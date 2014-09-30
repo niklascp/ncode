@@ -1,0 +1,4 @@
+*/obj/
+/packages/
+!/packages/repositories.config
+*.suo

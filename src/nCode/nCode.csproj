@@ -1,0 +1,394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BBD58F26-1480-4C8E-B481-FAFF8165E990}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>nCode</RootNamespace>
+    <AssemblyName>nCode</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\bin\nCode.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <DocumentationFile>
+    </DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.2.2.0\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core">
+      <HintPath>..\packages\Common.Logging.Core.2.2.0\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=1.34.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Dapper.1.34\lib\net45\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FileHelpers">
+      <HintPath>..\packages\FileHelpers.2.0.0.0\lib\FileHelpers.dll</HintPath>
+    </Reference>
+    <Reference Include="FileHelpers.ExcelStorage">
+      <HintPath>..\packages\FileHelpers.2.0.0.0\lib\FileHelpers.ExcelStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="Hangfire.Core">
+      <HintPath>..\packages\Hangfire.Core.1.1.1\lib\net45\Hangfire.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Hangfire.SqlServer">
+      <HintPath>..\packages\Hangfire.SqlServer.1.1.1\lib\net45\Hangfire.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.Excel">
+      <HintPath>..\packages\FileHelpers.2.0.0.0\lib\Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.Office">
+      <HintPath>..\packages\FileHelpers.2.0.0.0\lib\Interop.Office.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net">
+      <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Ajax\ActionResult.cs" />
+    <Compile Include="Controllers\JobSchedulingController.cs" />
+    <Compile Include="JobScheduling\Hangfire\HangfireJobEngine.cs" />
+    <Compile Include="JobScheduling\Hangfire\JobSchedulingIntegrationAttribute.cs" />
+    <Compile Include="JobScheduling\IBackgroundJob.cs" />
+    <Compile Include="JobScheduling\JobEngineExtensions.cs" />
+    <Compile Include="JobScheduling\JobHandler.cs" />
+    <Compile Include="JobScheduling\JobExecution.cs" />
+    <Compile Include="JobScheduling\ScheduledJob.cs" />
+    <Compile Include="Logging\Log4Net\Log4NetCleanupJob.cs" />
+    <Compile Include="Logging\Log4Net\Log4NetLoggerFactoryAdapter.cs" />
+    <Compile Include="Logging\Log4Net\Log4NetLogger.cs" />
+    <Compile Include="Logging\Log4Net\CommonLoggingAppender.cs" />
+    <Compile Include="Metadata\FileTextLinkList.cs" />
+    <Compile Include="Migrations\201409101753311_Metadata_Initial.cs" />
+    <Compile Include="Migrations\201409101753311_Metadata_Initial.Designer.cs">
+      <DependentUpon>201409101753311_Metadata_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SystemDbConfiguration.cs" />
+    <Compile Include="CultureRouteContraint.cs" />
+    <Compile Include="Data\CascadeRule.cs" />
+    <Compile Include="Data\DbConfigurationExtensions.cs" />
+    <Compile Include="Data\IFileImportManager.cs" />
+    <Compile Include="Data\ForeignEntityAtrribute.cs" />
+    <Compile Include="Data\LogMigrationsLogger.cs" />
+    <Compile Include="Data\RenameAttribute.cs" />
+    <Compile Include="Data\PrimaryKey.cs" />
+    <Compile Include="Data\UniqueKeyAttribute.cs" />
+    <Compile Include="Data\IndexAttribute.cs" />
+    <Compile Include="Data\Linq2Sql\Extensions.cs" />
+    <Compile Include="Geographics\AddressUtilities.cs" />
+    <Compile Include="Geographics\GsApi\GsApi.cs" />
+    <Compile Include="Geographics\GsApi\GsResponse.cs" />
+    <Compile Include="Imaging\CompressImageExtension.cs" />
+    <Compile Include="Imaging\GrayscaleImageExtension.cs" />
+    <Compile Include="Imaging\RotateImageExtension.cs" />
+    <Compile Include="Imaging\RoundCornersExtention.cs" />
+    <Compile Include="IO\FileSizeFormatProvider.cs" />
+    <Compile Include="Logging\Log4Net\Log4NetLoggingEngine.cs" />
+    <Compile Include="Logging\LoggingEngine.cs" />
+    <Compile Include="Metadata\FileLinkList.cs" />
+    <Compile Include="Metadata\FileList.cs" />
+    <Compile Include="Metadata\EditControlAttribute.cs" />
+    <Compile Include="Metadata\FileTextList.cs" />
+    <Compile Include="Metadata\Model\MetadataPropertyEntity.cs" />
+    <Compile Include="Metadata\Model\MetadataDescriptorEntity.cs" />
+    <Compile Include="Metadata\ObjectTypeGuidAttribute.cs" />
+    <Compile Include="Metadata\SiteMetadataContext.cs" />
+    <Compile Include="Search\IIndexUpdateContext.cs" />
+    <Compile Include="Search\LuceneIndexUpdateContext.cs" />
+    <Compile Include="Search\LuceneSearchEngine.cs" />
+    <Compile Include="Search\SearchHandler.cs" />
+    <Compile Include="Search\SearchEngine.cs" />
+    <Compile Include="Search\SearchSettings.cs" />
+    <Compile Include="ServiceModel\AutoSecuredHttpSecurityCapabilities.cs" />
+    <Compile Include="ServiceModel\AutoSecuredHttpTransportElement.cs" />
+    <Compile Include="ServiceModel\BindingExtenions\ClearUsernameBinding.cs" />
+    <Compile Include="ServiceModel\BindingExtenions\ClearUsernameBindingElement.cs" />
+    <Compile Include="ServiceModel\BindingExtenions\ClearUsernameCollectionElement.cs" />
+    <Compile Include="SystemDbContext.cs" />
+    <Compile Include="JobScheduling\JobEngine.cs" />
+    <Compile Include="UI\NavigationTree.cs" />
+    <Compile Include="UI\INavigationGraph.cs" />
+    <Compile Include="UI\NavigationView.cs" />
+    <Compile Include="UI\NavigationViewItem.cs" />
+    <Compile Include="UI\INavigationItem.cs" />
+    <Compile Include="UI\ISearchProvider.cs" />
+    <Compile Include="UI\SearchResult.cs" />
+    <Compile Include="UI\SiteNavigationItem.cs" />
+    <Compile Include="UI\StylesHelper.cs" />
+    <Compile Include="UI\TreeItem.cs" />
+    <Compile Include="CanonicalDomainModule.cs" />
+    <Compile Include="Configuration\AdminInterfaceSection.cs" />
+    <Compile Include="Configuration\HostMappingCollection.cs" />
+    <Compile Include="Configuration\SiteSection.cs" />
+    <Compile Include="Configuration\ImportManagerConfigurationElement.cs" />
+    <Compile Include="Configuration\ImportManagerConfigurationCollection.cs" />
+    <Compile Include="Configuration\ModuleCollection.cs" />
+    <Compile Include="Configuration\Shortcut.cs" />
+    <Compile Include="Configuration\ShortcutCollection.cs" />
+    <Compile Include="Configuration\SupportedCulture.cs" />
+    <Compile Include="Configuration\SupportedCultureCollection.cs" />
+    <Compile Include="Configuration\GlobalizationSection.cs" />
+    <Compile Include="Configuration\SupportInformation.cs" />
+    <Compile Include="ContentRewriteHandler.cs" />
+    <Compile Include="CultureRouteHandler.cs" />
+    <Compile Include="Data\FileHelpersImportManager.cs" />
+    <Compile Include="Data\ImportManager.cs" />
+    <Compile Include="Data\ImportFormatException.cs" />
+    <Compile Include="Data\SetExistingRowsAttribute.cs" />
+    <Compile Include="GenericModule.cs" />
+    <Compile Include="Metadata\GenericMetadataHelper.cs" />
+    <Compile Include="Metadata\NativeDataTypeExtensions.cs" />
+    <Compile Include="Metadata\IMetadataContext.cs" />
+    <Compile Include="Metadata\MetadataDescriptorCollection.cs" />
+    <Compile Include="UI\TreeNavigationItem.cs" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </None>
+    <Compile Include="ObfuscateEmailRewriteHandler.cs" />
+    <Compile Include="Configuration\HostMappingElement.cs" />
+    <Compile Include="SystemModule.cs" />
+    <Compile Include="UI\DataTypeEditControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI\IDataTypeEditControl.cs" />
+    <Compile Include="Data\Column.cs" />
+    <Compile Include="Data\ForeignKey.cs" />
+    <Compile Include="Data\Index.cs" />
+    <Compile Include="Data\UniqueKey.cs" />
+    <Compile Include="Data\Schema.cs" />
+    <Compile Include="Data\SchemaConfigurationException.cs" />
+    <Compile Include="Data\SchemaControl.cs" />
+    <Compile Include="Data\SchemaDefinition.cs" />
+    <Compile Include="Data\SqlObjectType.cs" />
+    <Compile Include="Data\Table.cs" />
+    <Compile Include="Feature.cs" />
+    <Compile Include="FeatureGroup.cs" />
+    <Compile Include="FeatureGroupCollection.cs" />
+    <Compile Include="Imaging\ImageUtilities.cs" />
+    <Compile Include="IO\FileUtilities.cs" />
+    <Compile Include="IO\vCards\Address.cs" />
+    <Compile Include="IO\vCards\AddressType.cs" />
+    <Compile Include="IO\vCards\PhoneNumberType.cs" />
+    <Compile Include="IO\vCards\PhoneNumber.cs" />
+    <Compile Include="IO\vCards\vCard.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="ProviderModel\ProviderCollection.cs" />
+    <Compile Include="Security\SystemMembershipProvider.cs" />
+    <Compile Include="Configuration\Module.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\SystemRoles.cs" />
+    <Compile Include="ServiceModel\ConfigurationStrings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceModel\MessageVersionConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceModel\StmEncoder.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceModel\StmEncoderBindingElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceModel\StmEncoderBindingElementExtensionElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ServiceModel\StmEncoderFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="SqlUtilities.cs" />
+    <Compile Include="Security\SystemMembershipUser.cs" />
+    <Compile Include="Security\SystemProfileProvider.cs" />
+    <Compile Include="Security\SystemRoleProvider.cs" />
+    <Compile Include="Templating\XsltTemplate.cs" />
+    <Compile Include="UI\CustomizedMasterPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI\IMasterPage.cs" />
+    <Compile Include="UI\MetadataEditControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI\LocalizationEventArgs.cs" />
+    <Compile Include="Metadata\MetadataDescriptor.cs" />
+    <Compile Include="UI\Navigation.cs" />
+    <Compile Include="UI\Page.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI\PageExtensions.cs" />
+    <Compile Include="UI\SelectorControl.cs" />
+    <Compile Include="UI\LocalizationUpdateEventArgs.cs" />
+    <Compile Include="UI\TitleMode.cs" />
+    <Compile Include="UI\UserSelector.cs" />
+    <Compile Include="Utilities.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201409101753311_Metadata_Initial.resx">
+      <DependentUpon>201409101753311_Metadata_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\SupportedCulture.resx">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Security\Resources\SystemRoles.da-DK.resx" />
+    <EmbeddedResource Include="Security\Resources\SystemRoles.resx">
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
