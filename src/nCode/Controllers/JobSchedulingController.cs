@@ -21,6 +21,9 @@ namespace nCode.Controllers
         [Route("executions")]
         public IEnumerable<JobExecution> GetJobExecutions(int offset = 0, int count = 50)
         {
+            if (!JobHandler.IsInitialized)
+                return null;
+
             return JobHandler.Engine.GetJobExecutions(offset, count);
         }
 
@@ -30,6 +33,9 @@ namespace nCode.Controllers
         [Route("scheduled")]
         public IEnumerable<ScheduledJob> GetScheduledJobs()
         {
+            if (!JobHandler.IsInitialized)
+                return null;
+
             return JobHandler.Engine.GetScheduledJobs();
         }
 
