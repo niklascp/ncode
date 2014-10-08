@@ -1,0 +1,276 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>nCode.CRM</name>
+    </assembly>
+    <members>
+        <member name="T:nCode.CRM.CrmDbContext">
+            <summary>
+            Entity Framework DbContext for the CRM module.
+            </summary>
+        </member>
+        <member name="T:nCode.CRM.CustomerGroup">
+            <summary>
+            Represenst a Customer Group.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CustomerGroup.Code">
+            <summary>
+            Gets or sets the code (primary key) for this Customer Group.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CustomerGroup.Name">
+            <summary>
+            Gets or sets the name of this Customer Group.
+            </summary>
+        </member>
+        <member name="T:nCode.CRM.CredentialMode">
+            <summary>
+            Indicates possible credention modes.
+            </summary>
+        </member>
+        <member name="F:nCode.CRM.CredentialMode.CustomerNo_CustomerPassword">
+            <summary>
+            Credential mode using Customer No and Customer Password.
+            </summary>
+        </member>
+        <member name="F:nCode.CRM.CredentialMode.CustomerUsername_CustomerPassword">
+            <summary>
+            Credential mode using Customer Username and Customer Password.
+            </summary>
+        </member>
+        <member name="F:nCode.CRM.CredentialMode.ContactEmail_ContactPassword">
+            <summary>
+            Credential mode using Contact Email and Contact Password.
+            </summary>
+        </member>
+        <member name="F:nCode.CRM.CredentialMode.ContactUsername_ContactPassword">
+            <summary>
+            Credential mode using Contact Username and Contact Password.
+            </summary>
+        </member>
+        <member name="T:nCode.CRM.CrmAuthentication">
+            <summary>
+            Provides access to the Crm Authentication Control
+            </summary>
+        </member>
+        <member name="M:nCode.CRM.CrmAuthentication.SignIn(System.String)">
+            <summary>
+            Signs in with the given identity.
+            </summary>
+            <param name="identity"></param>
+        </member>
+        <member name="M:nCode.CRM.CrmAuthentication.SignOut">
+            <summary>
+            Signs out.
+            </summary>
+        </member>
+        <member name="M:nCode.CRM.CrmAuthentication.Authenticate(System.String,System.String)">
+            <summary>
+            Returns true if authentication is successfull with the given identity and password. 
+            The authentication relies on the current Credential Mode <see cref="P:nCode.CRM.CrmSettings.CredentialMode"/>
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CrmAuthentication.Identity">
+            <summary>
+            Gets the identity of the current user.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CrmAuthentication.Authenticated">
+            <summary>
+            True if the current user is authenticated.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CrmAuthentication.Customer">
+            <summary>
+            Gets the Customer of the current user.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CrmAuthentication.Contact">
+            <summary>
+            Gets the Customer Contact (if available) of the current user.
+            </summary>
+        </member>
+        <member name="T:nCode.CRM.CrmSettings">
+            <summary>
+            Crm Settings
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CrmSettings.CredentialMode">
+            <summary>
+            Gets or sets the current Credential Mode (site specific).
+            </summary>
+        </member>
+        <member name="T:nCode.CRM.Customer">
+            <summary>
+            Represenst a Customer.
+            </summary>
+        </member>
+        <member name="M:nCode.CRM.Customer.GetProperty``1(nCode.CRM.CrmDbContext,System.Guid,System.String,``0)">
+            <summary>
+            Gets a Customer specific property (given by the Customer ID) of type T.
+            </summary>
+        </member>
+        <member name="M:nCode.CRM.Customer.SetProperty``1(nCode.CRM.CrmDbContext,System.Guid,System.String,``0)">
+            <summary>
+            Sets a Customer specific property (given by the Customer ID) of type T.
+            </summary>
+        </member>
+        <member name="M:nCode.CRM.Customer.GetProperty``1(nCode.CRM.CrmDbContext,System.String,``0)">
+            <summary>
+            Gets a Customer specific property of type T.
+            </summary>
+        </member>
+        <member name="M:nCode.CRM.Customer.SetProperty``1(nCode.CRM.CrmDbContext,System.String,``0)">
+            <summary>
+            Sets a Customer specific property of type T.
+            </summary>
+        </member>
+        <member name="M:nCode.CRM.Customer.GetProperty``1(System.String,``0)">
+            <summary>
+            Gets a Customer specific property of type T.
+            </summary>
+        </member>
+        <member name="M:nCode.CRM.Customer.SetProperty``1(System.String,``0)">
+            <summary>
+            Sets a Customer specific property of type T.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.Customer.ID">
+            <summary>
+            Gets or sets the primary key for this Customer.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.Customer.Created">
+            <summary>
+            Gets or sets the date and time for the creation of this Customer.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.Customer.Modified">
+            <summary>
+            Gets or sets the date and time for the last modification of this Customer.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.Customer.CustomerNo">
+            <summary>
+            Gets or sets the Customer Number of this Customer.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.Customer.Name">
+            <summary>
+            Gets or sets the Name of this Customer.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.Customer.Address1">
+            <summary>
+            Gets or sets the Address (line 1) of this Customer.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.Customer.Address2">
+            <summary>
+            Gets or sets the Address (line 2) of this Customer.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.Customer.PostalCode">
+            <summary>
+            Gets or sets the Postal Code of this Customer.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.Customer.City">
+            <summary>
+            Gets or sets the City of this Customer.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.Customer.CountryCode">
+            <summary>
+            Gets or sets the Country Code (ISO 3166-1 alpha-2) of this Customer.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.Customer.Phone">
+            <summary>
+            Gets or sets the Phone Number of this Customer.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.Customer.Email">
+            <summary>
+            Gets or sets the Email of this Customer.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.Customer.Web">
+            <summary>
+            Gets or sets the Url of this Customer's webpage.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.Customer.Description">
+            <summary>
+            Gets or sets the Description Customer.
+            </summary>
+        </member>
+        <member name="T:nCode.CRM.CustomerContact">
+            <summary>
+            Represenst a Customer Contact.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CustomerContact.ID">
+            <summary>
+            Gets or sets the primary key for this Customer Contact.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CustomerContact.Created">
+            <summary>
+            Gets or sets the date and time for the creation of this Customer Contact.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CustomerContact.Modified">
+            <summary>
+            Gets or sets the date and time for the last modification of this Customer Contact.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CustomerContact.CustomerID">
+            <summary>
+            Gets or sets the foreign key for Customer this Contact belongs to.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CustomerContact.Customer">
+            <summary>
+            Gets or sets the Customer this Contact belongs to.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CustomerContact.Name">
+            <summary>
+            Gets or sets the name of this Customer Contact.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CustomerContact.Phone">
+            <summary>
+            Gets or sets the phone number of this Customer Contact.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CustomerContact.Email">
+            <summary>
+            Gets or sets the email address of this Customer Contact.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CustomerContact.Username">
+            <summary>
+            Gets or sets the username this Customer Contact. Used if <see cref="P:nCode.CRM.CrmSettings.CredentialMode"/> is set to ContactUsername_ContactPassword.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CustomerContact.Password">
+            <summary>
+            Gets or sets the password this Customer Contact. Used if <see cref="P:nCode.CRM.CrmSettings.CredentialMode"/> is set to ContactEmail_ContactPassword.
+            </summary>
+        </member>
+        <member name="T:nCode.CRM.UI.ProtectedPage">
+            <summary>
+            Models a Crm Authention protected page.
+            </summary>
+        </member>
+        <member name="M:nCode.CRM.UI.ProtectedPage.OnPreInit(System.EventArgs)">
+            <summary>
+            Overrides so that authention is handled.
+            </summary>
+            <param name="e"></param>
+        </member>
+    </members>
+</doc>
