@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="CmsModel">
+  <DataContextMoniker Name="/CmsModel" />
+  <nestedChildShapes>
+    <classShape Id="fabe8ab4-43af-4a49-bdfe-00340c0f22d5" absoluteBounds="0.5, 0.5, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/CmsModel/ContentBlock" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7a0e8412-22f0-4e94-891a-10c3dc33d0b9" absoluteBounds="0.515, 0.96, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0614d3de-19e7-400f-8f1e-f30b3a6a645c" absoluteBounds="3, 0.5, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/CmsModel/ContentBlockLocalization" />
+      <nestedChildShapes>
+        <elementListCompartment Id="841f8fe6-86d7-44aa-8dac-e92cf1e9d62d" absoluteBounds="3.015, 0.96, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.5 : 1.28929768880208); (3 : 1.28929768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CmsModel/ContentBlock/ContentBlock_ContentBlockLocalization" />
+      <nodes>
+        <classShapeMoniker Id="fabe8ab4-43af-4a49-bdfe-00340c0f22d5" />
+        <classShapeMoniker Id="0614d3de-19e7-400f-8f1e-f30b3a6a645c" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="2760de2a-7742-402f-a286-400a790e5e95" absoluteBounds="5.5, 3.375, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/CmsModel/News" />
+      <nestedChildShapes>
+        <elementListCompartment Id="844320dd-9c88-46c5-940a-dfba4efe5689" absoluteBounds="5.5150000000000006, 3.835, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5ed5a43a-5aad-431b-9077-0cb3da7782b8" absoluteBounds="0.5, 3.375, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/CmsModel/NewsGroup" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b27433bf-6120-4ef2-a3e0-39212d9d3009" absoluteBounds="0.51500000000000012, 3.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4391b72c-d858-4665-97f9-39c37f96f95e" absoluteBounds="3, 3.375, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/CmsModel/NewsInNewsGroup" />
+      <nestedChildShapes>
+        <elementListCompartment Id="53fd8945-c222-4066-b4ba-79d5d7375814" absoluteBounds="3.015, 3.835, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.5 : 4.26044840494792); (5 : 4.26044840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CmsModel/News/News_CMS_NewsInNewsGroup" />
+      <nodes>
+        <classShapeMoniker Id="2760de2a-7742-402f-a286-400a790e5e95" />
+        <classShapeMoniker Id="4391b72c-d858-4665-97f9-39c37f96f95e" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.5 : 4.16429768880208); (3 : 4.16429768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CmsModel/NewsGroup/NewsGroup_CMS_NewsInNewsGroup" />
+      <nodes>
+        <classShapeMoniker Id="5ed5a43a-5aad-431b-9077-0cb3da7782b8" />
+        <classShapeMoniker Id="4391b72c-d858-4665-97f9-39c37f96f95e" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
