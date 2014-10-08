@@ -1,5 +1,6 @@
 */obj/
-/packages/
+*/bin/
+/packages/*
 !packages/repositories.config
 app.config
 *.suo
