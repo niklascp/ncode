@@ -170,11 +170,6 @@
     <Compile Include="Payment\PayPal\PayPalPaymentProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
-    <None Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </None>
     <Compile Include="SalesSettings.cs" />
     <Compile Include="SegmentsContentType.cs" />
     <Compile Include="TreeService.cs">
@@ -220,10 +215,6 @@
     <None Include="CatalogModel.dbml.layout">
       <DependentUpon>CatalogModel.dbml</DependentUpon>
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup />

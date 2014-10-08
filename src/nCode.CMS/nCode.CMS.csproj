@@ -104,11 +104,6 @@
     <Compile Include="ContentPageNode.cs" />
     <Compile Include="GenericContentType.cs" />
     <None Include="packages.config" />
-    <None Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </None>
     <Compile Include="ContentPageSearchSource.cs" />
     <Compile Include="Metadata\ContentBlockName.cs" />
     <Compile Include="Migrations\201403081953320_InitialCreate.cs" />
@@ -186,10 +181,6 @@
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>CmsModel.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
