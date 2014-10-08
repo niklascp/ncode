@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E491D395-DD42-4A3B-A7BF-316E31EF6969}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>nCode.Catalog</RootNamespace>
+    <AssemblyName>nCode.Catalog</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\bin\nCode.Catalog.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Ajax\ItemInfo.cs" />
+    <Compile Include="Basket.cs" />
+    <Compile Include="BasketItem.cs" />
+    <Compile Include="BasketController.cs" />
+    <Compile Include="CatalogFeatures.cs" />
+    <Compile Include="CatalogModel.cs">
+      <DependentUpon>CatalogModel.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="CatalogModel.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CatalogModel.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="CatalogModule.cs" />
+    <Compile Include="CatalogSettings.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="ItemSearchSource.cs" />
+    <Compile Include="CategoriesContentType.cs" />
+    <Compile Include="BrandsContentType.cs" />
+    <Compile Include="ItemSearchProvider.cs" />
+    <Compile Include="Model\Campaign.cs" />
+    <Compile Include="Model\VariantMode.cs" />
+    <Compile Include="Model\VatGroup.cs" />
+    <Compile Include="Model\PriceGroup.cs" />
+    <Compile Include="Model\CurrencyRoundingRule.cs" />
+    <Compile Include="Model\SalesChannel.cs" />
+    <Compile Include="Payment\PaymentFee.cs" />
+    <Compile Include="UI\BrandNavigationItem.cs" />
+    <Compile Include="ItemRewriteHandler.cs" />
+    <Compile Include="CategoryInfo.cs" />
+    <Compile Include="CategoryRouteHandler.cs" />
+    <Compile Include="CategoryUtilities.cs" />
+    <Compile Include="CompanyInformation.cs" />
+    <Compile Include="Configuration\DeliverySection.cs" />
+    <Compile Include="Delivery\DeliveryManager.cs" />
+    <Compile Include="Delivery\DeliveryProvider.cs" />
+    <Compile Include="Delivery\DeliveryProviderCollection.cs" />
+    <Compile Include="Delivery\IDeliveryTypeSetupControl.cs" />
+    <Compile Include="Delivery\Weight\WeightDeliveryProvider.cs" />
+    <Compile Include="Delivery\Weight\WeightInterval.cs" />
+    <Compile Include="Delivery\Weight\WeightIntervalPrice.cs" />
+    <Compile Include="DiscountType.cs" />
+    <Compile Include="CurrencyController.cs" />
+    <Compile Include="ItemBasketItem.cs" />
+    <Compile Include="ItemRouteHandler.cs" />
+    <Compile Include="LayoutSettings.cs" />
+    <Compile Include="Model\CatalogDbContext.cs" />
+    <Compile Include="Model\ItemProperty.cs" />
+    <Compile Include="Model\Item.cs" />
+    <Compile Include="Model\ItemLocalization.cs" />
+    <Compile Include="NoSerieNumber.cs" />
+    <Compile Include="OrderStatus.cs" />
+    <Compile Include="PaymentStatus.cs" />
+    <Compile Include="Payment\Curanet\CuranetApi.cs">
+    </Compile>
+    <Compile Include="Payment\Curanet\CuranetPaymentProvider.cs" />
+    <Compile Include="Payment\Curanet\CuranetSettings.cs" />
+    <Compile Include="Payment\Curanet\ICuranetApi.cs" />
+    <Compile Include="Payment\Invoice\InvoicePaymentProvider.cs" />
+    <Compile Include="Payment\IPaymentEditControl.cs" />
+    <Compile Include="Payment\IPaymentTypeSetupControl.cs" />
+    <Compile Include="Payment\PaymentProvider.cs" />
+    <Compile Include="Payment\PaymentProviderCollection.cs" />
+    <Compile Include="Payment\PaymentManager.cs" />
+    <Compile Include="Configuration\PaymentSection.cs" />
+    <Compile Include="Payment\PayPal\PayPalAddress.cs" />
+    <Compile Include="Payment\PayPal\PayPalApi.cs" />
+    <Compile Include="Payment\PayPal\PayPalApiData.cs" />
+    <Compile Include="Payment\PayPal\PayPalPaymentProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </None>
+    <Compile Include="SalesSettings.cs" />
+    <Compile Include="SegmentsContentType.cs" />
+    <Compile Include="TreeService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\CategoryNavigationItem.cs" />
+    <Compile Include="UI\CategoryInfoView.cs" />
+    <Compile Include="UI\CategoryInfoViewItem.cs" />
+    <Compile Include="UI\CatalogNavigationExtensions.cs" />
+    <Compile Include="UI\BrandNavigationTree.cs" />
+    <Compile Include="UI\CategoryNavigationTree.cs" />
+    <Compile Include="UI\CampaignNavigationList.cs" />
+    <Compile Include="UI\CampaignNavigationItem.cs" />
+    <Compile Include="UI\SegmentNavigationItem.cs" />
+    <Compile Include="UI\SegmentNavigationTree.cs" />
+    <Compile Include="UI\ItemNavigationItem.cs" />
+    <Compile Include="UI\ItemUtilities.cs" />
+    <Compile Include="UI\SeoUtilities.cs" />
+    <Compile Include="VatUtilities.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\nCode.CMS\nCode.CMS.csproj">
+      <Project>{34F244D8-C399-4FDE-AEB0-EEF2E3BA378E}</Project>
+      <Name>nCode.CMS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\nCode\nCode.csproj">
+      <Project>{BBD58F26-1480-4C8E-B481-FAFF8165E990}</Project>
+      <Name>nCode</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CatalogModel.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>CatalogModel.designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="CatalogModel.dbml.layout">
+      <DependentUpon>CatalogModel.dbml</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

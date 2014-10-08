@@ -1,0 +1,560 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="news_cmspartner_dk" EntityNamespace="nCode.Catalog" ContextNamespace="nCode.Catalog" Class="CatalogModel" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="dbo.Catalog_Category" Member="Categories">
+    <Type Name="Category">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CategoryNo" Type="System.Int32" DbType="Int NOT NULL" IsReadOnly="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Parent" Member="ParentID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="[Index]" Member="Index" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsVisible" Type="System.Boolean" DbType="Bit" CanBeNull="false" />
+      <Column Name="Image1" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Image2" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Image3" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="Category_Category" Member="Children" ThisKey="ID" OtherKey="ParentID" Type="Category" />
+      <Association Name="Category_CategoryLocalization" Member="Localizations" ThisKey="ID" OtherKey="CategoryID" Type="CategoryLocalization" />
+      <Association Name="Category_Item" Member="Items" ThisKey="ID" OtherKey="CategoryID" Type="Item" />
+      <Association Name="Category_Category" Member="Parent" ThisKey="ParentID" OtherKey="ID" Type="Category" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_CategoryLocalization" Member="CategoryLocalizations">
+    <Type Name="CategoryLocalization">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CategoryID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Culture" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="SeoKeywords" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="SeoDescription" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="Category_CategoryLocalization" Member="Category" ThisKey="CategoryID" OtherKey="ID" Type="Category" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_Brand" Member="Brands">
+    <Type Name="Brand">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ParentID" Type="System.Guid" DbType="UniqueIdentifier NULL" CanBeNull="true" />
+      <Column Name="[Index]" Member="Index" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Image1" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Image2" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Image3" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="Brand_Brand" Member="Children" ThisKey="ID" OtherKey="ParentID" Type="Brand" />
+      <Association Name="Brand_BrandLocalization" Member="Localizations" ThisKey="ID" OtherKey="BrandID" Type="BrandLocalization" />
+      <Association Name="Brand_Item" Member="Items" ThisKey="ID" OtherKey="BrandID" Type="Item" />
+      <Association Name="Brand_Brand" Member="Parent" ThisKey="ParentID" OtherKey="ID" Type="Brand" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_BrandLocalization" Member="BrandLocalizations">
+    <Type Name="BrandLocalization">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="BrandID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Culture" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Brand_BrandLocalization" Member="Brand" ThisKey="BrandID" OtherKey="ID" Type="Brand" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_Campaign" Member="Campaigns">
+    <Type Name="Campaign">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Code" Storage="_Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayIndex" Storage="_Index" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsVisible" Type="System.Boolean" DbType="Bit" CanBeNull="false" />
+      <Association Name="Campaign_CampaignLocalization" Member="Localizations" ThisKey="ID" OtherKey="CampaignID" Type="CampaignLocalization" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_CampaignLocalization" Member="CampaignLocalizations">
+    <Type Name="CampaignLocalization">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CampaignID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Culture" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(255)" CanBeNull="false" />
+      <Association Name="Campaign_CampaignLocalization" Member="Campaign" ThisKey="CampaignID" OtherKey="ID" Type="Campaign" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_CampaignItem" Member="CampaignItems">
+    <Type Name="CampaignItem">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CampaignID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ItemID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayIndex" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Campaign_CampaignItem" Member="Campaign" ThisKey="CampaignID" OtherKey="ID" Type="Campaign" IsForeignKey="true" />
+      <Association Name="Item_CampaignItem" Member="Item" ThisKey="ItemID" OtherKey="ID" Type="Item" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_Segment" Member="Segments">
+    <Type Name="Segment">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayIndex" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Segment_SegmentLocalization" Member="Localizations" ThisKey="ID" OtherKey="SegmentID" Type="SegmentLocalization" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_SegmentLocalization" Member="SegmentLocalizations">
+    <Type Name="SegmentLocalization">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SegmentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Culture" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(255)" CanBeNull="false" />
+      <Association Name="Segment_SegmentLocalization" Member="Segment" ThisKey="SegmentID" OtherKey="ID" Type="Segment" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_SegmentItem" Member="SegmentItems">
+    <Type Name="SegmentItem">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SegmentID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ItemID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayIndex" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Segment_SegmentItem" Member="Segment" ThisKey="SegmentID" OtherKey="ID" Type="Segment" IsForeignKey="true" />
+      <Association Name="Item_SegmentItem" Member="Item" ThisKey="ItemID" OtherKey="ID" Type="Item" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_Item" Member="Items">
+    <Type Name="Item">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SequenceNumber" Type="System.Int32" DbType="Int NOT NULL" IsReadOnly="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Category" Member="CategoryID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="[Index]" Member="Index" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Brand" Member="BrandID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="BrandIndex" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="VariantMode" Type="global::nCode.Catalog.Model.VariantMode" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UseStockControl" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="StockQuantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ReservedQuantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsSoldOut" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="VatGroupCode" Type="System.String" DbType="NVarChar(20) NULL" CanBeNull="true" />
+      <Column Name="CostCurrencyCode" Type="System.String" DbType="NVarChar(20) NULL" CanBeNull="true" />
+      <Column Name="CostPrice" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Weight" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="UnitCode" Type="System.String" DbType="NVarChar(20) NULL" CanBeNull="true" />
+      <Column Name="Ean" Type="System.String" DbType="NVarChar(13) NULL" CanBeNull="true" />
+      <Column Name="MinimumOrderQuantity" Type="System.Int32" DbType="Int NULL" CanBeNull="true" />
+      <Column Name="MultipleOrderQuantity" Type="System.Int32" DbType="Int NULL" CanBeNull="true" />
+      <Column Name="OnSale" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Item_ItemLocalization" Member="Localizations" Storage="_ItemLocalizations" ThisKey="ID" OtherKey="ItemID" Type="ItemLocalization" />
+      <Association Name="Item_ItemPrice" Member="Prices" ThisKey="ItemNo" OtherKey="ItemNo" Type="ItemPrice" />
+      <Association Name="Item_ItemImage" Member="Images" Storage="_ItemImages" ThisKey="ID" OtherKey="ItemID" Type="ItemImage" />
+      <Association Name="Item_ItemProperty" Member="Properties" ThisKey="ID" OtherKey="ItemID" Type="ItemProperty" />
+      <Association Name="Item_ItemVariantType" Member="ItemVariantTypes" ThisKey="ID" OtherKey="ItemID" Type="ItemVariantType" />
+      <Association Name="Item_ItemListPrice" Member="ListPrices" ThisKey="ItemNo" OtherKey="ItemNo" Type="ItemListPrice" />
+      <Association Name="Brand_Item" Member="Brand" ThisKey="BrandID" OtherKey="ID" Type="Brand" IsForeignKey="true" DeleteRule="SET NULL" />
+      <Association Name="Category_Item" Member="Category" ThisKey="CategoryID" OtherKey="ID" Type="Category" IsForeignKey="true" DeleteRule="SET NULL" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_ItemLocalization" Member="ItemLocalizations">
+    <Type Name="ItemLocalization">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Item" Member="ItemID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Culture" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="SeoKeywords" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="SeoDescription" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="Item_ItemLocalization" Member="Item" ThisKey="ItemID" OtherKey="ID" Type="Item" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_ItemPrice" Member="ItemPrices">
+    <Type Name="ItemPrice">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="PriceGroupCode" Type="System.String" DbType="NVarChar(20) NULL" CanBeNull="true" />
+      <Column Name="CurrencyCode" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Association Name="Item_ItemPrice" Member="Item" ThisKey="ItemNo" OtherKey="ItemNo" Type="Item" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_StockTransaction" Member="StockTransactions">
+    <Type Name="StockTransaction">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="OrderNo" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="true" />
+      <Column Name="Qty" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_ItemImage" Member="ItemImages">
+    <Type Name="ItemImage">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ItemID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayIndex" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ImageFile" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="Item_ItemImage" Member="Item" ThisKey="ItemID" OtherKey="ID" Type="Item" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_ItemRelation" Member="ItemRelations">
+    <Type Name="ItemRelation">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ItemID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayIndex" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RelatedItemID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_ItemProperty" Member="ItemProperties">
+    <Type Name="ItemProperty">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ItemID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="[Key]" Member="Key" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Association Name="Item_ItemProperty" Member="Item" ThisKey="ItemID" OtherKey="ID" Type="Item" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_Variant" Member="Variants">
+    <Type Name="Variant">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="VariantTypeID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayIndex" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="Variant_VariantLocalization" Member="Localizations" Storage="_VariantLocalizations" ThisKey="ID" OtherKey="VariantID" Type="VariantLocalization" />
+      <Association Name="Variant_ItemVariant" Member="ItemVariants" ThisKey="ID" OtherKey="VariantID" Type="ItemVariant" />
+      <Association Name="VariantType_Variant" Member="VariantType" ThisKey="VariantTypeID" OtherKey="ID" Type="VariantType" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_VariantLocalization" Member="VariantLocalizations">
+    <Type Name="VariantLocalization">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="VariantID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Culture" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="DisplayName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="Variant_VariantLocalization" Member="Variant" ThisKey="VariantID" OtherKey="ID" Type="Variant" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_VariantType" Member="VariantTypes">
+    <Type Name="VariantType">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayIndex" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="VariantType_Variant" Member="Variants" ThisKey="ID" OtherKey="VariantTypeID" Type="Variant" />
+      <Association Name="VariantType_VariantTypeLocalization" Member="Localizations" Storage="_VariantTypeLocalizations" ThisKey="ID" OtherKey="VariantTypeID" Type="VariantTypeLocalization" />
+      <Association Name="VariantType_ItemVariantType" Member="ItemVariantTypes" ThisKey="ID" OtherKey="VariantTypeID" Type="ItemVariantType" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_VariantTypeLocalization" Member="VariantTypeLocalizations">
+    <Type Name="VariantTypeLocalization">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="VariantTypeID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Culture" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="DisplayName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="VariantType_VariantTypeLocalization" Member="VariantType" ThisKey="VariantTypeID" OtherKey="ID" Type="VariantType" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_ItemVariantType" Member="ItemVariantTypes">
+    <Type Name="ItemVariantType">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ItemID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="VariantTypeID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Depth" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ItemVariantType_ItemVariant" Member="ItemVariants" ThisKey="ID" OtherKey="ItemVariantTypeID" Type="ItemVariant" />
+      <Association Name="Item_ItemVariantType" Member="Item" ThisKey="ItemID" OtherKey="ID" Type="Item" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="VariantType_ItemVariantType" Member="VariantType" ThisKey="VariantTypeID" OtherKey="ID" Type="VariantType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_ItemVariant" Member="ItemVariants">
+    <Type Name="ItemVariant">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ParentID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="ItemVariantTypeID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="VariantID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="VariantNo" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="CostPrice" Type="System.Decimal" DbType="Decimal(18,2) NULL" CanBeNull="true" />
+      <Column Name="StockQuantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ReservedQuantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsSoldOut" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsLeaf" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="ItemVariant_ItemVariantPrice" Member="Prices" Storage="_ItemVariantPrices" ThisKey="ID" OtherKey="ItemVariantID" Type="ItemVariantPrice" />
+      <Association Name="ItemVariantType_ItemVariant" Member="ItemVariantType" ThisKey="ItemVariantTypeID" OtherKey="ID" Type="ItemVariantType" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Variant_ItemVariant" Member="Variant" ThisKey="VariantID" OtherKey="ID" Type="Variant" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_ItemVariantPrice" Member="ItemVariantPrices">
+    <Type Name="ItemVariantPrice">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ItemVariantID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="CurrencyCode" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="PriceGroupCode" Type="System.String" DbType="NVarChar(20) NULL" CanBeNull="true" />
+      <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Association Name="ItemVariant_ItemVariantPrice" Member="ItemVariant" ThisKey="ItemVariantID" OtherKey="ID" Type="ItemVariant" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_VatGroup" Member="VatGroups">
+    <Type Name="VatGroup">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="IsDefault" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Rate" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_PriceGroup" Member="PriceGroups">
+    <Type Name="PriceGroup">
+      <Column Name="Id" Type="System.Int32" DbType="int NOT NULL" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Guid" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="PricesIncludeVat" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_Currency" Member="Currencies">
+    <Type Name="Currency">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="NumericalCode" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsDefault" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Rate" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="RoundingRule" Type="global::nCode.Catalog.Model.CurrencyRoundingRule" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RoundingMultiple" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_NoSerie" Member="NoSeries">
+    <Type Name="NoSerie">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Prefix" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Suffix" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="StartNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EndNo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LastNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_Country" Member="Countries">
+    <Type Name="Country">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IsDefault" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IncludeVat" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_Order" Member="Orders">
+    <Type Name="Order">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="OrderNo" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="InvoiceNo" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="InvoiceDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DueDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Status" Type="global::nCode.Catalog.OrderStatus" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CustomerNo" Type="System.String" DbType="NVarChar(255) NULL" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Address1" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Address2" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PostalCode" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="CountryCode" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="CustomerReference" Type="System.String" DbType="NVarChar(255) NULL" CanBeNull="true" />
+      <Column Name="CustomerEan" Type="System.String" DbType="NVarChar(13) NULL" CanBeNull="true" />
+      <Column Name="UseShippingAddress" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ShippingName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ShippingAddress1" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ShippingAddress2" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ShippingPostalCode" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ShippingCity" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ShippingCountryCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="SalesChannelCode" Type="System.String" DbType="NVarChar(20) NULL" CanBeNull="true" />
+      <Column Name="CurrencyCode" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Culture" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="PaymentTypeCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="PaymentStatus" Type="global::nCode.Catalog.PaymentStatus" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TransactionNo" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="DeliveryTypeCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="DeliveryDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DiscountCode" Type="System.String" DbType="NVarChar(255) NULL" CanBeNull="true" />
+      <Column Name="DiscountAmount" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="FreightAmount" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="FreightVatGroupCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="PaymentFeeAmount" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="PaymentFeeVatGroupCode" Type="System.String" DbType="NVarChar(20) NULL" CanBeNull="true" />
+      <Column Name="NetTotal" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Total" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="VatIncluded" Type="System.Boolean" DbType="Bit" CanBeNull="false" />
+      <Column Name="Comment" Type="System.String" DbType="NVarChar(Max)" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="Order_OrderItem" Member="Items" ThisKey="OrderNo" OtherKey="OrderNo" Type="OrderItem" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_OrderItem" Member="OrderItems">
+    <Type Name="OrderItem">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="OrderNo" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayIndex" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ImageFile" Type="System.String" DbType="NVarChar(255) NULL" CanBeNull="true" />
+      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(255) NULL" CanBeNull="true" />
+      <Column Name="ItemVariantID" Type="System.Guid" DbType="UniqueIdentifier NULL" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Qty" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UnitCostPrice" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="UnitPrice" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="VatGroupCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Association Name="Order_OrderItem" Member="Order" ThisKey="OrderNo" OtherKey="OrderNo" Type="Order" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_OrderPackage" Member="OrderPackages">
+    <Type Name="OrderPackage">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="OrderNo" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="TrackingNo" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="Order_OrderPackage" Member="Order" ThisKey="OrderNo" OtherKey="OrderNo" Type="Order" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_PaymentType" Member="PaymentTypes">
+    <Type Name="PaymentType">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="ProviderName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayIndex" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Association Name="PaymentType_PaymentTypeLocalization" Member="Localizations" ThisKey="ID" OtherKey="PaymentTypeID" Type="PaymentTypeLocalization" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_PaymentTypeLocalization" Member="PaymentTypeLocalizations">
+    <Type Name="PaymentTypeLocalization">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PaymentTypeID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Culture" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Instructions" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="PaymentType_PaymentTypeLocalization" Member="PaymentType" ThisKey="PaymentTypeID" OtherKey="ID" Type="PaymentType" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_PaymentTypeProperty" Member="PaymentTypeProperties">
+    <Type Name="PaymentTypeProperty">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PaymentTypeID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="[Key]" Member="Key" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Association Name="PaymentType_PaymentTypeProperty" Member="PaymentType" ThisKey="PaymentTypeID" OtherKey="ID" Type="PaymentType" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_DeliveryType" Member="DeliveryTypes">
+    <Type Name="DeliveryType">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="ProviderName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayIndex" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="DeliveryType_DeliveryTypeLocalization" Member="Localizations" ThisKey="ID" OtherKey="DeliveryTypeID" Type="DeliveryTypeLocalization" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_DeliveryTypeLocalization" Member="DeliveryTypeLocalizations">
+    <Type Name="DeliveryTypeLocalization">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DeliveryTypeID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Culture" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="DeliveryType_DeliveryTypeLocalization" Member="DeliveryType" ThisKey="DeliveryTypeID" OtherKey="ID" Type="DeliveryType" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_DeliveryTypeProperty" Member="DeliveryTypeProperties">
+    <Type Name="DeliveryTypeProperty">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DeliveryTypeID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="[Key]" Member="Key" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Value" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Association Name="DeliveryType_DeliveryTypeProperty" Member="DeliveryType" ThisKey="DeliveryTypeID" OtherKey="ID" Type="DeliveryType" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_DiscountCode" Member="DiscountCodes">
+    <Type Name="DiscountCode">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="DiscountType" Type="DiscountType" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FixedAmount" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="true" />
+      <Column Name="Procentage" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="true" />
+      <Column Name="ValidFrom" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ValidTo" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Issued" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Applied" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CurrencyCode" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_Unit" Member="Units">
+    <Type Name="Unit">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Created" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Modified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_ItemListPrice" Member="ItemListPrices">
+    <Type Name="ItemListPrice">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ItemNo" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="CurrencyCode" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="PriceGroupCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
+      <Column Name="MultiplePrices" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Item_ItemListPrice" Member="Item" ThisKey="ItemNo" OtherKey="ItemNo" Type="Item" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Catalog_OrderLocation" Member="OrderLocations">
+    <Type Name="OrderLocation">
+      <Column Name="ID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="OrderNo" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="LocationCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="MunicipalityCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="RegionCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Latitude" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Longitude" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="Order_OrderLocation" Member="Order" ThisKey="OrderNo" OtherKey="OrderNo" Type="Order" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+</Database>
