@@ -28,12 +28,15 @@ namespace nCode.Catalog.Models
 
         public Guid BrandID { get; set; }
 
+        [MaxLength(255)]
         public string Culture { get; set; }
 
         public string Description { get; set; }
 
+        [MaxLength(250)]
         public string SeoKeywords { get; set; }
 
+        [MaxLength(2000)]
         public string SeoDescription { get; set; }
     }
 }

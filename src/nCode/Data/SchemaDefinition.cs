@@ -304,6 +304,8 @@ namespace nCode.Data
 
                     /* Find the real column name (in this table) of the foreign key. */
                     var foreignKeyAttribute = attributes.OfType<ForeignKeyAttribute>().First();
+                    var cascadeRule = attributes.OfType<CascadeRule>().FirstOrDefault() ?? new CascadeRule(willCascadeOnDelete: true);
+
                     var foreignKeyColumnProperty = ps.SingleOrDefault(x => x.Name == foreignKeyAttribute.Name);
 
                     if (foreignKeyColumnProperty == null)
@@ -332,7 +334,7 @@ namespace nCode.Data
 
                     var fromToken = string.Format("{0}.{1}", tableName, foreignKeyColumnName);
                     var toToken = string.Format("{0}.{1}", foreignTableName, foreignTableKeyName);
-                    foreignKeys.Add(new ForeignKey(fromToken, toToken) { DeleteRule = "CASCADE" });
+                    foreignKeys.Add(new ForeignKey(fromToken, toToken) { DeleteRule = cascadeRule.WillCascadeOnDelete ? "CASCADE" : "NO ACTION" });
                     continue;
                 }
 

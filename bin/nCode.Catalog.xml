@@ -717,6 +717,30 @@
             Gets or sets the unique identifier.
             </summary>
         </member>
+        <member name="M:nCode.Catalog.Models.Brand.GetProperty``1(System.String,``0)">
+            <summary>
+            Gets the Metadata Property given by the given key, or a default value if the Property is not defined.
+            </summary>
+            <typeparam name="T">The type of the property.</typeparam>
+            <param name="key">The key.</param>
+            <param name="defaultValue">The default value.</param>
+        </member>
+        <member name="M:nCode.Catalog.Models.Brand.SetProperty``1(System.String,``0)">
+            <summary>
+            Sets the Metadata Property given by the given key to the given value.
+            </summary>
+            <typeparam name="T">The type of the property.</typeparam>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="P:nCode.Catalog.Models.Brand.ObjectTypeId">
+            <summary>
+            Gets the object type unique identifier.
+            </summary>
+            <value>
+            The object type unique identifier.
+            </value>
+        </member>
         <member name="P:nCode.Catalog.Models.Brand.ID">
             <summary>
             Gets or sets the unique identifier.
