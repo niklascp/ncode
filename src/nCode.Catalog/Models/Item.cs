@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace nCode.Catalog.Model
+namespace nCode.Catalog.Models
 {
     /// <summary>
     /// Represents a Item.

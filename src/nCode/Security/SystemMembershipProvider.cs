@@ -481,9 +481,11 @@ namespace nCode.Security
         }
 
         public override bool ValidateUser(string username, string password)
-        {
+        {            
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 return false;
+
+            Log.Info(string.Format("SystemMembershipProvider: Validating user '{0}'.", username));
 
             // Validate agianst SQL Server
             bool validated = false;
@@ -515,11 +517,11 @@ namespace nCode.Security
 
             if (validated)
             {
-                Log.WriteEntry("System", "Validate User", string.Format("User '{0}' successfully validated.", username), EntryType.SuccessAudit);
+                Log.Info(string.Format("SystemMembershipProvider: Successfully validated user '{0}'.", username));
             }
             else
             {
-                Log.WriteEntry("System", "Validate User", string.Format("User '{0}' failed validation.", username), EntryType.FailureAudit);
+                Log.Info(string.Format("SystemMembershipProvider: Validated of user '{0}' failed.", username));
             }
 
             return validated;

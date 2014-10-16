@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nCode.Catalog.Model
+namespace nCode.Catalog.Models
 {
     [Table("Catalog_Campaign")]
     public class Campaign

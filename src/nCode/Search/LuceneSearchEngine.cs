@@ -47,10 +47,10 @@ namespace nCode.Search
 
         public override IEnumerable<SearchResult> Search(string queryString)
         {
-            var results = new List<SearchResult>(100);
+            var results = new Dictionary<Guid, SearchResult>(100);
 
             if (queryString == null || indexSearcher == null)
-                return results;
+                return results.Values;
 
             var query = new BooleanQuery();
 
@@ -93,10 +93,11 @@ namespace nCode.Search
                     Score = hits.ScoreDocs[i].Score
                 };
 
-                results.Add(result);
+                if (!results.ContainsKey(result.ID) || results[result.ID].Score < result.Score)
+                    results[result.ID] = result;
             }
 
-            return results;
+            return results.Values;
         }
 
         public override IIndexUpdateContext GetUpdateContext(SearchSource searchSource)

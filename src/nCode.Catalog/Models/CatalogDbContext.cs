@@ -5,7 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 
-namespace nCode.Catalog.Model
+namespace nCode.Catalog.Models
 {
     /// <summary>
     /// Entity Framework DbContext for the Catalog module.
@@ -41,6 +41,22 @@ namespace nCode.Catalog.Model
 
         [ForeignEntityAtrribute]
         public DbSet<VatGroup> VatGroups { get; set; }
+
+        /// <summary>
+        /// Gets or sets the items.
+        /// </summary>
+        /// <value>
+        /// The items.
+        /// </value>
+        public DbSet<Brand> Brands { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item localizations.
+        /// </summary>
+        /// <value>
+        /// The item localizations.
+        /// </value>
+        public DbSet<BrandLocalization> BrandLocalizations { get; set; }
 
         /// <summary>
         /// Gets or sets the items.

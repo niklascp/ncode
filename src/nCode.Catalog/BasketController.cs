@@ -1,4 +1,4 @@
-﻿using nCode.Catalog.Model;
+﻿using nCode.Catalog.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

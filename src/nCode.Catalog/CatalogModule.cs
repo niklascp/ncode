@@ -9,7 +9,7 @@ using System.Web.Http;
 using nCode.Configuration;
 using nCode.Data;
 using nCode.Search;
-using nCode.Catalog.Model;
+using nCode.Catalog.Models;
 
 namespace nCode.Catalog
 {
@@ -22,7 +22,7 @@ namespace nCode.Catalog
         {
             get
             {
-                return 1.97m;
+                return 1.99m;
             }
         }
 
@@ -167,7 +167,7 @@ namespace nCode.Catalog
                     var priceGroup = dbContext.PriceGroups.Where(x => x.Code == null).SingleOrDefault();
                     if (priceGroup == null)
                     {
-                        priceGroup = new Model.PriceGroup()
+                        priceGroup = new Models.PriceGroup()
                         {
                             Code = null,
                             Name = "(Standard)",

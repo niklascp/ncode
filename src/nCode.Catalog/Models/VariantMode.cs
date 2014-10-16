@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nCode.Catalog.Model
+namespace nCode.Catalog.Models
 {
     public enum VariantMode
     {

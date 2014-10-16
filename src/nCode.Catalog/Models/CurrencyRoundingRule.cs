@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace nCode.Catalog.Model
+namespace nCode.Catalog.Models
 {
     /// <summary>
     /// Represents how Currency Rounding is performed.

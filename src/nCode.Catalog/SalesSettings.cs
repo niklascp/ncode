@@ -1,4 +1,4 @@
-﻿using nCode.Catalog.Model;
+﻿using nCode.Catalog.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +49,7 @@ namespace nCode.Catalog
         /// <value>
         /// The default sales channel.
         /// </value>
-        public static Model.PriceGroup DefaultPriceGroup
+        public static Models.PriceGroup DefaultPriceGroup
         {
             get
             {

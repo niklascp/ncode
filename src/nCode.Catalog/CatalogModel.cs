@@ -19,7 +19,7 @@ namespace nCode.Catalog
 
     using nCode.Geographics;
     using nCode.Geographics.GsApi;
-    using nCode.Catalog.Model;
+    using nCode.Catalog.Models;
 
     /// <summary>
     /// Represents a Category.

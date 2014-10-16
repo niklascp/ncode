@@ -1,7 +1,7 @@
 ﻿/* Internal Code - Disable Missing Comment Warnings. */
 #pragma warning disable 1591
 
-using nCode.Catalog.Model;
+using nCode.Catalog.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

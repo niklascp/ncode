@@ -1,4 +1,4 @@
-﻿using nCode.Catalog.Model;
+﻿using nCode.Catalog.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -561,7 +561,7 @@ namespace nCode.Catalog
             }
         }
 
-        public static decimal GetDisplayPrice(decimal price, Model.VatGroup vatGroup, Model.PriceGroup priceGroup, SalesChannel salesChannel)
+        public static decimal GetDisplayPrice(decimal price, Models.VatGroup vatGroup, Models.PriceGroup priceGroup, SalesChannel salesChannel)
         {
             if (vatGroup == null)
                 return price;
@@ -573,7 +573,7 @@ namespace nCode.Catalog
                 return price;
         }
 
-        public static decimal GetDisplayPrice(decimal price, Model.VatGroup vatGroup, Model.PriceGroup priceGroup, bool includeVat)
+        public static decimal GetDisplayPrice(decimal price, Models.VatGroup vatGroup, Models.PriceGroup priceGroup, bool includeVat)
         {
             if (vatGroup == null)
                 return price;

@@ -48,7 +48,7 @@ namespace nCode.Catalog
                                          Description = l.SeoDescription,
                                          Content = l.Description,
                                          Culture = l.Culture,
-                                         Keywords = l.SeoKeywords,
+                                         Keywords = i.ItemNo + " " + l.SeoKeywords,
                                          Url = (l.Culture != null ? "/" + l.Culture : "") + "/Catalog/Item-View?ID=" + i.ID.ToString()
                                      }).ToList();
 
@@ -58,6 +58,18 @@ namespace nCode.Catalog
                 {
                     if (en.Content != null)
                         en.Content = HttpUtility.HtmlDecode(htmlRemovalRegex.Replace(en.Content, Environment.NewLine));
+
+                    var variants = (from ivt in model.ItemVariantTypes.Where(x => x.ItemID == en.Id)
+                                    from iv in ivt.ItemVariants
+                                    from g in iv.Variant.Localizations.Where(x => x.Culture == null)
+                                    from l in iv.Variant.Localizations.Where(x => x.Culture == en.Culture).DefaultIfEmpty()
+                                    select new
+                                    {
+                                        (l ?? g).DisplayName
+                                    }).ToList();
+
+                    foreach (var variant in variants)
+                        en.Keywords += " " + variant.DisplayName;
 
                     index.IndexEntry(en);
                 }
@@ -113,6 +125,19 @@ namespace nCode.Catalog
                 {
                     if (en.Content != null)
                         en.Content = HttpUtility.HtmlDecode(htmlRemovalRegex.Replace(en.Content, Environment.NewLine));
+
+                    var variants = (from ivt in model.ItemVariantTypes.Where(x => x.ItemID == en.Id)
+                                    from iv in ivt.ItemVariants
+                                    from g in iv.Variant.Localizations.Where(x => x.Culture == null)
+                                    from l in iv.Variant.Localizations.Where(x => x.Culture == en.Culture).DefaultIfEmpty()
+                                    select new
+                                    {
+                                        (l ?? g).DisplayName
+                                    }).ToList();
+
+                    foreach (var variant in variants)
+                        en.Keywords += " " + variant.DisplayName;
+                    
                     index.IndexEntry(en);
                 }
 

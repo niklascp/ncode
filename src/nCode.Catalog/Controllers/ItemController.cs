@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-using M = nCode.Catalog.Model;
+using M = nCode.Catalog.Models;
 
 namespace nCode.Catalog.Controllers
 {

@@ -56,6 +56,8 @@
       <Column Name="BrandID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="Culture" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="Description" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="SeoKeywords" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="SeoDescription" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
       <Association Name="Brand_BrandLocalization" Member="Brand" ThisKey="BrandID" OtherKey="ID" Type="Brand" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
@@ -134,7 +136,7 @@
       <Column Name="[Index]" Member="Index" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Brand" Member="BrandID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
       <Column Name="BrandIndex" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="VariantMode" Type="global::nCode.Catalog.Model.VariantMode" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="VariantMode" Type="global::nCode.Catalog.Models.VariantMode" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="UseStockControl" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="StockQuantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="ReservedQuantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -337,7 +339,7 @@
       <Column Name="IsDefault" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="DisplayName" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="Rate" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
-      <Column Name="RoundingRule" Type="global::nCode.Catalog.Model.CurrencyRoundingRule" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RoundingRule" Type="global::nCode.Catalog.Models.CurrencyRoundingRule" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="RoundingMultiple" Type="System.Decimal" DbType="Decimal(18,2) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>

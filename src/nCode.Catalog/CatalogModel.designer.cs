@@ -1597,6 +1597,10 @@ namespace nCode.Catalog
 		
 		private string _Description;
 		
+		private string _SeoKeywords;
+		
+		private string _SeoDescription;
+		
 		private EntityRef<Brand> _Brand;
 		
     #region Extensibility Method Definitions
@@ -1615,6 +1619,10 @@ namespace nCode.Catalog
     partial void OnCultureChanged();
     partial void OnDescriptionChanging(string value);
     partial void OnDescriptionChanged();
+    partial void OnSeoKeywordsChanging(string value);
+    partial void OnSeoKeywordsChanged();
+    partial void OnSeoDescriptionChanging(string value);
+    partial void OnSeoDescriptionChanged();
     #endregion
 		
 		public BrandLocalization()
@@ -1743,6 +1751,46 @@ namespace nCode.Catalog
 					this._Description = value;
 					this.SendPropertyChanged("Description");
 					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SeoKeywords", DbType="NVarChar(250)")]
+		public string SeoKeywords
+		{
+			get
+			{
+				return this._SeoKeywords;
+			}
+			set
+			{
+				if ((this._SeoKeywords != value))
+				{
+					this.OnSeoKeywordsChanging(value);
+					this.SendPropertyChanging();
+					this._SeoKeywords = value;
+					this.SendPropertyChanged("SeoKeywords");
+					this.OnSeoKeywordsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SeoDescription", DbType="NVarChar(2000)")]
+		public string SeoDescription
+		{
+			get
+			{
+				return this._SeoDescription;
+			}
+			set
+			{
+				if ((this._SeoDescription != value))
+				{
+					this.OnSeoDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._SeoDescription = value;
+					this.SendPropertyChanged("SeoDescription");
+					this.OnSeoDescriptionChanged();
 				}
 			}
 		}
@@ -3038,7 +3086,7 @@ namespace nCode.Catalog
 		
 		private int _BrandIndex;
 		
-		private global::nCode.Catalog.Model.VariantMode _VariantMode;
+		private global::nCode.Catalog.Models.VariantMode _VariantMode;
 		
 		private bool _UseStockControl;
 		
@@ -3104,7 +3152,7 @@ namespace nCode.Catalog
     partial void OnBrandIDChanged();
     partial void OnBrandIndexChanging(int value);
     partial void OnBrandIndexChanged();
-    partial void OnVariantModeChanging(global::nCode.Catalog.Model.VariantMode value);
+    partial void OnVariantModeChanging(global::nCode.Catalog.Models.VariantMode value);
     partial void OnVariantModeChanged();
     partial void OnUseStockControlChanging(bool value);
     partial void OnUseStockControlChanged();
@@ -3337,7 +3385,7 @@ namespace nCode.Catalog
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VariantMode", DbType="Int NOT NULL", CanBeNull=false)]
-		public global::nCode.Catalog.Model.VariantMode VariantMode
+		public global::nCode.Catalog.Models.VariantMode VariantMode
 		{
 			get
 			{
@@ -7291,7 +7339,7 @@ namespace nCode.Catalog
 		
 		private decimal _Rate;
 		
-		private global::nCode.Catalog.Model.CurrencyRoundingRule _RoundingRule;
+		private global::nCode.Catalog.Models.CurrencyRoundingRule _RoundingRule;
 		
 		private decimal _RoundingMultiple;
 		
@@ -7315,7 +7363,7 @@ namespace nCode.Catalog
     partial void OnDisplayNameChanged();
     partial void OnRateChanging(decimal value);
     partial void OnRateChanged();
-    partial void OnRoundingRuleChanging(global::nCode.Catalog.Model.CurrencyRoundingRule value);
+    partial void OnRoundingRuleChanging(global::nCode.Catalog.Models.CurrencyRoundingRule value);
     partial void OnRoundingRuleChanged();
     partial void OnRoundingMultipleChanging(decimal value);
     partial void OnRoundingMultipleChanged();
@@ -7487,7 +7535,7 @@ namespace nCode.Catalog
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoundingRule", DbType="Int NOT NULL", CanBeNull=false)]
-		public global::nCode.Catalog.Model.CurrencyRoundingRule RoundingRule
+		public global::nCode.Catalog.Models.CurrencyRoundingRule RoundingRule
 		{
 			get
 			{

@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Configuration;
 using System.Globalization;
-using nCode.Catalog.Model;
+using nCode.Catalog.Models;
 
 namespace nCode.Catalog.Payment.Curanet
 {

@@ -712,12 +712,17 @@
             Gets a Globally Unique Id that identifies this Search Source.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.Model.Campaign.ID">
+        <member name="P:nCode.Catalog.Models.BrandLocalization.ID">
             <summary>
             Gets or sets the unique identifier.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.Model.Campaign.Code">
+        <member name="P:nCode.Catalog.Models.Brand.ID">
+            <summary>
+            Gets or sets the unique identifier.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.Models.Brand.Name">
             <summary>
             Gets or sets the name.
             </summary>
@@ -725,22 +730,59 @@
             The name.
             </value>
         </member>
-        <member name="T:nCode.Catalog.Model.VatGroup">
+        <member name="P:nCode.Catalog.Models.Brand.Image1">
+            <summary>
+            Gets or sets the Image.
+            </summary>
+            <value>
+            The name.
+            </value>
+        </member>
+        <member name="P:nCode.Catalog.Models.Brand.Image2">
+            <summary>
+            Gets or sets the Image.
+            </summary>
+            <value>
+            The Image.
+            </value>
+        </member>
+        <member name="P:nCode.Catalog.Models.Brand.Image3">
+            <summary>
+            Gets or sets the Image.
+            </summary>
+            <value>
+            The Image.
+            </value>
+        </member>
+        <member name="P:nCode.Catalog.Models.Campaign.ID">
+            <summary>
+            Gets or sets the unique identifier.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.Models.Campaign.Code">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value>
+            The name.
+            </value>
+        </member>
+        <member name="T:nCode.Catalog.Models.VatGroup">
             <summary>
             Represents a PriceGroup.
             </summary>
         </member>
-        <member name="T:nCode.Catalog.Model.PriceGroup">
+        <member name="T:nCode.Catalog.Models.PriceGroup">
             <summary>
             Represents a PriceGroup.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.Model.PriceGroup.Id">
+        <member name="P:nCode.Catalog.Models.PriceGroup.Id">
             <summary>
             Gets the Id of this Sale Channel.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.Model.PriceGroup.Guid">
+        <member name="P:nCode.Catalog.Models.PriceGroup.Guid">
             <summary>
             Gets or sets the unique identifier.
             </summary>
@@ -748,7 +790,7 @@
             The unique identifier.
             </value>
         </member>
-        <member name="P:nCode.Catalog.Model.PriceGroup.Code">
+        <member name="P:nCode.Catalog.Models.PriceGroup.Code">
             <summary>
             Gets or sets the code.
             </summary>
@@ -756,7 +798,7 @@
             The code.
             </value>
         </member>
-        <member name="P:nCode.Catalog.Model.PriceGroup.Name">
+        <member name="P:nCode.Catalog.Models.PriceGroup.Name">
             <summary>
             Gets or sets the name.
             </summary>
@@ -764,42 +806,42 @@
             The name.
             </value>
         </member>
-        <member name="P:nCode.Catalog.Model.PriceGroup.PricesIncludeVat">
+        <member name="P:nCode.Catalog.Models.PriceGroup.PricesIncludeVat">
             <summary>
             Gets or sets whether prices in this Price Group at statet inclusive Vat. 
             </summary>
         </member>
-        <member name="T:nCode.Catalog.Model.CurrencyRoundingRule">
+        <member name="T:nCode.Catalog.Models.CurrencyRoundingRule">
             <summary>
             Represents how Currency Rounding is performed.
             </summary>
         </member>
-        <member name="F:nCode.Catalog.Model.CurrencyRoundingRule.Round">
+        <member name="F:nCode.Catalog.Models.CurrencyRoundingRule.Round">
             <summary>
             Round to the nearest multiplicity.
             </summary>
         </member>
-        <member name="F:nCode.Catalog.Model.CurrencyRoundingRule.Ceiling">
+        <member name="F:nCode.Catalog.Models.CurrencyRoundingRule.Ceiling">
             <summary>
             Round up (away from zero) to the nearest multiplicity.
             </summary>
         </member>
-        <member name="F:nCode.Catalog.Model.CurrencyRoundingRule.Floor">
+        <member name="F:nCode.Catalog.Models.CurrencyRoundingRule.Floor">
             <summary>
             Round down (towards from zero) to the nearest multiplicity.
             </summary>
         </member>
-        <member name="T:nCode.Catalog.Model.SalesChannel">
+        <member name="T:nCode.Catalog.Models.SalesChannel">
             <summary>
             Represents a Sales Channel.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.Model.SalesChannel.Id">
+        <member name="P:nCode.Catalog.Models.SalesChannel.Id">
             <summary>
             Gets the Id of this Sale Channel.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.Model.SalesChannel.Guid">
+        <member name="P:nCode.Catalog.Models.SalesChannel.Guid">
             <summary>
             Gets or sets the unique identifier.
             </summary>
@@ -807,7 +849,7 @@
             The unique identifier.
             </value>
         </member>
-        <member name="P:nCode.Catalog.Model.SalesChannel.Code">
+        <member name="P:nCode.Catalog.Models.SalesChannel.Code">
             <summary>
             Gets or sets the code.
             </summary>
@@ -815,7 +857,7 @@
             The code.
             </value>
         </member>
-        <member name="P:nCode.Catalog.Model.SalesChannel.Name">
+        <member name="P:nCode.Catalog.Models.SalesChannel.Name">
             <summary>
             Gets or sets the name.
             </summary>
@@ -823,7 +865,7 @@
             The name.
             </value>
         </member>
-        <member name="P:nCode.Catalog.Model.SalesChannel.PriceGroupCode">
+        <member name="P:nCode.Catalog.Models.SalesChannel.PriceGroupCode">
             <summary>
             Gets or sets the price group code.
             </summary>
@@ -831,7 +873,7 @@
             The price group code.
             </value>
         </member>
-        <member name="P:nCode.Catalog.Model.SalesChannel.ShowPricesIncludingVat">
+        <member name="P:nCode.Catalog.Models.SalesChannel.ShowPricesIncludingVat">
             <summary>
             Gets or sets a value indicating whether to show prices including vat.
             </summary>
@@ -839,7 +881,7 @@
             <c>true</c> if to show prices including vat; otherwise, <c>false</c>.
             </value>
         </member>
-        <member name="P:nCode.Catalog.Model.SalesChannel.OrderConfirmTemplateName">
+        <member name="P:nCode.Catalog.Models.SalesChannel.OrderConfirmTemplateName">
             <summary>
             Gets or sets the name of the order confirm template.
             </summary>
@@ -847,7 +889,7 @@
             The name of the order confirm template.
             </value>
         </member>
-        <member name="P:nCode.Catalog.Model.SalesChannel.InvoiceTemplateName">
+        <member name="P:nCode.Catalog.Models.SalesChannel.InvoiceTemplateName">
             <summary>
             Gets or sets the name of the invoice template.
             </summary>
@@ -1269,22 +1311,22 @@
             Gets or sets a value indicating whether to item images in basket and orders.
             </summary>
         </member>
-        <member name="T:nCode.Catalog.Model.CatalogDbContext">
+        <member name="T:nCode.Catalog.Models.CatalogDbContext">
             <summary>
             Entity Framework DbContext for the Catalog module.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.Model.CatalogDbContext.#ctor">
+        <member name="M:nCode.Catalog.Models.CatalogDbContext.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:nCode.Catalog.Model.CatalogDbContext"/> class.
+            Initializes a new instance of the <see cref="T:nCode.Catalog.Models.CatalogDbContext"/> class.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.Model.CatalogDbContext.SalesChannels">
+        <member name="P:nCode.Catalog.Models.CatalogDbContext.SalesChannels">
             <summary>
             Gets a list of Sales Channes.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.Model.CatalogDbContext.PriceGroups">
+        <member name="P:nCode.Catalog.Models.CatalogDbContext.PriceGroups">
             <summary>
             Gets or sets the price groups.
             </summary>
@@ -1292,7 +1334,7 @@
             The price groups.
             </value>
         </member>
-        <member name="P:nCode.Catalog.Model.CatalogDbContext.Items">
+        <member name="P:nCode.Catalog.Models.CatalogDbContext.Brands">
             <summary>
             Gets or sets the items.
             </summary>
@@ -1300,7 +1342,7 @@
             The items.
             </value>
         </member>
-        <member name="P:nCode.Catalog.Model.CatalogDbContext.ItemLocalizations">
+        <member name="P:nCode.Catalog.Models.CatalogDbContext.BrandLocalizations">
             <summary>
             Gets or sets the item localizations.
             </summary>
@@ -1308,7 +1350,23 @@
             The item localizations.
             </value>
         </member>
-        <member name="P:nCode.Catalog.Model.CatalogDbContext.ItemProperties">
+        <member name="P:nCode.Catalog.Models.CatalogDbContext.Items">
+            <summary>
+            Gets or sets the items.
+            </summary>
+            <value>
+            The items.
+            </value>
+        </member>
+        <member name="P:nCode.Catalog.Models.CatalogDbContext.ItemLocalizations">
+            <summary>
+            Gets or sets the item localizations.
+            </summary>
+            <value>
+            The item localizations.
+            </value>
+        </member>
+        <member name="P:nCode.Catalog.Models.CatalogDbContext.ItemProperties">
             <summary>
             Gets or sets the item properties.
             </summary>
@@ -1316,42 +1374,42 @@
             The item properties.
             </value>
         </member>
-        <member name="T:nCode.Catalog.Model.CatalogItemProperty">
+        <member name="T:nCode.Catalog.Models.CatalogItemProperty">
             <summary>
             Represents an Item Property.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.Model.CatalogItemProperty.ID">
+        <member name="P:nCode.Catalog.Models.CatalogItemProperty.ID">
             <summary>
             Gets or sets the unique identifier.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.Model.CatalogItemProperty.ItemID">
+        <member name="P:nCode.Catalog.Models.CatalogItemProperty.ItemID">
             <summary>
             Gets or sets the item unique identifier.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.Model.CatalogItemProperty.Item">
+        <member name="P:nCode.Catalog.Models.CatalogItemProperty.Item">
             <summary>
             Gets or sets the item (Navigation Property for ItemID).
             </summary>
         </member>
-        <member name="P:nCode.Catalog.Model.CatalogItemProperty.Key">
+        <member name="P:nCode.Catalog.Models.CatalogItemProperty.Key">
             <summary>
             Gets or sets the key.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.Model.CatalogItemProperty.Value">
+        <member name="P:nCode.Catalog.Models.CatalogItemProperty.Value">
             <summary>
             Gets or sets the value.
             </summary>
         </member>
-        <member name="T:nCode.Catalog.Model.CatalogItem">
+        <member name="T:nCode.Catalog.Models.CatalogItem">
             <summary>
             Represents a Item.
             </summary>
         </member>
-        <member name="T:nCode.Catalog.Model.CatalogItemLocalization">
+        <member name="T:nCode.Catalog.Models.CatalogItemLocalization">
             <summary>
             Represents a Item Localization.
             </summary>
