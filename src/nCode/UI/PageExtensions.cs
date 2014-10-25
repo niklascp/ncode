@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.UI;
 using System.Web.UI.HtmlControls;
 
 namespace nCode.UI
@@ -47,6 +48,24 @@ namespace nCode.UI
             page.ClientScript.RegisterClientScriptInclude(scriptKey, page.ResolveUrl(scriptFile).ToLower());
         }
 
+        /// <summary>
+        /// Adds a meta-custrol to the header of this page.
+        /// </summary>
+        public static void AddMetaControl(this System.Web.UI.Page page, Control control)
+        {
+            if (page == null)
+                throw new ArgumentNullException("page");
+
+            var container = page.FindControl("pageMetaDataPlaceholder");
+
+            if (container == null)
+                container = page.Header;
+
+            if (container != null)
+            {
+                container.Controls.Add(control);
+            }
+        }
 
         /// <summary>
         /// Adds a meta-tag to the header of this page.
