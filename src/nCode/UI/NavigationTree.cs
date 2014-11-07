@@ -14,7 +14,7 @@ namespace nCode.UI
     /// </summary>
     public abstract class NavigationTree<E,V> : INavigationGraph where V : TreeNavigationItem
     {
-        //private Lazy<IEnumerable<INavigationItem>> roots;
+        private Lazy<IEnumerable<INavigationItem>> roots;
         private IQueryable<V> items { get; set; }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace nCode.UI
         /// <summary>
         /// Gets the roots of the tree.
         /// </summary>
-        public IEnumerable<INavigationItem> Roots { get { return Expand(null); } }
+        public IEnumerable<INavigationItem> Roots { get { return roots.Value; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigationTree"/> class.
@@ -43,7 +43,8 @@ namespace nCode.UI
         /// <param name="sourceFilter">The source filter.</param>
         /// <param name="viewFilter">The view filter.</param>
         /// <param name="traverseFilter">The traverse filter.</param>
-        public NavigationTree(Expression<Func<E, bool>> sourceFilter = null, Func<V, bool> viewFilter = null, Func<V, bool> traverseFilter = null)
+        /// <param name="root">The initial root of the tree, or null the true root.</param> 
+        public NavigationTree(Expression<Func<E, bool>> sourceFilter = null, Func<V, bool> viewFilter = null, Func<V, bool> traverseFilter = null, INavigationItem root = null)
         {
             SourceFilter = sourceFilter ?? (x => true); 
             ViewFilter = viewFilter;
@@ -51,7 +52,7 @@ namespace nCode.UI
 
             items = InitializeSource();
 
-            //roots = new Lazy<IEnumerable<INavigationItem>>(() => Expand(null));
+            roots = new Lazy<IEnumerable<INavigationItem>>(() => Expand(root));
         }
 
         /// <summary>
