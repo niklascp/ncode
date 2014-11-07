@@ -34,6 +34,14 @@ namespace nCode
             return source;
         }
 
+        /// <summary>
+        /// Returns null if string is null or whitespace, otherwise just return the string. 
+        /// </summary>
+        public static string NullIfWhiteSpace(this string value)
+        {
+            return !string.IsNullOrWhiteSpace(value) ? value : null;
+        }
+
         internal static char IntToHex(int n)
         {
              Debug.Assert(n < 0x10);

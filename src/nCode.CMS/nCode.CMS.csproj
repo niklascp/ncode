@@ -118,7 +118,7 @@
       <DependentUpon>201405281636411_RenameToContentPartInstance.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\CmsDbContext.cs" />
-    <Compile Include="Model\Configuration.cs" />
+    <Compile Include="Model\CmsDbConfiguration.cs" />
     <Compile Include="Model\ContentPageEntity.cs" />
     <Compile Include="Model\ContentPartInContainer.cs" />
     <Compile Include="Model\ContentPart.cs" />

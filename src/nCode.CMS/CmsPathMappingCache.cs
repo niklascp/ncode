@@ -1,6 +1,7 @@
 ﻿using nCode.CMS.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -78,6 +79,10 @@ namespace nCode.CMS
                     }
                 }
                 catch (InvalidOperationException ex)
+                {
+                    Log.Error("Refreshed CMS Path Mapping Cache failed.", ex);
+                }
+                catch (DataException ex)
                 {
                     Log.Error("Refreshed CMS Path Mapping Cache failed.", ex);
                 }
