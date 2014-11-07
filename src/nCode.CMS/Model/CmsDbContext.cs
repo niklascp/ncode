@@ -16,6 +16,12 @@ namespace nCode.CMS.Model
     /// </summary>
     public class CmsDbContext : DbContext
     {
+        static CmsDbContext()
+        {
+            // don't let EF modify the database schema...
+            Database.SetInitializer<CmsDbContext>(null);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CmsDbContext"/> class.
         /// </summary>
