@@ -4,7 +4,10 @@ using System.Text;
 using System.Linq;
 using System.Configuration;
 using System.Data.SqlClient;
+
 using nCode.Data;
+
+using Dapper;
 
 namespace nCode
 {
@@ -75,6 +78,21 @@ namespace nCode
                 return true;
             }
         }
+
+        public static bool IndexExist(string tableName, string indexName)
+        {
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();                
+                return conn.ExecuteScalar<bool>(
+                    "SELECT CAST(CASE WHEN EXISTS(SELECT 1 FROM sys.indexes WHERE name = @indexName AND object_id = OBJECT_ID(@tableName)) THEN 1 ELSE 0 END AS bit)",
+                    new {
+                        tableName = tableName,
+                        indexName = indexName
+                    });
+            }
+        }
+
 
         public static void DropTableIfExist(string tableName)
         {

@@ -47,8 +47,8 @@ namespace nCode
             if (0m < InstalledVersion && InstalledVersion < 2.2m)
             {
                 /* For some reason, the unique key constraints created by the old Xml-Schema contains a space. Drop it, since a new (without the space) will exist. */
-                SqlUtilities.ExecuteStatement("ALTER TABLE [System_MetadataDescriptors] DROP CONSTRAINT [IX_System_MetadataDescriptors_ObjectTypeID_ Name]");
-                SqlUtilities.ExecuteStatement("ALTER TABLE [System_MetadataProperties] DROP CONSTRAINT [IX_System_MetadataProperties_ObjectTypeID_ ObjectID_ Key]");
+                SqlUtilities.ExecuteStatement("IF EXISTS(SELECT 1 FROM sys.indexes WHERE name='IX_System_MetadataDescriptors_ObjectTypeID_ Name' AND object_id = OBJECT_ID('System_MetadataDescriptors')) ALTER TABLE [System_MetadataDescriptors] DROP CONSTRAINT [IX_System_MetadataDescriptors_ObjectTypeID_ Name]");
+                SqlUtilities.ExecuteStatement("IF EXISTS(SELECT 1 FROM sys.indexes WHERE name='IX_System_MetadataDescriptors_ObjectTypeID_ Key' AND object_id = OBJECT_ID('System_MetadataDescriptors')) ALTER TABLE [System_MetadataProperties] DROP CONSTRAINT [IX_System_MetadataProperties_ObjectTypeID_ ObjectID_ Key]");
             }
 
             /*

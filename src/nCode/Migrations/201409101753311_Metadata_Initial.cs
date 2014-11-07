@@ -9,7 +9,11 @@ namespace nCode
         {
             if (SqlUtilities.TableExist("System_MetadataDescriptors"))
             {
-                RenameIndex("System_MetadataDescriptors", "IX_System_MetadataDescriptors_ObjectTypeID_Name", "IX_ObjectTypeID_Name");
+                if (SqlUtilities.IndexExist("System_MetadataDescriptors", "IX_System_MetadataDescriptors_ObjectTypeID_Name"))
+                    RenameIndex("System_MetadataDescriptors", "IX_System_MetadataDescriptors_ObjectTypeID_Name", "IX_ObjectTypeID_Name");
+                else
+                    CreateIndex("System_MetadataDescriptors", new[] { "ObjectTypeID", "Name" }, unique: true, name: "IX_ObjectTypeID_Name");
+
                 RenameTable("System_MetadataDescriptors", "System_MetadataDescriptor");
             }
             else if (!SqlUtilities.TableExist("System_MetadataDescriptor"))
@@ -33,7 +37,11 @@ namespace nCode
 
             if (SqlUtilities.TableExist("System_MetadataProperties"))
             {
-                RenameIndex("System_MetadataProperties", "IX_System_MetadataProperties_ObjectTypeID_ObjectID_Key", "IX_ObjectTypeID_ObjectID_Key");
+                if (SqlUtilities.IndexExist("System_MetadataProperties", "IX_System_MetadataProperties_ObjectTypeID_ObjectID_Key"))
+                    RenameIndex("System_MetadataProperties", "IX_System_MetadataProperties_ObjectTypeID_ObjectID_Key", "IX_ObjectTypeID_ObjectID_Key");
+                else
+                    CreateIndex("System_MetadataProperties", new[] { "ObjectTypeID", "ObjectID", "Key" }, unique: true, name: "IX_ObjectTypeID_ObjectID_Key");
+
                 RenameTable("System_MetadataProperties", "System_MetadataProperty");
             }
             else if (!SqlUtilities.TableExist("System_MetadataProperty"))
