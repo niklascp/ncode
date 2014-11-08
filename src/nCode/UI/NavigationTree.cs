@@ -6,13 +6,14 @@ using nCode.Metadata;
 using nCode.UI;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Collections;
 
 namespace nCode.UI
 {
     /// <summary>
     /// Represents a the Brand Tree in the Navigation Framework.
     /// </summary>
-    public abstract class NavigationTree<E,V> : INavigationGraph where V : TreeNavigationItem
+    public abstract class NavigationTree<E, V> : INavigationGraph, IEnumerable<INavigationItem> where V : TreeNavigationItem
     {
         private Lazy<IEnumerable<INavigationItem>> roots;
         private IQueryable<V> items { get; set; }
@@ -87,6 +88,16 @@ namespace nCode.UI
             }
 
             return null;
+        }
+
+        public IEnumerator<INavigationItem> GetEnumerator()
+        {
+            return Roots.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return Roots.GetEnumerator();
         }
     }
 }
