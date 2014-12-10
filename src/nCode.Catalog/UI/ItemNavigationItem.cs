@@ -72,11 +72,16 @@ namespace nCode.Catalog.UI
         }
 
         /// <summary>
+        /// Gets or sets the primery parent Navigation Item.
+        /// </summary>
+        public INavigationItem Parent { get; set; }
+
+        /// <summary>
         /// Gets the primery parent Navigation Item.
         /// </summary>
         public INavigationItem GetParent()
         {
-            return null;
+            return Parent;
         }
 
         /* Metadata */
@@ -89,7 +94,7 @@ namespace nCode.Catalog.UI
         /// <param name="defaultValue">The default value.</param>
         public T GetProperty<T>(string key, T defaultValue)
         {
-            return GenericMetadataHelper.GetProperty<T>(Brand.ObjectTypeId, ID, key, defaultValue);
+            return GenericMetadataHelper.GetProperty<T>(Item.ObjectTypeId, ID, key, defaultValue);
         }
 
         /// <summary>
@@ -100,7 +105,7 @@ namespace nCode.Catalog.UI
         /// <param name="value">The value.</param>
         public void SetProperty<T>(string key, T value)
         {
-            GenericMetadataHelper.SetProperty<T>(Brand.ObjectTypeId, ID, key, value);
+            GenericMetadataHelper.SetProperty<T>(Item.ObjectTypeId, ID, key, value);
         }
     }
 }
