@@ -13,6 +13,7 @@ using nCode.Catalog.UI;
 
 namespace nCode.Catalog
 {
+    [Obsolete("Use nCode.Search Framework, with ItemSearchSource.")]
     public class ItemSearchProvider : ISearchProvider
     {
         public IEnumerable<SearchResult> Search(string searchQuery)

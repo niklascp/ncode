@@ -1,4 +1,5 @@
-﻿using nCode.Search;
+﻿using Common.Logging;
+using nCode.Search;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,7 +49,7 @@ namespace nCode.Catalog
                                          Description = l.SeoDescription,
                                          Content = l.Description,
                                          Culture = l.Culture,
-                                         Keywords = i.ItemNo + " " + l.SeoKeywords,
+                                         Keywords = i.ItemNo + " " + (i.Brand != null ? i.Brand.Name : "") + " " + l.SeoKeywords,
                                          Url = (l.Culture != null ? "/" + l.Culture : "") + "/Catalog/Item-View?ID=" + i.ID.ToString()
                                      }).ToList();
 
@@ -77,7 +78,8 @@ namespace nCode.Catalog
                 index.CommitChanges();
             }
 
-            Log.WriteEntry(EntryType.Information, "Catalog", "Update Item Search Index");
+            ILog log = LogManager.GetCurrentClassLogger();
+            log.Info("Successfully updated Catalog Item search index.");
         }
 
         /// <summary>
@@ -115,7 +117,7 @@ namespace nCode.Catalog
                                          Content = l.Description,
                                          Culture = l.Culture,
                                          /* NCP: 2014-09-13: Add ItemNo to Keyword, allowing search by ItemNo. */
-                                         Keywords = i.ItemNo + " " + l.SeoKeywords,
+                                         Keywords = i.ItemNo + " " + (i.Brand != null ? i.Brand.Name : "") + " " + l.SeoKeywords,
                                          Url = (l.Culture != null ? "/" + l.Culture : "") + "/Catalog/Item-View?ID=" + i.ID.ToString()
                                      }).ToList();
 

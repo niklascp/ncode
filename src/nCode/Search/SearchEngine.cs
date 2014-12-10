@@ -17,6 +17,9 @@ namespace nCode.Search
     {
         public abstract IEnumerable<SearchResult> Search(string queryString);
 
+        /// <summary>
+        /// Get entry count in the index for the given search source.
+        /// </summary>
         public abstract int GetEntryCount(SearchSource source);
 
         public abstract IIndexUpdateContext GetUpdateContext(SearchSource searchSource);

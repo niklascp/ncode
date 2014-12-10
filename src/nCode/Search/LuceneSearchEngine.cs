@@ -35,6 +35,9 @@ namespace nCode.Search
             }
         }
 
+        /// <summary>
+        /// Get entry count in the index for the given search source.
+        /// </summary>
         public override int GetEntryCount(SearchSource searchSource)
         {
             if (indexSearcher == null)
