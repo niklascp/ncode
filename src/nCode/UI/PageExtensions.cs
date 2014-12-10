@@ -56,13 +56,17 @@ namespace nCode.UI
             if (page == null)
                 throw new ArgumentNullException("page");
 
-            var container = page.FindControl("pageMetaDataPlaceholder");
+            if (control == null)
+                throw new ArgumentNullException("control");
 
-            if (container == null)
-                container = page.Header;
-
-            if (container != null)
+            if (page.Header != null)
             {
+                /* metadataPlaceholder */
+                var container = 
+                    page.Header.FindControl("metadataPlaceholder") ??
+                    page.FindControl("pageMetaDataPlaceholder") ?? 
+                    page.Header;
+
                 container.Controls.Add(control);
             }
         }
@@ -75,18 +79,10 @@ namespace nCode.UI
             if (page == null)
                 throw new ArgumentNullException("page");
 
-            var container = page.FindControl("pageMetaDataPlaceholder");
-
-            if (container == null)
-                container = page.Header;
-
-            if (container != null)
-            {
-                HtmlMeta metaTag = new HtmlMeta();
-                metaTag.Name = name;
-                metaTag.Content = content;
-                container.Controls.Add(metaTag);
-            }
+            HtmlMeta metaTag = new HtmlMeta();
+            metaTag.Name = name;
+            metaTag.Content = content;
+            AddMetaControl(page, metaTag);
         }
 
         /// <summary>
@@ -97,18 +93,10 @@ namespace nCode.UI
             if (page == null)
                 throw new ArgumentNullException("page");
 
-            var container = page.FindControl("pageMetaDataPlaceholder");
-
-            if (container == null)
-                container = page.Header;
-
-            if (container != null)
-            {
-                HtmlMeta metaTag = new HtmlMeta();
-                metaTag.HttpEquiv = httpEquiv;
-                metaTag.Content = content;
-                container.Controls.Add(metaTag);
-            }
+            HtmlMeta metaTag = new HtmlMeta();
+            metaTag.HttpEquiv = httpEquiv;
+            metaTag.Content = content;
+            AddMetaControl(page, metaTag);
         }
     }
 }

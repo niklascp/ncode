@@ -84,19 +84,6 @@ namespace nCode.UI
             Navigation = new Navigation();
         }
 
-        public virtual string PrintUrl
-        {
-            get
-            {
-                string url = Request.Url.PathAndQuery;
-
-                url += (url.Contains("?") ? "&" : "?");
-                url += "Print=True";
-
-                return url;
-            }
-        }
-
         [Obsolete("Pages that require special urls should rewrite content after render.")]
         public virtual string PageHandledUrl(string url)
         {
@@ -127,17 +114,20 @@ namespace nCode.UI
 
         protected override void OnLoad(EventArgs e)
         {
-            var container = Page.FindControl("pageMetaDataPlaceholder");
+            if (Page.Header != null)
+            {
+                var container = Header.FindControl("metadataPlaceholder") ?? Header.FindControl("pageMetaDataPlaceholder");
 
-            if (container != null)
-            {
-            }
-            else
-            {
-                /* Add some legacy Metadags if using "old"-style. */
-                Page.AddHttpEquivMetaTag("content-type", "text/html; charset=" + Page.Response.HeaderEncoding.WebName);
-                Page.AddHttpEquivMetaTag("content-language", CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
-                Page.AddMetaTag("generator", "nCode, http://www.ncode.dk/");
+                if (container != null)
+                {
+                }
+                else
+                {
+                    /* Add some legacy Metadags if using "old"-style. */
+                    Page.AddHttpEquivMetaTag("content-type", "text/html; charset=" + Page.Response.HeaderEncoding.WebName);
+                    Page.AddHttpEquivMetaTag("content-language", CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
+                    Page.AddMetaTag("generator", "nCode, http://www.ncode.dk/");
+                }
             }
 
             base.OnLoad(e);            
