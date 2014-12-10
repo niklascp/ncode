@@ -40,6 +40,11 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Logging, Version=2.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Common.Logging.2.3.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Dapper">
       <HintPath>..\packages\Dapper.1.36\lib\net45\Dapper.dll</HintPath>
       <Private>False</Private>
@@ -127,6 +132,7 @@
     <Compile Include="CatalogSettings.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
+    <Compile Include="Controllers\PackageController.cs" />
     <Compile Include="ItemSearchSource.cs" />
     <Compile Include="CategoriesContentType.cs" />
     <Compile Include="BrandsContentType.cs" />
