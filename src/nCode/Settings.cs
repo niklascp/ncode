@@ -14,6 +14,10 @@ using nCode.Configuration;
 using nCode.Security;
 using nCode.UI;
 
+using Dapper;
+using Newtonsoft.Json;
+using nCode.Data;
+
 namespace nCode
 {
     /// <summary>
@@ -22,11 +26,15 @@ namespace nCode
     public static class Settings
     {
         private const string cacheKey = "nCode.Settings";
-
+        private static JsonSerializerSettings jsonSerializerSettings;
         private static object cacheLock = new object();
 
         static Settings()
         {
+            jsonSerializerSettings = new JsonSerializerSettings()
+            {
+                ContractResolver = new CamelCaseContractResolver()
+            };
             InitializeModules();
         }
 
@@ -94,8 +102,8 @@ namespace nCode
         /// </summary>
         public static string SenderName
         {
-            get { return GetProperty<string>("nCode.System.SenderName", string.Empty); }
-            set { SetProperty<string>("nCode.System.SenderName", value); }
+            get { return GetProperty("nCode.System.SenderName", string.Empty); }
+            set { SetProperty("nCode.System.SenderName", value); }
         }
 
         /// <summary>
@@ -103,8 +111,8 @@ namespace nCode
         /// </summary>
         public static string SenderAddress
         {
-            get { return GetProperty<string>("nCode.System.SenderAddress", string.Empty); }
-            set { SetProperty<string>("nCode.System.SenderAddress", value); }
+            get { return GetProperty("nCode.System.SenderAddress", string.Empty); }
+            set { SetProperty("nCode.System.SenderAddress", value); }
         }
 
         /// <summary>
@@ -112,8 +120,8 @@ namespace nCode
         /// </summary>
         public static bool ObfuscateEmail
         {
-            get { return GetProperty<bool>("nCode.System.ObfuscateEmail", true); }
-            set { SetProperty<bool>("nCode.System.ObfuscateEmail", value); }
+            get { return GetProperty("nCode.System.ObfuscateEmail", true); }
+            set { SetProperty("nCode.System.ObfuscateEmail", value); }
         }
 
 
@@ -126,8 +134,8 @@ namespace nCode
         /// </summary>
         public static string GoogleAnalyticsAccount
         {
-            get { return GetProperty<string>("nCode.System.GoogleAnalyticsAccount", null); }
-            set { SetProperty<string>("nCode.System.GoogleAnalyticsAccount", value); }
+            get { return GetProperty("nCode.System.GoogleAnalyticsAccount", (string)null); }
+            set { SetProperty("nCode.System.GoogleAnalyticsAccount", value); }
         }
 
 
@@ -224,31 +232,44 @@ namespace nCode
             {
                 return (T)PropertyCache[key];
             }
-            else 
+            else
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                using (var conn = new SqlConnection(ConnectionString))
                 {
+                    string o;
+
                     try
                     {
                         conn.Open();
 
-                        SqlCommand cmd = new SqlCommand("SELECT [Value] FROM [System_Properties] WHERE [Key] = @Key", conn);
-                        cmd.Parameters.AddWithValue("@Key", key);
+                        /* Get value from database. */
+                        o = conn.ExecuteScalar<string>("SELECT [Value] FROM [System_Properties] WHERE [Key] = @key", new { key = key });
+                    }
+                    catch (SqlException ex)
+                    {
+                        Log.Warn(string.Format("Failed to load string value for setting with key {0}.", key), ex);
 
-                        object o = cmd.ExecuteScalar();
+                        return defaultValue;
+                    }
 
-                        if (o == null)
+                    if (o == null)
+                    {
+                        /* Cache */
+                        lock (cacheLock)
                         {
-                            /* Cache */
-                            lock (cacheLock)
-                            {
-                                if (!PropertyCache.ContainsKey(key))
-                                    PropertyCache.Add(key, defaultValue);
-                            }
-
-                            return defaultValue;
+                            if (!PropertyCache.ContainsKey(key))
+                                PropertyCache.Add(key, defaultValue);
                         }
-                        else
+
+                        return defaultValue;
+                    }
+                    else
+                    {
+                        /* Deserialize */
+                        T v;
+
+                        /* Legacy: data is stored as XmlSerialized C# object. */
+                        if (o.StartsWith("<?xml"))
                         {
                             /* Copy the string data to a Memory Stream. */
                             using (MemoryStream ms = new MemoryStream())
@@ -260,33 +281,47 @@ namespace nCode
                                 /* Reset the Memory Stream. */
                                 ms.Position = 0;
 
-                                /* Deserialize */
-                                T v;
                                 try
                                 {
                                     XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
                                     v = (T)xmlSerializer.Deserialize(ms);
                                 }
-                                catch (InvalidOperationException)
+                                catch (InvalidOperationException ex)
                                 {
-                                    return defaultValue;
+                                    v = defaultValue;
+                                    Log.Warn(string.Format("Failed to deserialize XML string for setting with key {0}.", key), ex);
                                 }
 
-                                /* Cache */
-                                lock (cacheLock)
-                                {
-                                    if (!PropertyCache.ContainsKey(key))
-                                        PropertyCache.Add(key, v);
-                                }
+                                /* Convert to JSON Property */
+                                SetProperty(key, v);
 
                                 return v;
                             }
                         }
+                        /* Parse as JSON string. */
+                        else
+                        {
+                            try
+                            {
+                                v = JsonConvert.DeserializeObject<T>(o, jsonSerializerSettings);
+                            }
+                            catch (JsonSerializationException ex)
+                            {
+                                v = defaultValue;
+                                Log.Warn(string.Format("Failed to deserialize JSON string for setting with key {0}.", key), ex);
+                            }
+
+                            /* Cache */
+                            lock (cacheLock)
+                            {
+                                if (!PropertyCache.ContainsKey(key))
+                                    PropertyCache.Add(key, v);
+                            }
+
+                            return v;
+                        }
                     }
-                    catch (SqlException)
-                    {
-                        return defaultValue;
-                    }
+
                 }
             }
         }
@@ -299,44 +334,43 @@ namespace nCode
             /* Update Cache */
             if (PropertyCache.ContainsKey(key))
             {
-                PropertyCache[key] = value;
+                /* Cache */
+                lock (cacheLock)
+                {
+                    if (PropertyCache.ContainsKey(key))
+                        PropertyCache[key] = value;
+                }
             }
 
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            var serializedValue = JsonConvert.SerializeObject(value, jsonSerializerSettings);
+
+            using (var conn = new SqlConnection(ConnectionString))
             {
                 conn.Open();
 
-                /* Serialize the data and copy to string. */
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-                    xmlSerializer.Serialize(ms, value);
-
-                    /* Reset the Memory Stream. */
-                    ms.Position = 0;
-
-                    StreamReader sr = new StreamReader(ms);
-                    string serializedValue = sr.ReadToEnd();
-
-                    /* Try to update */
-                    SqlCommand updateCommand = new SqlCommand("UPDATE [System_Properties] SET [Modified] = @Modified, [Value] = @Value WHERE [Key] = @Key", conn);
-                    updateCommand.Parameters.AddWithValue("@Modified", DateTime.Now);
-                    updateCommand.Parameters.AddWithValue("@Key", key);                    
-                    updateCommand.Parameters.AddWithValue("@Value", serializedValue);
-
-                    int affectedRows = updateCommand.ExecuteNonQuery();
-
-                    /* No rows updated, insert instead */
-                    if (affectedRows == 0)
+                var affectedRows = conn.Execute(
+                    "UPDATE [System_Properties] SET [Modified] = @modified, [Value] = @value WHERE [Key] = @key",
+                    new
                     {
-                        SqlCommand insertCommand = new SqlCommand("INSERT INTO [System_Properties] ([ID], [Created], [Modified], [Key], [Value]) VALUES (@ID, @Created, @Modified, @Key, @Value)", conn);
-                        insertCommand.Parameters.AddWithValue("@ID", Guid.NewGuid());
-                        insertCommand.Parameters.AddWithValue("@Created", DateTime.Now);
-                        insertCommand.Parameters.AddWithValue("@Modified", DateTime.Now);
-                        insertCommand.Parameters.AddWithValue("@Key", key);
-                        insertCommand.Parameters.AddWithValue("@Value", serializedValue);
-                        insertCommand.ExecuteNonQuery();
+                        modified = DateTime.Now,
+                        key = key,
+                        value = serializedValue,
                     }
+                );
+
+                if (affectedRows == 0)
+                {
+                    conn.Execute(
+                        "INSERT INTO [System_Properties] ([ID], [Created], [Modified], [Key], [Value]) VALUES (@id, @created, @modified, @key, @value)",
+                        new
+                        {
+                            id = Guid.NewGuid(),
+                            created = DateTime.Now,
+                            modified = DateTime.Now,
+                            key = key,
+                            value = serializedValue,
+                        }
+                    );
                 }
             }
         }
