@@ -20,6 +20,7 @@ namespace nCode.Catalog.UI
         /// <param name="sourceFilter">The source filter.</param>
         /// <param name="viewFilter">The view filter.</param>
         /// <param name="traverseFilter">The traverse filter.</param>
+        /// <param name="root">The root.</param>
         public CategoryNavigationTree(Expression<Func<Category, bool>> sourceFilter = null, Func<CategoryNavigationItem, bool> viewFilter = null, Func<CategoryNavigationItem, bool> traverseFilter = null, CategoryNavigationItem root = null)
             : base(
                 sourceFilter: sourceFilter ?? (x => x.IsVisible),
