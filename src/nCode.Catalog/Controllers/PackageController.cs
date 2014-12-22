@@ -37,6 +37,8 @@ namespace nCode.Catalog.Controllers
                     workingDraft.Add(new PackageDraftItem
                     {
                         OrderNo = orderNo,
+                        PackageProductCode = "P19DK",
+                        PackageProductServices = new[] { "DLV" }
                     });
                 }
             }
