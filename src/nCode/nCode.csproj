@@ -58,7 +58,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Logging">
-      <HintPath>..\packages\Common.Logging.2.3.1\lib\net40\Common.Logging.dll</HintPath>
+      <HintPath>..\packages\Common.Logging.3.0.0\lib\net40\Common.Logging.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core">
+      <HintPath>..\packages\Common.Logging.Core.3.0.0\lib\net40\Common.Logging.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Dapper, Version=1.38.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -66,14 +70,12 @@
       <HintPath>..\packages\Dapper.1.38\lib\net45\Dapper.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FileHelpers">
@@ -124,7 +126,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Owin">
@@ -181,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ajax\ActionResult.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\JobSchedulingController.cs" />
     <Compile Include="Data\CamelCaseContractResolver.cs" />
     <Compile Include="JobScheduling\Hangfire\HangfireJobEngine.cs" />
@@ -199,6 +202,7 @@
     <Compile Include="Migrations\201409101753311_Metadata_Initial.Designer.cs">
       <DependentUpon>201409101753311_Metadata_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Search\ReindexJob.cs" />
     <Compile Include="SystemDbConfiguration.cs" />
     <Compile Include="CultureRouteContraint.cs" />
     <Compile Include="Data\CascadeRule.cs" />
@@ -234,7 +238,7 @@
     <Compile Include="Search\LuceneSearchEngine.cs" />
     <Compile Include="Search\SearchHandler.cs" />
     <Compile Include="Search\SearchEngine.cs" />
-    <Compile Include="Search\SearchSettings.cs" />
+    <Compile Include="Search\LuceneSearchSettings.cs" />
     <Compile Include="ServiceModel\AutoSecuredHttpSecurityCapabilities.cs" />
     <Compile Include="ServiceModel\AutoSecuredHttpTransportElement.cs" />
     <Compile Include="ServiceModel\BindingExtenions\ClearUsernameBinding.cs" />
