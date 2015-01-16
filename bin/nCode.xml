@@ -4,6 +4,16 @@
         <name>nCode</name>
     </assembly>
     <members>
+        <member name="T:nCode.Controllers.SearchController">
+            <summary>
+            Controller API for Job Scheduling.
+            </summary>
+        </member>
+        <member name="M:nCode.Controllers.SearchController.Reindex(System.Guid)">
+            <summary>
+            Gets a list of Planned and Completed Job Executions.
+            </summary>
+        </member>
         <member name="T:nCode.Controllers.JobSchedulingController">
             <summary>
             Controller API for Job Scheduling.
@@ -29,7 +39,7 @@
             Represents the Interface for a Job Engine.
             </summary>
         </member>
-        <member name="M:nCode.JobScheduling.JobEngine.Queue``1">
+        <member name="M:nCode.JobScheduling.JobEngine.Queue``1(System.String)">
             <summary>
             Enqueue a background job to run immidiately on any worker node.
             </summary>
@@ -46,11 +56,12 @@
             Gets a list of planned and completed Job Executions.
             </summary>
         </member>
-        <member name="M:nCode.JobScheduling.Hangfire.HangfireJobEngine.#ctor(System.Boolean)">
+        <member name="M:nCode.JobScheduling.Hangfire.HangfireJobEngine.#ctor(System.Boolean,System.String[])">
             <summary>
             Initializes a new Hangfire Job Engine.
             </summary>
             <param name="useServer"></param>
+            <param name="queues"></param>
         </member>
         <member name="T:nCode.JobScheduling.Hangfire.JobSchedulingIntegrationAttribute">
             <summary>
@@ -363,6 +374,16 @@
             Wrapper class that prevents exceptions from being rendered in the message
             </summary>
         </member>
+        <member name="T:nCode.Search.ReindexSourceJob">
+            <summary>
+            A Background Job that Reindexes a single search source, specified by the source id.
+            </summary>
+        </member>
+        <member name="T:nCode.Search.ReindexSourceJobParameters">
+            <summary>
+            Background Job Parameters for Reindex Source Jobs.
+            </summary>
+        </member>
         <member name="T:nCode.CultureRouteContraint">
             <summary>
             Checkes the Culture and the StaticPath parameter, and returns true if a corresponding content page exists.
@@ -524,6 +545,11 @@
             Writes a Error Log Message.
             </summary>
         </member>
+        <member name="M:nCode.Logging.LoggingEngine.Verbose(System.String,System.Exception)">
+            <summary>
+            Writes a Verbose Log Message.
+            </summary>
+        </member>
         <member name="M:nCode.Logging.Log4Net.Log4NetLoggingEngine.#ctor">
             <summary>
             Initializes Logging.
@@ -542,6 +568,11 @@
         <member name="M:nCode.Logging.Log4Net.Log4NetLoggingEngine.Error(System.String,System.Exception)">
             <summary>
             Writes a Error Log Message.
+            </summary>
+        </member>
+        <member name="M:nCode.Logging.Log4Net.Log4NetLoggingEngine.Verbose(System.String,System.Exception)">
+            <summary>
+            Writes a Infomation Log Message.
             </summary>
         </member>
         <member name="T:nCode.Metadata.SiteMetadataContext">
@@ -623,6 +654,16 @@
             </summary>
             <param name="entryId"></param>
         </member>
+        <member name="M:nCode.Search.SearchEngine.GetEntryCount(nCode.Search.SearchSource)">
+            <summary>
+            Get entry count in the index for the given search source.
+            </summary>
+        </member>
+        <member name="M:nCode.Search.LuceneSearchEngine.GetEntryCount(nCode.Search.SearchSource)">
+            <summary>
+            Get entry count in the index for the given search source.
+            </summary>
+        </member>
         <member name="T:nCode.Search.SearchSource">
             <summary>
             Represens a source of douments for the search engine. 
@@ -643,13 +684,14 @@
             Represents a the Brand Tree in the Navigation Framework.
             </summary>
         </member>
-        <member name="M:nCode.UI.NavigationTree`2.#ctor(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Func{`1,System.Boolean},System.Func{`1,System.Boolean})">
+        <member name="M:nCode.UI.NavigationTree`2.#ctor(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Func{`1,System.Boolean},System.Func{`1,System.Boolean},nCode.UI.INavigationItem)">
             <summary>
             Initializes a new instance of the <see cref="!:NavigationTree"/> class.
             </summary>
             <param name="sourceFilter">The source filter.</param>
             <param name="viewFilter">The view filter.</param>
             <param name="traverseFilter">The traverse filter.</param>
+            <param name="root">The initial root of the tree, or null the true root.</param> 
         </member>
         <member name="M:nCode.UI.NavigationTree`2.InitializeSource">
             <summary>
@@ -1534,6 +1576,11 @@
             Writes a Error Log Message.
             </summary>
         </member>
+        <member name="M:nCode.Log.Verbose(System.String,System.Exception)">
+            <summary>
+            Writes a Error Log Message.
+            </summary>
+        </member>
         <member name="M:nCode.Log.WriteEntry(System.String,System.String,System.String,nCode.EntryType)">
             <summary>
             Writes a entry to the Log.
@@ -1861,6 +1908,11 @@
             Registers a Javascript-file using the given key.
             </summary>
         </member>
+        <member name="M:nCode.UI.PageExtensions.AddMetaControl(System.Web.UI.Page,System.Web.UI.Control)">
+            <summary>
+            Adds a meta-custrol to the header of this page.
+            </summary>
+        </member>
         <member name="M:nCode.UI.PageExtensions.AddMetaTag(System.Web.UI.Page,System.String,System.String)">
             <summary>
             Adds a meta-tag to the header of this page.
@@ -1939,6 +1991,11 @@
         <member name="M:nCode.Utilities.GenerateRandomPassword(System.Int32)">
             <summary>
             Generates a random password of the given length with the charecters a-z, A-Z and 0-9.
+            </summary>
+        </member>
+        <member name="M:nCode.Utilities.NullIfWhiteSpace(System.String)">
+            <summary>
+            Returns null if string is null or whitespace, otherwise just return the string. 
             </summary>
         </member>
         <member name="M:nCode.Utilities.UrlEncodeString(System.String)">

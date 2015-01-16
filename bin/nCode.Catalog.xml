@@ -1325,6 +1325,11 @@
             Contains Settings for Catalog Layout.
             </summary>
         </member>
+        <member name="P:nCode.Catalog.LayoutSettings.DefaultItemListSettings">
+            <summary>
+            Gets or sets the default settings for item list views.
+            </summary>
+        </member>
         <member name="P:nCode.Catalog.LayoutSettings.NoImageImageFile">
             <summary>
             Gets or sets the no image image file.
@@ -1807,13 +1812,14 @@
             Represents a the Brand Tree in the Navigation Framework.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.UI.BrandNavigationTree.#ctor(System.Func{nCode.Catalog.Brand,System.Boolean},System.Func{nCode.Catalog.UI.BrandNavigationItem,System.Boolean},System.Func{nCode.Catalog.UI.BrandNavigationItem,System.Boolean})">
+        <member name="M:nCode.Catalog.UI.BrandNavigationTree.#ctor(System.Func{nCode.Catalog.Brand,System.Boolean},System.Func{nCode.Catalog.UI.BrandNavigationItem,System.Boolean},System.Func{nCode.Catalog.UI.BrandNavigationItem,System.Boolean},nCode.Catalog.UI.BrandNavigationItem)">
             <summary>
             Initializes a new instance of the <see cref="T:nCode.Catalog.UI.BrandNavigationTree"/> class.
             </summary>
             <param name="sourceFilter">The source filter.</param>
             <param name="viewFilter">The view filter.</param>
             <param name="traverseFilter">The traverse filter.</param>
+            <param name="root">The root.</param> 
         </member>
         <member name="M:nCode.Catalog.UI.BrandNavigationTree.Expand(nCode.UI.INavigationItem)">
             <summary>
@@ -1845,13 +1851,14 @@
             Represents a the Category Tree in the Navigation Framework.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.UI.CategoryNavigationTree.#ctor(System.Linq.Expressions.Expression{System.Func{nCode.Catalog.Category,System.Boolean}},System.Func{nCode.Catalog.UI.CategoryNavigationItem,System.Boolean},System.Func{nCode.Catalog.UI.CategoryNavigationItem,System.Boolean})">
+        <member name="M:nCode.Catalog.UI.CategoryNavigationTree.#ctor(System.Linq.Expressions.Expression{System.Func{nCode.Catalog.Category,System.Boolean}},System.Func{nCode.Catalog.UI.CategoryNavigationItem,System.Boolean},System.Func{nCode.Catalog.UI.CategoryNavigationItem,System.Boolean},nCode.Catalog.UI.CategoryNavigationItem)">
             <summary>
             Initializes a new instance of the <see cref="T:nCode.Catalog.UI.CategoryNavigationTree"/> class.
             </summary>
             <param name="sourceFilter">The source filter.</param>
             <param name="viewFilter">The view filter.</param>
             <param name="traverseFilter">The traverse filter.</param>
+            <param name="root">The root.</param>
         </member>
         <member name="T:nCode.Catalog.UI.CampaignNavigationList">
             <summary>
@@ -1932,6 +1939,11 @@
         <member name="P:nCode.Catalog.UI.ItemNavigationItem.IsActive">
             <summary>
             Gets a value indicating whether this Item is active.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemNavigationItem.Parent">
+            <summary>
+            Gets or sets the primery parent Navigation Item.
             </summary>
         </member>
         <member name="T:nCode.Catalog.UI.ItemUtilities">
