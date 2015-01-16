@@ -12,6 +12,9 @@ namespace nCode.Catalog
     /// </summary>
     public class ItemBasketItem : BasketItem
     {
+        string loadedCulture;
+        bool unitWeightLoaded;
+
         bool imageLoaded;
         bool vatGroupCodeLoaded;
 
@@ -49,7 +52,7 @@ namespace nCode.Catalog
                 int qty = value;
 
                 /* Intercept illegal quanties (i.e. stock control, sales qty, min sale qty) */
-                using (CatalogModel model = new CatalogModel(SqlUtilities.ConnectionString))
+                using (var model = new CatalogModel())
                 {
                     var item = (from i in model.Items
                                 where i.ID == ItemID
@@ -137,7 +140,11 @@ namespace nCode.Catalog
         {
             get
             {
-                return ItemUtilities.GetItemTitle(ItemID, ItemVariantID, CultureInfo.CurrentUICulture.Name);
+                if (base.Title == null || loadedCulture != CultureInfo.CurrentUICulture.Name) {
+                    base.Title = ItemUtilities.GetItemTitle(ItemID, ItemVariantID, CultureInfo.CurrentUICulture.Name);
+                    loadedCulture = CultureInfo.CurrentUICulture.Name;
+                }
+                return base.Title;
             }
             set
             {
@@ -153,10 +160,17 @@ namespace nCode.Catalog
         {
             get
             {
-                using (CatalogModel model = new CatalogModel(SqlUtilities.ConnectionString))
+                if (!unitWeightLoaded)
                 {
-                    return (from i in model.Items where i.ItemNo == ItemNo select i.Weight).Single();
+                    using (var model = new CatalogModel())
+                    {
+                        base.UnitWeight = (from i in model.Items where i.ItemNo == ItemNo select i.Weight).Single();
+                    }
+
+                    unitWeightLoaded = true;
                 }
+
+                return base.UnitWeight;
             }
             set
             {

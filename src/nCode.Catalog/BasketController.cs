@@ -76,6 +76,7 @@ namespace nCode.Catalog
                 if (basket == null)
                 {
                     basket = new Basket(SalesChannel.Code);
+                    basket.SetProperty("UserAgent", context.Request.UserAgent);
                     context.Session[key] = basket;
                 }
 

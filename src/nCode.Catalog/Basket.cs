@@ -580,6 +580,8 @@ namespace nCode.Catalog
         /// </summary>
         public Order PlaceAsOrder(bool clearExistingItems = true)
         {
+            Log.Info(string.Format("Placing Basket as Order (Order No.: {0}).", OrderNo ?? "none"));
+
             using (var context = new CatalogDbContext())
             using (var model = new CatalogModel())
             {
@@ -595,8 +597,11 @@ namespace nCode.Catalog
                     order.Created = DateTime.Now;
 
                     if (OrderNo == null)
+                    {
                         OrderNo = NoSerieNumber.GetNext("Order").ToString();
-                    
+                        Log.Info(string.Format("Assigned Order No.: {0}.", OrderNo));
+                    }
+
                     order.OrderNo = OrderNo;
                     model.Orders.InsertOnSubmit(order);
                 }
@@ -694,6 +699,8 @@ namespace nCode.Catalog
 
                 order.UpdateTotals();
                 model.SubmitChanges();
+
+                Log.Info(string.Format("Order No.: {0} successfully placed.", OrderNo));
 
                 return order;
             }
