@@ -40,7 +40,7 @@ namespace nCode.Geographics
 
         public override string ToString()
         {
-            return "StreetAddress (StreetName: " + StreetName + ", HouseNo: " + HouseNo + ")";
+            return "StreetName: " + StreetName + ", HouseNo: " + HouseNo;
         }
     }
 }

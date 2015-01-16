@@ -677,7 +677,7 @@ namespace nCode.Catalog
             if (paymentType != null && PaymentManager.Providers[paymentType.ProviderName] != null)
                 DueDate = PaymentManager.Providers[paymentType.ProviderName].GetDueDate(model, this, paymentType);
 
-            Log.Info(string.Format("Calculated Due Date: {0} for Order ({1}).", DueDate, OrderNo));
+            Log.Info(string.Format("Calculated Due Date: {0:d} for Order ({1}).", DueDate, OrderNo));
 
             Status = OrderStatus.Invoice;
             
@@ -979,7 +979,7 @@ namespace nCode.Catalog
         {
             var customerLocation = model.OrderLocations.SingleOrDefault(x => x.OrderNo == OrderNo && x.LocationCode == "BILL");
 
-            // Todo: Parameter that specifies that the information should be updatet?
+            // Todo: Parameter that specifies that the information should be updated?
             if (customerLocation == null && CountryCode == "DK")
             {
                 Log.Info(string.Format("Extracting Address Information for Order ({0}): {1}", OrderNo, Address1));
@@ -999,7 +999,7 @@ namespace nCode.Catalog
 
                     if (res != null)
                     {
-                        // Todo: Parameter that specifies that the information should be updatet?
+                        // Todo: Parameter that specifies that the information should be updated?
                         //if (customerLocation == null)
                         //{
                         customerLocation = new OrderLocation();
@@ -1019,14 +1019,6 @@ namespace nCode.Catalog
                             customerLocation.Longitude = res.Wgs84Coordinate.Longitude;
                         }
                     }
-                    else
-                    {
-                        Log.WriteEntry(EntryType.Information, "Catalog", "Lookup Address " + OrderNo + ": " + address.StreetName + " - " + address.HouseNo + " - " + PostalCode);
-                    }
-                }
-                else
-                {
-                    Log.WriteEntry(EntryType.Information, "Catalog", "Extract Address " + OrderNo + ": " + Address1 + " - " + Address2);
                 }
             }
         }
