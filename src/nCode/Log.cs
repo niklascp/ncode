@@ -82,6 +82,19 @@ namespace nCode
             log.Error(message, ex);
         }
 
+        /// <summary>
+        /// Writes a Error Log Message.
+        /// </summary>
+        public static void Verbose(string message, Exception ex = null)
+        {
+            if (log == null)
+                throw new InvalidOperationException(notInitializedExceptionMessage);
+
+            log.Verbose(message, ex);
+        }
+
+
+
         /* 
          *  OBSOLETE METHODS: 
          */

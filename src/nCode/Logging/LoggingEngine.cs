@@ -22,5 +22,10 @@ namespace nCode.Logging
         /// Writes a Error Log Message.
         /// </summary>
         public abstract void Error(string message, Exception ex = null);
+
+        /// <summary>
+        /// Writes a Verbose Log Message.
+        /// </summary>
+        public abstract void Verbose(string message, Exception ex = null);
     }
 }

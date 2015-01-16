@@ -60,5 +60,16 @@ namespace nCode.Logging.Log4Net
             else
                 log.Error(message);
         }
+
+        /// <summary>
+        /// Writes a Infomation Log Message.
+        /// </summary>
+        public override void Verbose(string message, Exception ex = null)
+        {
+            if (ex != null)
+                log.Debug(message, ex);
+            else
+                log.Debug(message);
+        }
     }
 }
