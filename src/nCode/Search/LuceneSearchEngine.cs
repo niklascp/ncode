@@ -64,17 +64,29 @@ namespace nCode.Search
                 var subquery = new BooleanQuery();
 
                 var titlePrefixQuery = new Lucene.Net.Search.PrefixQuery(new Term("title_analyzed", w));
-                var titleFuzzyQuery = new Lucene.Net.Search.FuzzyQuery(new Term("title_analyzed", w), 0.5f, 3);
+                subquery.Add(titlePrefixQuery, Occur.SHOULD);
 
-                var descriptionQuery = new Lucene.Net.Search.FuzzyQuery(new Term("description_analyzed", w), 0.7f, 3);
-                var keywordQuery = new Lucene.Net.Search.FuzzyQuery(new Term("keywords_analyzed", w), 0.7f, 3);
+                if (LuceneSearchSettings.UseFuzzySearch)
+                {
+                    var titleFuzzyQuery = new Lucene.Net.Search.FuzzyQuery(new Term("title_analyzed", w), 0.5f, 3);
+                    subquery.Add(titleFuzzyQuery, Occur.SHOULD);
+
+                    var descriptionQuery = new Lucene.Net.Search.FuzzyQuery(new Term("description_analyzed", w), 0.7f, 3);
+                    subquery.Add(descriptionQuery, Occur.SHOULD);
+                    
+                    var keywordQuery = new Lucene.Net.Search.FuzzyQuery(new Term("keywords_analyzed", w), 0.7f, 3);
+                    subquery.Add(keywordQuery, Occur.SHOULD);
+                }
+                else
+                {
+                    var descriptionQuery = new Lucene.Net.Search.TermQuery(new Term("description_analyzed", w));
+                    subquery.Add(descriptionQuery, Occur.SHOULD);
+
+                    var keywordQuery = new Lucene.Net.Search.TermQuery(new Term("keywords_analyzed", w));
+                    subquery.Add(keywordQuery, Occur.SHOULD);
+                }
 
                 var contentQuery = new Lucene.Net.Search.TermQuery(new Term("content_analyzed", w));
-
-                subquery.Add(titlePrefixQuery, Occur.SHOULD);
-                subquery.Add(titleFuzzyQuery, Occur.SHOULD);
-                subquery.Add(descriptionQuery, Occur.SHOULD);
-                subquery.Add(keywordQuery, Occur.SHOULD);
                 subquery.Add(contentQuery, Occur.SHOULD);
 
                 query.Add(subquery, Occur.MUST);
