@@ -9,6 +9,31 @@
             Entity Framework DbContext for the CRM module.
             </summary>
         </member>
+        <member name="M:nCode.CRM.CrmDbContext.#ctor">
+            <summary>
+            Initializes a new CRM DbContext with default connection string.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CrmDbContext.CustomerGroups">
+            <summary>
+            Gets the set of Customer Groups.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CrmDbContext.Customers">
+            <summary>
+            Gets the set of Customers.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CrmDbContext.CustomerContacts">
+            <summary>
+            Gets the set of Customer Contacts.
+            </summary>
+        </member>
+        <member name="P:nCode.CRM.CrmDbContext.CustomerProperties">
+            <summary>
+            Gets the set of Customer Properties.
+            </summary>
+        </member>
         <member name="T:nCode.CRM.CustomerGroup">
             <summary>
             Represenst a Customer Group.
