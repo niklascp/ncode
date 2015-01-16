@@ -10,11 +10,14 @@ namespace nCode.Catalog.Models
     {
         public ItemListSettings()
         {
+            ShowTitle = true;
             ShowItemNo = false;
             ShowBrandName = false;
             ShowPrice = true;
             ShowDefaultPrice = false;
         }
+
+        public bool ShowTitle { get; set; }
 
         public bool ShowItemNo { get; set; }
 
