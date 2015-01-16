@@ -14,13 +14,13 @@ namespace nCode.CRM
         {
             get
             {
-                return 2.2m;
+                return 2.21m;
             }
         }
 
         public override void Upgrade()
         {
-            /* Uninstall ald CRM schema, if installed. */
+            /* Uninstall old CRM schema, if installed. */
             var schema = SchemaControl.Schemas.SingleOrDefault(x => string.Equals(x.Name, "CRM", StringComparison.InvariantCultureIgnoreCase));
             if (schema != null)
                 SchemaControl.Uninstall("CRM");

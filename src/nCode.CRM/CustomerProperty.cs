@@ -1,4 +1,5 @@
-﻿using System;
+﻿using nCode.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,6 +9,7 @@ using System.Text;
 namespace nCode.CRM
 {
     [Table("CRM_CustomerProperties")]
+    [UniqueKey("CustomerID", "Key")]
     public class CustomerProperty
 	{		
 		[Key]
