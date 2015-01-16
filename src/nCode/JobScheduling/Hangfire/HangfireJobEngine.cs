@@ -10,6 +10,7 @@ using Hangfire.Storage;
 
 using Dapper;
 using Newtonsoft.Json;
+using Hangfire.States;
 
 namespace nCode.JobScheduling.Hangfire
 {
@@ -62,7 +63,8 @@ namespace nCode.JobScheduling.Hangfire
         /// Initializes a new Hangfire Job Engine.
         /// </summary>
         /// <param name="useServer"></param>
-        public HangfireJobEngine(bool useServer = true)
+        /// <param name="queues"></param>
+        public HangfireJobEngine(bool useServer = true, string[] queues = null)
         {
             // TODO: Should we instead create a custom implementation of
             // IJobCreationProcess so we do not pollute the GlobalFilters. 
@@ -75,9 +77,14 @@ namespace nCode.JobScheduling.Hangfire
 
             if (useServer)
             {
+                if (queues == null) 
+                    queues = new[] { EnqueuedState.DefaultQueue, Environment.MachineName.ToLower() };
+
+                if (queues.Length == 0) throw new ArgumentException("You should specify at least one queue to listen.", "queues");
+
                 backgroundJobServer = new BackgroundJobServer(new BackgroundJobServerOptions()
                 {
-
+                    Queues = queues
                 }, jobStorage);
 
                 backgroundJobServer.Start();
@@ -87,23 +94,31 @@ namespace nCode.JobScheduling.Hangfire
             jobManager = new RecurringJobManager(jobStorage);
         }
 
-        public override string Queue<T>()
+        public override string Queue<T>(string queue = null)
         {
-            return backgroundJobClient.Enqueue<T>(x => x.Execute());
+            var state = new EnqueuedState();
+            if (queue != null)
+                state.Queue = queue;
+
+            return backgroundJobClient.Create<T>(x => x.Execute(), state);
         }
 
-        public override string Queue<T, P>(P parameters)
+        public override string Queue<T, P>(P parameters, string queue = null)
         {
-            return backgroundJobClient.Enqueue<T>(x => x.Execute(parameters));
+            var state = new EnqueuedState();
+            if (queue != null)
+                state.Queue = queue;
+
+            return backgroundJobClient.Create<T>(x => x.Execute(parameters), state);
         }
 
-        public override void Schedule<T>(string jobId, string cronExpression)
+        public override void Schedule<T>(string jobId, string cronExpression, string queue = null)
         {
             var job = Job.FromExpression<T>(x => x.Execute());
             jobManager.AddOrUpdate(jobId, job, cronExpression);
         }
 
-        public override void Schedule<T, P>(string jobId, P parameters, string cronExpression)
+        public override void Schedule<T, P>(string jobId, P parameters, string cronExpression, string queue = null)
         {
             var job = Job.FromExpression<T>(x => x.Execute(parameters));
             jobManager.AddOrUpdate(jobId, job, cronExpression);

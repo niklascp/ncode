@@ -16,17 +16,17 @@ namespace nCode.JobScheduling
         /// </summary>
         /// <typeparam name="T">The Type og the Background Job.</typeparam>
         /// <returns>A job id that identifies the job enqueued.</returns>
-        public abstract string Queue<T>()
+        public abstract string Queue<T>(string queue = null)
             where T : IBackgroundJob;
 
-        public abstract string Queue<T, P>(P parameters)
+        public abstract string Queue<T, P>(P parameters, string queue = null)
             where T : IBackgroundJob<P>
             where P : IBackgroundJobParameters;
 
-        public abstract void Schedule<T>(string jobId, string cronExpression)
+        public abstract void Schedule<T>(string jobId, string cronExpression, string queue = null)
             where T : IBackgroundJob;
 
-        public abstract void Schedule<T, P>(string jobId, P parameters, string cronExpression)
+        public abstract void Schedule<T, P>(string jobId, P parameters, string cronExpression, string queue = null)
             where T : IBackgroundJob<P>
             where P : IBackgroundJobParameters;
 
