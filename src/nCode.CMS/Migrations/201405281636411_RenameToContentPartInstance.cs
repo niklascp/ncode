@@ -20,14 +20,17 @@ namespace nCode.CMS.Model
             .PrimaryKey(t => t.ID)
             .Index(t => new { t.ContainerID, t.DisplayIndex }, name: "IX_CMS_ContentPartInstance_ContainerID_DisplayIndex", unique: true);
 
-            Sql("INSERT INTO CMS_ContentPartInstance SELECT NEWID(), ISNULL(ParentContentPartID, ContentPageID), DisplayIndex, ID, ContentPageID FROM CMS_ContentPart");
+            if (SqlUtilities.ColumnExist("CMS_ContentPart", "ParentContentPartID"))
+            {
+                Sql("INSERT INTO CMS_ContentPartInstance SELECT NEWID(), ISNULL(ParentContentPartID, ContentPageID), DisplayIndex, ID, ContentPageID FROM CMS_ContentPart");
+                DropColumn("dbo.CMS_ContentPart", "ParentContentPartID");            
+            }
 
             DropForeignKey("dbo.CMS_ContentPart", "FK_CMS_ContentPart_CMS_ContentPage");
             DropIndex("dbo.CMS_ContentPart", new[] { "ContentPageID" });
             CreateIndex("dbo.CMS_ContentPartInstance", "ContentPartID");
             AddForeignKey("dbo.CMS_ContentPartInstance", "ContentPartID", "dbo.CMS_ContentPart", "ID", cascadeDelete: true);
             DropColumn("dbo.CMS_ContentPart", "ContentPageID");
-            DropColumn("dbo.CMS_ContentPart", "ParentContentPartID");
             DropColumn("dbo.CMS_ContentPart", "DisplayIndex");
         }
 
