@@ -31,6 +31,11 @@ namespace nCode.JobScheduling
             where P : IBackgroundJobParameters;
 
         /// <summary>
+        /// Deletes the job given by the job id.
+        /// </summary>
+        public abstract bool Delete(string jobId);
+
+        /// <summary>
         /// Gets a list of Scheduled Jobs.
         /// </summary>
         public abstract IEnumerable<ScheduledJob> GetScheduledJobs();

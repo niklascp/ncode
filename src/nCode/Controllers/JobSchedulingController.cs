@@ -39,5 +39,17 @@ namespace nCode.Controllers
             return JobHandler.Engine.GetScheduledJobs();
         }
 
+        /// <summary>
+        /// Get a list of Scheduled Jobs.
+        /// </summary>
+        [Route("{jobId}"), HttpDelete]
+        public bool? DeleteJob(string jobId)
+        {
+            if (!JobHandler.IsInitialized)
+                return null;
+
+            return JobHandler.Engine.Delete(jobId);
+        }
+
     }
 }

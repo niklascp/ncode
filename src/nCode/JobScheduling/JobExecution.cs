@@ -15,8 +15,8 @@ namespace nCode.JobScheduling
         /// <summary>
         /// Gets or set a unique identifier of the job execution.
         /// </summary>
-        [JsonProperty("executionId")]
-        public string ExecutionId { get; set; }
+        [JsonProperty("jobId")]
+        public string JobId { get; set; }
 
         /// <summary>
         /// Gets or set the job name of the job execution.
@@ -54,6 +54,7 @@ namespace nCode.JobScheduling
         Planned = 0,
         Executing = 1,
         Succeded = 2,
-        Failed = 3
+        Failed = 3,
+        Canceled = 4
     }
 }

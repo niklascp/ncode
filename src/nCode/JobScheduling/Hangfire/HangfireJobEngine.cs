@@ -124,6 +124,12 @@ namespace nCode.JobScheduling.Hangfire
             jobManager.AddOrUpdate(jobId, job, cronExpression);
         }
 
+        public override bool Delete(string jobId)
+        {
+            return backgroundJobClient.Delete(jobId);
+        }
+
+
         public override IEnumerable<ScheduledJob> GetScheduledJobs()
         {
             using (var connection = jobStorage.GetConnection())
@@ -171,7 +177,7 @@ select * from (
 
                     var execution = new JobExecution()
                     {
-                        ExecutionId = job.Id.ToString(),
+                        JobId = job.Id.ToString(),
                         JobName = job.JobName != null ? JsonConvert.DeserializeObject<string>(job.JobName) : null,
                         TypeName = invocationData.Type,
                         CreateDateTime = job.CreatedAt,
@@ -197,6 +203,10 @@ select * from (
                     else if (job.StateName == "Failed")
                     {
                         execution.State = JobExecutionState.Failed;
+                    }
+                    else if (job.StateName == "Deleted")
+                    {
+                        execution.State = JobExecutionState.Canceled;
                     }
 
                     yield return execution; 
