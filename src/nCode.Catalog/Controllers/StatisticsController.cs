@@ -172,16 +172,36 @@ order by
         }
 
         [Route("sale")]
-        public dynamic GetSale(DateTime fromDate, DateTime toDate)
+        public dynamic GetSale(DateTime fromDate, DateTime toDate, string step = null)
         {
             using (var conn = new SqlConnection(Settings.ConnectionString))
             {
+                DateTime parallelFromDate;
+                DateTime parallelToDate;
+
                 conn.Open();
 
+                Func<DateTime, DateTime> stepExp;
+                string stepFmt;
+
+                if (step != null && step.Equals("days", StringComparison.OrdinalIgnoreCase))
+                {
+                    stepExp = x => x.AddDays(1);
+                    stepFmt = "dd/MM";
+
+                    parallelFromDate = fromDate.AddMonths(-1);
+                    parallelToDate = toDate.AddMonths(-1);
+                }
+                else
+                {
+                    stepExp = x => x.AddMonths(1);
+                    stepFmt = "MMM yyyy";
+
+                    parallelFromDate = fromDate.AddYears(-1);
+                    parallelToDate = toDate.AddYears(-1);
+                }
+
                 var salePerDate = conn.Query<SalePerDate>(saleByInvoiceDate, new { fromDate = fromDate, toDate = toDate });
-                
-                var parallelFromDate = fromDate.AddYears(-1);
-                var parallelToDate = toDate.AddYears(-1);
                 var parallelSalePerDate = conn.Query<SalePerDate>(saleByInvoiceDate, new { fromDate = parallelFromDate, toDate = parallelToDate });
 
                 var categories = new List<string>();
@@ -195,13 +215,13 @@ order by
                 var date = fromDate;
                 var parallelDate = parallelFromDate;
 
-                while (date < toDate)
+                while (date <= toDate)
                 {
                     /* Todo - */
-                    var nextDate = date.AddMonths(1);
-                    var nextParallelDate = parallelDate.AddMonths(1);
+                    var nextDate = stepExp(date);
+                    var nextParallelDate = stepExp(parallelDate);
 
-                    categories.Add(date.ToString("MMM yyyy"));
+                    categories.Add(date.ToString(stepFmt));
 
                     orderCount.Add(salePerDate.Where(x => date <= x.InvoiceDate && x.InvoiceDate < nextDate).Sum(x => x.OrderCount));
                     parallelOrderCount.Add(parallelSalePerDate.Where(x => parallelDate <= x.InvoiceDate && x.InvoiceDate < nextParallelDate).Sum(x => x.OrderCount));
