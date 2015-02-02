@@ -29,6 +29,11 @@
             Get a list of Scheduled Jobs.
             </summary>
         </member>
+        <member name="M:nCode.Controllers.JobSchedulingController.DeleteJob(System.String)">
+            <summary>
+            Get a list of Scheduled Jobs.
+            </summary>
+        </member>
         <member name="T:nCode.JobScheduling.Hangfire.HangfireJobEngine">
             <summary>
             Represent a Job Engine implementation using the Hangfire Job Framework.
@@ -45,6 +50,11 @@
             </summary>
             <typeparam name="T">The Type og the Background Job.</typeparam>
             <returns>A job id that identifies the job enqueued.</returns>
+        </member>
+        <member name="M:nCode.JobScheduling.JobEngine.Delete(System.String)">
+            <summary>
+            Deletes the job given by the job id.
+            </summary>
         </member>
         <member name="M:nCode.JobScheduling.JobEngine.GetScheduledJobs">
             <summary>
@@ -89,7 +99,7 @@
             Represents data about a Job Execution.
             </summary>
         </member>
-        <member name="P:nCode.JobScheduling.JobExecution.ExecutionId">
+        <member name="P:nCode.JobScheduling.JobExecution.JobId">
             <summary>
             Gets or set a unique identifier of the job execution.
             </summary>
