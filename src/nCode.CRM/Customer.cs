@@ -112,7 +112,6 @@ namespace nCode.CRM
         /// Gets or sets the Description Customer.
         /// </summary>
         [MaxLength]
-        [Column(TypeName = "nvarchar(4000)")]
         public string Description { get; set; }
 
         [MaxLength(255)]
