@@ -83,16 +83,31 @@ namespace nCode
         {
             using (var conn = new SqlConnection(ConnectionString))
             {
-                conn.Open();                
+                conn.Open();
                 return conn.ExecuteScalar<bool>(
                     "SELECT CAST(CASE WHEN EXISTS(SELECT 1 FROM sys.indexes WHERE name = @indexName AND object_id = OBJECT_ID(@tableName)) THEN 1 ELSE 0 END AS bit)",
-                    new {
+                    new
+                    {
                         tableName = tableName,
                         indexName = indexName
                     });
             }
         }
 
+        public static bool ColumnExist(string tableName, string columnName)
+        {
+            using (var conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();
+                return conn.ExecuteScalar<bool>(
+                    "SELECT CAST(CASE WHEN EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = @tableName AND column_name = @columnName) THEN 1 ELSE 0 END AS bit)",
+                    new
+                    {
+                        tableName = tableName,
+                        columnName = columnName
+                    });
+            }
+        }
 
         public static void DropTableIfExist(string tableName)
         {
