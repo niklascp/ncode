@@ -592,8 +592,9 @@ namespace nCode.Catalog
                 /* TODO: Cache this for performance! */
                 var priceGroup = dbContext.PriceGroups.Where(x => x.Code == priceGroupCode).Single();
                 var salesChannel = dbContext.SalesChannels.Where(x => x.Code == salesChannelCode).SingleOrDefault();
+                var vatGroup = vatGroupCode != null ? VatGroupCache[vatGroupCode] : null;
 
-                return GetDisplayPrice(price, VatGroupCache[vatGroupCode], priceGroup, salesChannel);
+                return GetDisplayPrice(price, vatGroup, priceGroup, salesChannel);
             }
         }
 
@@ -603,8 +604,9 @@ namespace nCode.Catalog
             {
                 /* TODO: Cache this for performance! */
                 var priceGroup = dbContext.PriceGroups.Where(x => x.Code == priceGroupCode).Single();
+                var vatGroup = vatGroupCode != null ? VatGroupCache[vatGroupCode] : null;
 
-                return GetDisplayPrice(price, VatGroupCache[vatGroupCode], priceGroup, includeVat);
+                return GetDisplayPrice(price, vatGroup, priceGroup, includeVat);
             }
         }
 
