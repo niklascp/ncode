@@ -6,37 +6,73 @@ using System.IO;
 using System.Xml.Serialization;
 using nCode.Metadata.Model;
 using System.Xml.Linq;
+using Newtonsoft.Json;
+using nCode.Data;
 
 namespace nCode.Metadata
 {
     public static class GenericMetadataHelper
     {
+        private static JsonSerializerSettings jsonSerializerSettings;
+
+        static GenericMetadataHelper()
+        {
+            jsonSerializerSettings = new JsonSerializerSettings()
+            {
+                ContractResolver = new CamelCaseContractResolver()
+            };
+        }
+
         /// <summary>
-        /// Deserializes a xml-encoded property and returns it as type T. If serializedData is null the default value is returned.
+        /// Serializes a object and returns it as a string.
+        /// </summary>
+        public static string Serialize<T>(T value)
+        {
+            return JsonConvert.SerializeObject(value, jsonSerializerSettings);
+        }
+
+        /// <summary>
+        /// Deserializes a json or xml-encoded property and returns it as type T. If serializedData is null the default value is returned.
         /// </summary>
         public static T Deserialize<T>(string serializedData, T defaultValue)
         {
             if (serializedData == null)
                 return defaultValue;
 
-            /* Copy the string data to a Memory Stream. */
-            using (MemoryStream ms = new MemoryStream())
+            if (serializedData.StartsWith("<?xml"))
             {
-                StreamWriter sw = new StreamWriter(ms);
-                sw.Write(serializedData);
-                sw.Flush();
-
-                /* Reset the Memory Stream. */
-                ms.Position = 0;
-
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-
-                try
-                {                    
-                    return (T)xmlSerializer.Deserialize(ms);
-                }
-                catch (InvalidOperationException)
+                /* Copy the string data to a Memory Stream. */
+                using (MemoryStream ms = new MemoryStream())
                 {
+                    StreamWriter sw = new StreamWriter(ms);
+                    sw.Write(serializedData);
+                    sw.Flush();
+
+                    /* Reset the Memory Stream. */
+                    ms.Position = 0;
+
+                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+
+                    try
+                    {
+                        return (T)xmlSerializer.Deserialize(ms);
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        Log.Warn(string.Format("Failed to deserialize XML string '{0}'.", serializedData), ex);
+                        return defaultValue;
+                    }
+                }
+            }
+            else
+            {
+                try
+                {
+                    return JsonConvert.DeserializeObject<T>(serializedData, jsonSerializerSettings);
+                }
+                catch (JsonSerializationException ex)
+                {
+                    Log.Warn(string.Format("Failed to deserialize JSON string '{0}'", serializedData), ex);
                     return defaultValue;
                 }
             }
@@ -90,37 +126,24 @@ namespace nCode.Metadata
         {
             using (var dbContext = new SystemDbContext())
             {
-                /* Serialize the data and copy to string. */
-                using (MemoryStream ms = new MemoryStream())
+                var property = (from p in dbContext.MetadataProperties
+                                where p.ObjectTypeID == objectTypeId && p.ObjectID == objectId && p.Key == key
+                                select p).SingleOrDefault();
+
+                /* Property does not exists. */
+                if (property == null)
                 {
-                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-                    xmlSerializer.Serialize(ms, value);
-
-                    /* Reset the Memory Stream. */
-                    ms.Position = 0;
-
-                    using (StreamReader sr = new StreamReader(ms))
-                    {
-                        var property = (from p in dbContext.MetadataProperties
-                                        where p.ObjectTypeID == objectTypeId && p.ObjectID == objectId && p.Key == key
-                                        select p).SingleOrDefault();
-
-                        /* Property does not exists. */
-                        if (property == null)
-                        {
-                            property = new MetadataPropertyEntity();
-                            property.ID = Guid.NewGuid();
-                            property.ObjectTypeID = objectTypeId;
-                            property.ObjectID = objectId;
-                            property.Key = key;
-                            dbContext.MetadataProperties.Add(property);
-                        }
-
-                        property.Value = sr.ReadToEnd();
-
-                        dbContext.SaveChanges();
-                    }
+                    property = new MetadataPropertyEntity();
+                    property.ID = Guid.NewGuid();
+                    property.ObjectTypeID = objectTypeId;
+                    property.ObjectID = objectId;
+                    property.Key = key;
+                    dbContext.MetadataProperties.Add(property);
                 }
+
+                property.Value = JsonConvert.SerializeObject(value, jsonSerializerSettings);
+
+                dbContext.SaveChanges();
             }
         }
 
@@ -158,9 +181,9 @@ namespace nCode.Metadata
 
                 foreach (var p in properties)
                 {
-                    var doc = XDocument.Parse(p.Value);
-                    doc.Root.Name = p.Key;
-                    list.Add(doc.Root);
+                    var element = new XElement(p.Key);
+                    element.Value = p.Value;
+                    list.Add(element);
                 }
 
                 return list;
