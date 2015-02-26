@@ -112,6 +112,51 @@ order by
     [Hour];
 ";
 
+        const string saleByLocation = @"
+/* For testing purposes only: */
+--declare @fromDate date = '2014-01-01';
+--declare @toDate date = '2014-12-31';
+--declare @zoom int = 8
+
+/* Calculates sales in the default currency. */
+select
+    [Latitude] = round(ol.[Latitude], @zoom),
+    [Longitude] = round(ol.[Longitude], @zoom),
+    [ItemCount] = sum(oi.[Qty]),
+    [Amount] = sum(
+		case when oc.[Code] <> dc.[Code] then dc.[Rate] / oc.[Rate] else 1 end * 
+		case when o.[VatIncluded] = 0 and vg.[Rate] > 0 then 1 + vg.[Rate] else 1 end * 
+		oi.[Qty] * oi.[UnitPrice])
+from
+    [Catalog_Order] o 
+    join [Catalog_OrderItem] oi on oi.[OrderNo] = o.[OrderNo] 
+    join [Catalog_Currency] oc on oc.[Code] = o.[CurrencyCode]
+    join [Catalog_Currency] dc on dc.[IsDefault] = 1
+	left join [Catalog_VatGroup] vg on vg.[Code] = oi.[VatGroupCode]
+	join [Catalog_OrderLocation] ol on ol.[OrderNo] = o.[OrderNo] and ol.[LocationCode] = 'BILL'
+where
+    o.[Status] = 1 
+	and o.[InvoiceDate] between @fromDate and @toDate 
+	and ol.[Latitude] <> 0
+	and ol.[Longitude] <> 0
+group by
+    round(ol.[Latitude], @zoom),
+    round(ol.[Longitude], @zoom)
+";
+
+        const string agentTypeQuery = @"
+/* For testing purposes only: */
+--declare @orderObjectTypeId uniqueidentifier = '33c92b8d-b993-451b-94ef-7975da3f3d87';
+
+select
+    [Value]
+from
+    [Catalog_Order] o 
+	join [System_MetadataProperty] agent on agent.[ObjectTypeID] = @orderObjectTypeId and agent.[ObjectID] = o.[ID] and agent.[Key] = 'UserAgent'
+where
+    o.[Status] = 1 
+	and o.[InvoiceDate] between @fromDate and @toDate 
+";
         #endregion
 
         [Route("topbrands")]
@@ -307,6 +352,62 @@ order by
             }
         }
 
+
+        [Route("salebylocation")]
+        public dynamic GetSaleLocation(DateTime fromDate, DateTime toDate, int zoom)
+        {
+            using (var conn = new SqlConnection(Settings.ConnectionString))
+            {
+                conn.Open();
+                return conn.Query(saleByLocation, new { fromDate = fromDate, toDate = toDate, zoom = zoom });                
+            }
+        }
+
+        [Route("device")]
+        public dynamic GetSaleByDevice(DateTime fromDate, DateTime toDate)
+        {
+            using (var conn = new SqlConnection(Settings.ConnectionString))
+            {
+                conn.Open();
+                var agentTypes = conn.Query<string>(agentTypeQuery, new { fromDate = fromDate, toDate = toDate, orderObjectTypeId = Order.ObjectTypeId });
+
+                var agentClass = new Dictionary<string, int>();
+                agentClass.Add("iPad", 0);
+                agentClass.Add("iPhone", 0);
+                agentClass.Add("Android", 0);
+                agentClass.Add("Windows Phone", 0);
+
+                agentClass.Add("Mac", 0);
+                agentClass.Add("Linux", 0);
+                agentClass.Add("Windows", 0);
+
+                agentClass.Add("Ukendt", 0);
+
+                foreach (var a in agentTypes)
+                {
+                    if (a.IndexOf("iPad", StringComparison.OrdinalIgnoreCase) != -1)
+                        agentClass["iPad"]++;
+                    else if (a.IndexOf("iPhone", StringComparison.OrdinalIgnoreCase) != -1)
+                        agentClass["iPhone"]++;
+                    else if (a.IndexOf("Android", StringComparison.OrdinalIgnoreCase) != -1)
+                        agentClass["Android"]++;
+                    else if (a.IndexOf("Mac", StringComparison.OrdinalIgnoreCase) != -1)
+                        agentClass["Mac"]++;
+                    else if (a.IndexOf("Linux", StringComparison.OrdinalIgnoreCase) != -1)
+                        agentClass["Linux"]++;
+                    else if (a.IndexOf("Windows", StringComparison.OrdinalIgnoreCase) != -1)
+                        agentClass["Windows"]++;
+                    else
+                        agentClass["Ukendt"]++;
+                }
+
+                return new
+                {
+                    categories = agentClass.Keys,
+                    orderCount = agentClass.Values,
+                };
+            }
+        }
         public class SaleByHour
         {
             public int Hour { get; set; }
