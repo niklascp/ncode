@@ -6,6 +6,9 @@ using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
 
+using Dapper;
+using Newtonsoft.Json;
+
 using nCode.Security;
 using nCode.UI;
 
@@ -37,7 +40,8 @@ namespace nCode.CMS
         /// not a content page request.
         /// </summary>
         [Obsolete("Please use the new Graph Navigation Framework.")]
-        public static IList<ContentPage> CurrentPath {
+        public static IList<ContentPage> CurrentPath
+        {
             get
             {
                 if (Navigation.CurrentPath == null)
@@ -49,7 +53,7 @@ namespace nCode.CMS
 
         // Data Holders
         private Guid id;
-        
+
         public ContentPage(Guid id)
         {
             this.id = id;
@@ -235,7 +239,7 @@ namespace nCode.CMS
         {
             get
             {
-                return ContentPage.Current == this;
+                return Navigation.Current == this;
             }
         }
 
@@ -244,7 +248,7 @@ namespace nCode.CMS
         /// </summary>
         public bool IsEditable { get; set; }
 
-       
+
 
         /* Methods */
 
@@ -264,62 +268,64 @@ namespace nCode.CMS
             return null;
         }
 
-        public T GetProperty<T>(string key, T defaultValue) 
+        /// <summary>
+        /// Gets a property of type T with the given key. Returns the default value if the property does no exists.
+        /// </summary>
+        public T GetProperty<T>(string key, T defaultValue)
         {
-            using (SqlConnection conn = new SqlConnection(nCode.Settings.ConnectionString)) 
+            using (var conn = new SqlConnection(Settings.ConnectionString))
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("SELECT [Value] FROM [CMS_ContentPageProperty] WHERE [ContentPage] = @ContentPage AND [Key] = @Key", conn);
-                cmd.Parameters.AddWithValue("@ContentPage", ID);
-                cmd.Parameters.AddWithValue("@Key", key);
+                var value = conn.ExecuteScalar<string>(@"
+select [Value]
+from [CMS_ContentPageProperty]
+where [ContentPage] = @contentPageId and [Key] = @key",
+                    new
+                    {
+                        contentPageId = this.ID,
+                        key = key
+                    });
 
-                SqlDataReader rdr = cmd.ExecuteReader();
-
-                if (rdr.Read())
-                {
-                    return GenericMetadataHelper.Deserialize<T>((string)rdr["Value"], defaultValue);
-                }
+                return GenericMetadataHelper.Deserialize<T>(value, defaultValue);
             }
-
-            return defaultValue;
         }
 
+        /// <summary>
+        /// Sets a property of type T with the given key to the given value.
+        /// </summary>
         public void SetProperty<T>(string key, T value)
         {
-            using (SqlConnection conn = new SqlConnection(nCode.Settings.ConnectionString))
+            var serializedValue = GenericMetadataHelper.Serialize(value);
+
+            using (var conn = new SqlConnection(nCode.Settings.ConnectionString))
             {
                 conn.Open();
 
-                /* Serialize the data and copy to string. */
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-                    xmlSerializer.Serialize(ms, value);
-                    
-                    /* Reset the Memory Stream. */
-                    ms.Position = 0;
-
-                    using (StreamReader sr = new StreamReader(ms))
+                var affectedRows = conn.Execute(@"
+update [CMS_ContentPageProperty]
+set [Value] = @value
+where [ContentPage] = @contentPageId AND [Key] = @key",
+                    new
                     {
-                        SqlCommand cmd = new SqlCommand("SELECT 1 FROM [CMS_ContentPageProperty] WHERE [ContentPage] = @ContentPage AND [Key] = @Key", conn);
-                        cmd.Parameters.AddWithValue("@ContentPage", ID);
-                        cmd.Parameters.AddWithValue("@Key", key);
+                        contentPageId = this.ID,
+                        key = key,
+                        value = serializedValue
+                    });
 
-                        bool exitst = cmd.ExecuteScalar() != null;
-
-                        if (exitst)
+                if (affectedRows == 0)
+                {
+                    conn.Execute(@"
+insert into [CMS_ContentPageProperty] ([ID], [ContentPage], [Key], [Value])
+values (@id, @contentPageId, @key, @value)",
+                        new
                         {
-                            cmd.CommandText = "UPDATE [CMS_ContentPageProperty] SET [Value] = @Value WHERE [ContentPage] = @ContentPage AND [Key] = @Key";
+                            id = Guid.NewGuid(),
+                            contentPageId = this.ID,
+                            key = key,
+                            value = serializedValue,
                         }
-                        else
-                        {
-                            cmd.CommandText = "INSERT INTO [CMS_ContentPageProperty] ([ID], [ContentPage], [Key], [Value]) VALUES (@ID, @ContentPage, @Key, @Value)";
-                            cmd.Parameters.AddWithValue("@ID", Guid.NewGuid());
-                        }
-                        cmd.Parameters.AddWithValue("@Value", sr.ReadToEnd());
-                        cmd.ExecuteNonQuery();
-                    }
+                    );
                 }
             }
         }
