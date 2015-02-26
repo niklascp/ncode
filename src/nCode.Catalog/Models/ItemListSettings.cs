@@ -15,6 +15,8 @@ namespace nCode.Catalog.Models
             ShowBrandName = false;
             ShowPrice = true;
             ShowDefaultPrice = false;
+
+            ShowBuyButton = false;
         }
 
         public bool ShowTitle { get; set; }
@@ -26,5 +28,7 @@ namespace nCode.Catalog.Models
         public bool ShowPrice { get; set; }
 
         public bool ShowDefaultPrice { get; set; }
+
+        public bool ShowBuyButton { get; set; }
     }
 }
