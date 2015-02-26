@@ -189,6 +189,16 @@
             Returns the parent ContentPage, or null, if this is the root of the menu.
             </summary>
         </member>
+        <member name="M:nCode.CMS.ContentPage.GetProperty``1(System.String,``0)">
+            <summary>
+            Gets a property of type T with the given key. Returns the default value if the property does no exists.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.ContentPage.SetProperty``1(System.String,``0)">
+            <summary>
+            Sets a property of type T with the given key to the given value.
+            </summary>
+        </member>
         <member name="M:nCode.CMS.ContentPage.Update">
             <summary>
             Updates this Content Object in the Database.

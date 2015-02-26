@@ -968,9 +968,14 @@
             Called on Application Start. Allows the module to register routes.
             </summary>
         </member>
+        <member name="M:nCode.Metadata.GenericMetadataHelper.Serialize``1(``0)">
+            <summary>
+            Serializes a object and returns it as a string.
+            </summary>
+        </member>
         <member name="M:nCode.Metadata.GenericMetadataHelper.Deserialize``1(System.String,``0)">
             <summary>
-            Deserializes a xml-encoded property and returns it as type T. If serializedData is null the default value is returned.
+            Deserializes a json or xml-encoded property and returns it as type T. If serializedData is null the default value is returned.
             </summary>
         </member>
         <member name="M:nCode.Metadata.GenericMetadataHelper.GetProperty``1(System.Type,System.Guid,System.String,``0)">
@@ -1703,7 +1708,17 @@
         </member>
         <member name="M:nCode.Settings.SetProperty``1(System.String,``0)">
             <summary>
-            Sets a property of type T with the given key. Returns the default value if the property does no exists.
+            Sets a property of type T with the given key to the given value.
+            </summary>
+        </member>
+        <member name="P:nCode.Settings.IsSetupComplete">
+            <summary>
+            Gets or sets a value indicating if Setup has been completed.
+            </summary>
+        </member>
+        <member name="P:nCode.Settings.HostMappings">
+            <summary>
+            Gets or sets the list of Host Mappings.
             </summary>
         </member>
         <member name="P:nCode.Settings.Url">
