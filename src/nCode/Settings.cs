@@ -13,10 +13,13 @@ using System.Xml.Serialization;
 using nCode.Configuration;
 using nCode.Security;
 using nCode.UI;
+using System.Linq;
 
 using Dapper;
 using Newtonsoft.Json;
 using nCode.Data;
+using nCode.Models;
+using Common.Logging;
 
 namespace nCode
 {
@@ -37,14 +40,64 @@ namespace nCode
             };
             InitializeModules();
         }
+        
+        private static List<HostMapping> ConvertFromLegacyHostMapping()
+        {
+            var log = LogManager.GetLogger(type: typeof(Settings));
+            log.Info("Converting Host Mappings from Legacy Storage (in Web.config)");
+
+            var siteSection = SiteSection.GetSection();
+
+            if (siteSection != null && siteSection.HostMappings != null)
+            {
+                return siteSection.HostMappings.Select(x => new HostMapping()
+                {
+                    Hostname = x.Name,
+                    FrontpagePath = x.FrontpagePath,
+                    MasterPageFile = x.MasterPageFile,
+                    DefaultCulture = x.DefaultCulture
+                }).ToList();
+            }
+
+            return null;
+        }
 
         /*
          * Site settings
          */
 
+        /// <summary>
+        /// Gets or sets a value indicating if Setup has been completed.
+        /// </summary>
         public static bool IsSetupComplete
         {
             get { return GetProperty("nCode.System.Setup", false); }
+        }
+
+        /// <summary>
+        /// Gets or sets the list of Host Mappings.
+        /// </summary>
+        public static List<HostMapping> HostMappings
+        {
+            get
+            {
+                var hostMapping = GetProperty<List<HostMapping>>("nCode.System.HostMappings", null);
+
+                /* Try to convert from Legacy Storage in Web.config. */
+                if (hostMapping == null) {
+                    hostMapping = ConvertFromLegacyHostMapping();
+
+                    /* If still no Host Mapping create a new empty one. */
+                    if (hostMapping == null)
+                        hostMapping = new List<HostMapping>();
+
+                    /* Save to Settings Storage for future request. */
+                    HostMappings = hostMapping;
+                }
+
+                return hostMapping;
+            }
+            set { SetProperty("nCode.System.HostMappings", value); }
         }
 
         /// <summary>
@@ -327,7 +380,7 @@ namespace nCode
         }
 
         /// <summary>
-        /// Sets a property of type T with the given key. Returns the default value if the property does no exists.
+        /// Sets a property of type T with the given key to the given value.
         /// </summary>
         public static void SetProperty<T>(string key, T value)
         {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using nCode.Configuration;
+using nCode.Models;
 
 namespace nCode
 {
@@ -17,13 +18,13 @@ namespace nCode
         /// <summary>
         /// Gets the current host mapping, if any.
         /// </summary>
-        public static HostMappingElement CurrentHostMapping
+        public static HostMapping CurrentHostMapping
         {
             get
             {
                 if (HttpContext.Current == null)
                     throw new InvalidOperationException("Getting the CurrentHostMapping requires a current HttpContext.");
-                return (HostMappingElement)HttpContext.Current.Items[currentHostMappingItem];
+                return (HostMapping)HttpContext.Current.Items[currentHostMappingItem];
             }
             private set
             {
@@ -37,22 +38,18 @@ namespace nCode
         {
             HttpApplication app = (HttpApplication)sender;
             Uri requestUrl = app.Request.Url;
-            
-            SiteSection siteSection = SiteSection.GetSection();
-            if (siteSection != null && siteSection.HostMappings != null)
+
+            /* 2011-07-29: This site uses the new host mapping functionality. */
+            var mapping = Settings.HostMappings.FirstOrDefault(x => x.Hostname.Equals(requestUrl.Host, StringComparison.InvariantCultureIgnoreCase));
+            if (mapping != null)
             {
-                /* 2011-07-29: This site uses the new host mapping functionality. */
-                var mapping = siteSection.HostMappings.FirstOrDefault(x => x.Name.Equals(requestUrl.Host, StringComparison.InvariantCultureIgnoreCase));
-                if (mapping != null)
-                {
-                    CurrentHostMapping = mapping;
+                CurrentHostMapping = mapping;
 
-                    /* We are only going to redirect the root request. */
-                    if (requestUrl.PathAndQuery == "/")
-                        app.Response.RedirectPermanent(mapping.FrontpagePath);
+                /* We are only going to redirect the root request. */
+                if (requestUrl.PathAndQuery == "/")
+                    app.Response.RedirectPermanent(mapping.FrontpagePath);
 
-                    return;
-                }
+                return;
             }
 
             if (!Settings.EnforceCanonicalDomain || string.IsNullOrEmpty(Settings.Url))
