@@ -186,6 +186,7 @@
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\JobSchedulingController.cs" />
     <Compile Include="Data\CamelCaseContractResolver.cs" />
+    <Compile Include="Models\HostMapping.cs" />
     <Compile Include="JobScheduling\Hangfire\HangfireJobEngine.cs" />
     <Compile Include="JobScheduling\Hangfire\JobSchedulingIntegrationAttribute.cs" />
     <Compile Include="JobScheduling\IBackgroundJob.cs" />
@@ -399,9 +400,7 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
