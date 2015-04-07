@@ -16,7 +16,7 @@ namespace nCode.Search
     {
         public void Execute(ReindexSourceJobParameters parameters)
         {
-            var log = LogManager.GetCurrentClassLogger();
+            var log = LogManager.GetLogger<ReindexSourceJob>();
             var searchSource = SearchHandler.Sources.Where(x => x.SourceGuid == parameters.SourceGuid).SingleOrDefault();
 
             if (searchSource == null)

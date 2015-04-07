@@ -26,10 +26,11 @@ namespace nCode.Controllers
             if (!JobHandler.IsInitialized)
                 return false;
 
+            var queue = JobHandler.Engine.LocalQueue;
             JobHandler.Engine.Queue<ReindexSourceJob, ReindexSourceJobParameters>(new ReindexSourceJobParameters
             {
                 SourceGuid = sourceGuid
-            });
+            }, queue);
 
             return true;
         }

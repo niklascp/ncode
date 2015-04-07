@@ -11,6 +11,7 @@ using Hangfire.Storage;
 using Dapper;
 using Newtonsoft.Json;
 using Hangfire.States;
+using System.Text.RegularExpressions;
 
 namespace nCode.JobScheduling.Hangfire
 {
@@ -19,6 +20,7 @@ namespace nCode.JobScheduling.Hangfire
     /// </summary>
     public class HangfireJobEngine : JobEngine
     {
+        private string localQueue;
         private JobStorage jobStorage;
         private BackgroundJobServer backgroundJobServer;
         private BackgroundJobClient backgroundJobClient;
@@ -66,6 +68,8 @@ namespace nCode.JobScheduling.Hangfire
         /// <param name="queues"></param>
         public HangfireJobEngine(bool useServer = true, string[] queues = null)
         {
+            localQueue = Regex.Replace(Environment.MachineName.ToLower(), @"[^a-z0-9_]", string.Empty);
+
             // TODO: Should we instead create a custom implementation of
             // IJobCreationProcess so we do not pollute the GlobalFilters. 
             GlobalJobFilters.Filters.Add(new JobSchedulingIntegrationAttribute());
@@ -78,7 +82,7 @@ namespace nCode.JobScheduling.Hangfire
             if (useServer)
             {
                 if (queues == null) 
-                    queues = new[] { EnqueuedState.DefaultQueue, Environment.MachineName.ToLower() };
+                    queues = new[] { EnqueuedState.DefaultQueue, localQueue };
 
                 if (queues.Length == 0) throw new ArgumentException("You should specify at least one queue to listen.", "queues");
 
@@ -214,7 +218,7 @@ select * from (
             }
         }
 
-
+        public override string LocalQueue { get { return localQueue; } }
     }
 
     internal class SqlJob

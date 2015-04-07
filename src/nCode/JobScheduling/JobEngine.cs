@@ -45,5 +45,9 @@ namespace nCode.JobScheduling
         /// </summary>
         public abstract IEnumerable<JobExecution> GetJobExecutions(int offset, int count);
 
+        public virtual string LocalQueue
+        {
+            get { return Environment.MachineName; }
+        }
     }
 }
