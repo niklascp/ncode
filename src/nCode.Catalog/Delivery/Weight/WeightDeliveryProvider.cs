@@ -81,7 +81,6 @@ namespace nCode.Catalog.Delivery.Weight
         /// <summary>
         /// Gets a IDeliveryTypeSetupControl to configure types provided by this Delivery Provider.
         /// </summary>
-        /// <returns></returns>
         public override IDeliveryTypeSetupControl GetDeliveryTypeSetupControl()
         {
             return (IDeliveryTypeSetupControl)BuildManager.CreateInstanceFromVirtualPath("~/Admin/Catalog/Delivery/Weight/DeliveryTypeSetupControl.ascx", typeof(Control));

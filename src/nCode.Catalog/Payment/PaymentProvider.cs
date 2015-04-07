@@ -36,6 +36,11 @@ namespace nCode.Catalog.Payment
             return localization.Title;
         }
 
+        public virtual string GetSummeryString(CatalogModel model, Basket basket, PaymentType paymentType)
+        {
+            return GetDisplayString(model, paymentType);
+        }
+
         public virtual string GetOrderString(CatalogModel model, Order order, PaymentType paymentType)
         {
             var localization = paymentType.Localizations.SingleOrDefault(x => x.Culture == order.Culture);
