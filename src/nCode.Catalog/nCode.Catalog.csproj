@@ -134,6 +134,12 @@
     <Compile Include="Delivery\Gls\GlsController.cs" />
     <Compile Include="Delivery\Gls\Services\ServiceContracts.cs" />
     <Compile Include="Delivery\Gls\Services\DataContracts.cs" />
+    <Compile Include="Delivery\Pdk\PdkController.cs" />
+    <Compile Include="Delivery\Pdk\Models\ServicePoint.cs" />
+    <Compile Include="Delivery\Pdk\PdkParcelShopDeliveryProvider.cs" />
+    <Compile Include="Delivery\Pdk\Services\IPdkServicePointServiceClient.cs" />
+    <Compile Include="Delivery\Pdk\Services\PdkServicePointServiceClient.cs" />
+    <Compile Include="Delivery\Unifaun\Models\ErpConnect.cs" />
     <Compile Include="ICatalogRepository.cs" />
     <Compile Include="ItemSearchSource.cs" />
     <Compile Include="CategoriesContentType.cs" />

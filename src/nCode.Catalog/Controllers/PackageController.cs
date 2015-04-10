@@ -28,19 +28,37 @@ namespace nCode.Catalog.Controllers
             var draft = Settings.GetProperty<PackageDraftItem[]>("nCode.Catalog.PackageDraft", null) ?? new PackageDraftItem[] { };
             var workingDraft = new List<PackageDraftItem>(draft);
 
+            using (var catalogModel = new CatalogModel()) {
             foreach (var orderNo in orderNoSet)
             {
+                var order = catalogModel.Orders.SingleOrDefault(x => x.OrderNo == orderNo);
+
+                if (order == null)
+                    continue;
+
                 var existing = workingDraft.FirstOrDefault(x => x.OrderNo == orderNo);
 
                 if (existing == null)
                 {
+                    var services = new List<string>();
+
+                    if (!string.IsNullOrEmpty(order.GetProperty("PdkParcelShopId", string.Empty)))
+                    {
+                        services.Add("PUPOPT");
+                    }
+                    else
+                    {
+                        services.Add("DLV");
+                    }
+
                     workingDraft.Add(new PackageDraftItem
                     {
                         OrderNo = orderNo,
                         PackageProductCode = "P19DK",
-                        PackageProductServices = new[] { "DLV" }
+                        PackageProductServices = services.ToArray()
                     });
                 }
+            }
             }
 
             Settings.SetProperty<PackageDraftItem[]>("nCode.Catalog.PackageDraft", workingDraft.ToArray());
