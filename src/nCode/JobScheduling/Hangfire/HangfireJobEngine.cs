@@ -68,8 +68,6 @@ namespace nCode.JobScheduling.Hangfire
         /// <param name="queues"></param>
         public HangfireJobEngine(bool useServer = true, string[] queues = null)
         {
-            localQueue = Regex.Replace(Environment.MachineName.ToLower(), @"[^a-z0-9_]", string.Empty);
-
             // TODO: Should we instead create a custom implementation of
             // IJobCreationProcess so we do not pollute the GlobalFilters. 
             GlobalJobFilters.Filters.Add(new JobSchedulingIntegrationAttribute());
@@ -81,6 +79,8 @@ namespace nCode.JobScheduling.Hangfire
 
             if (useServer)
             {
+                localQueue = Regex.Replace(Environment.MachineName.ToLower(), @"[^a-z0-9_]", string.Empty);
+
                 if (queues == null) 
                     queues = new[] { EnqueuedState.DefaultQueue, localQueue };
 
@@ -90,8 +90,6 @@ namespace nCode.JobScheduling.Hangfire
                 {
                     Queues = queues
                 }, jobStorage);
-
-                backgroundJobServer.Start();
             }
 
             backgroundJobClient = new BackgroundJobClient(jobStorage);

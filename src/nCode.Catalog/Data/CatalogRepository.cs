@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nCode.Catalog
+namespace nCode.Catalog.Data
 {
     public class CatalogRepository : nCode.Catalog.ICatalogRepository
     {
@@ -31,25 +31,28 @@ namespace nCode.Catalog
             dbModel = new CatalogModel();
         }
 
-        public IEnumerable<ItemListView> GetItemList(IFilterExpression<CatalogModel, Item> sourceFilter, IOrderByExpression<Item> sourceOrder, int skip = 0, int? take = null)
+        public IEnumerable<ItemListView> GetItemList(IFilterExpression<CatalogModel, Item> filter, IOrderByExpression<Item> order = null, int skip = 0, int? take = null)
         {
             var items = dbModel.Items.AsQueryable();
 
-            if (sourceFilter != null)
-                items = sourceFilter.ApplyFilter(dbModel, items);
+            if (filter != null)
+                items = filter.ApplyFilter(dbModel, items);
 
             items = items.Where(x => x.IsActive);
 
-            if (sourceOrder != null)
-                items = sourceOrder.ApplyOrdering(items);
+            if (order != null)
+                items = order.ApplyOrdering(items);
+
+            var currentCurrencyCode = CurrencyController.CurrentCurrency != null ? CurrencyController.CurrentCurrency.Code : null;
+            var defaultCurrencyCode = CurrencyController.DefaultCurrency != null ? CurrencyController.DefaultCurrency.Code : null;
 
             var viewData = from i in items
                            from l in i.Localizations.Where(x => x.Culture == CultureInfo.CurrentUICulture.Name).DefaultIfEmpty()
                            from g in i.Localizations.Where(x => x.Culture == null)
-                           from cs in i.ListPrices.Where(x => x.CurrencyCode == CurrencyController.CurrentCurrency.Code && x.PriceGroupCode == priceGroup).DefaultIfEmpty()
-                           from ds in i.ListPrices.Where(x => x.CurrencyCode == CurrencyController.DefaultCurrency.Code && x.PriceGroupCode == priceGroup).DefaultIfEmpty()
-                           from c in i.ListPrices.Where(x => x.CurrencyCode == CurrencyController.CurrentCurrency.Code && x.PriceGroupCode == null).DefaultIfEmpty()
-                           from d in i.ListPrices.Where(x => x.CurrencyCode == CurrencyController.DefaultCurrency.Code && x.PriceGroupCode == null)
+                           from cs in i.ListPrices.Where(x => x.CurrencyCode == currentCurrencyCode && x.PriceGroupCode == priceGroup).DefaultIfEmpty()
+                           from ds in i.ListPrices.Where(x => x.CurrencyCode == defaultCurrencyCode && x.PriceGroupCode == priceGroup).DefaultIfEmpty()
+                           from c in i.ListPrices.Where(x => x.CurrencyCode == currentCurrencyCode && x.PriceGroupCode == null).DefaultIfEmpty()
+                           from d in i.ListPrices.Where(x => x.CurrencyCode == defaultCurrencyCode && x.PriceGroupCode == null).DefaultIfEmpty()
                            select new ItemListView
                            {
                                ID = i.ID,

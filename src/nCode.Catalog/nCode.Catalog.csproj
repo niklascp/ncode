@@ -48,8 +48,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Common.Logging.Core.3.1.0\lib\net40\Common.Logging.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Dapper">
-      <HintPath>..\packages\Dapper.1.39\lib\net45\Dapper.dll</HintPath>
+    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Dapper.1.40\lib\net45\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -124,11 +125,13 @@
       <DependentUpon>CatalogModel.dbml</DependentUpon>
     </Compile>
     <Compile Include="CatalogModule.cs" />
-    <Compile Include="CatalogRepository.cs" />
+    <Compile Include="Data\CatalogRepository.cs" />
     <Compile Include="CatalogSettings.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\PackageController.cs" />
+    <Compile Include="Data\CampaignItemFilter.cs" />
+    <Compile Include="Data\SegmentItemFilter.cs" />
     <Compile Include="Delivery\IDeliveryTypeCheckoutControl.cs" />
     <Compile Include="Delivery\Gls\GlsParcelShopDeliveryProvider.cs" />
     <Compile Include="Delivery\Gls\GlsController.cs" />

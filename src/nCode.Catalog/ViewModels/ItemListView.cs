@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using nCode.Catalog.UI;
 
 namespace nCode.Catalog.ViewModels
 {
@@ -27,5 +28,10 @@ namespace nCode.Catalog.ViewModels
         public int BrandIndex { get; set; }
 
         public string ImageFile { get; set; }
+
+        public string Url
+        {
+            get { return SeoUtilities.GetItemUrl(ItemNo, Title); }
+        }
     }
 }
