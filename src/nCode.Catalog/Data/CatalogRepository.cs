@@ -7,10 +7,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using nCode.Catalog.UI;
 
 namespace nCode.Catalog.Data
 {
-    public class CatalogRepository : nCode.Catalog.ICatalogRepository
+    public class CatalogRepository : nCode.Catalog.Data.ICatalogRepository
     {
         public static IOrderByExpression<Item> ItemCategoryOrder
         {
@@ -77,6 +78,43 @@ namespace nCode.Catalog.Data
 
             return viewData.ToList();
         }
+
+        public ItemDetailView GetItemDetail(string itemNo)
+        {
+            var viewData = from i in dbModel.Items.Where(x => x.ItemNo == itemNo)
+                           from l in i.Localizations.Where(x => x.Culture == CultureInfo.CurrentUICulture.Name).DefaultIfEmpty()
+                           from g in i.Localizations.Where(x => x.Culture == null)
+                           select new ItemDetailView
+                           {
+                               ID = i.ID,
+                               ItemNo = i.ItemNo,
+                               Title = (l ?? g).Title,
+                               Description = (l ?? g).Description,
+
+                               SeoKeywords = (l ?? g).SeoKeywords,
+                               SeoDescription = (l ?? g).SeoDescription,
+
+                               OnSale = i.OnSale,
+                               IsAvailable = i.IsAvailable,
+                               VariantMode = i.VariantMode,
+
+                               CategoryID = i.CategoryID,
+                               //CategoryTitle = 
+                               CategoryIndex = i.Index,
+
+                               BrandID = i.BrandID,
+                               BrandName = (i.Brand != null ? i.Brand.Name : null),
+                               BrandIndex = i.BrandIndex,
+                           };
+
+            return viewData.SingleOrDefault();
+        }
+
+        public ItemDetailView GetItemDetail(ItemViewRequest itemViewRequest)
+        {
+            return GetItemDetail(itemViewRequest.ItemNo);
+        }
+
 
         public void Dispose()
         {

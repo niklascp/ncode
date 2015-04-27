@@ -5,8 +5,8 @@ using System.Text;
 
 namespace nCode.UI
 {
-    public interface ISearchProvider
+    public interface ISeoContext
     {
-        IEnumerable<SearchResult> Search(string searchQuery);
+        ISeoData GetSeoData();
     }
 }

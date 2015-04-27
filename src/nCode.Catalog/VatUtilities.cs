@@ -319,12 +319,15 @@ namespace nCode.Catalog
         /// </summary>
         public static decimal? GetItemPrice(string itemNo, string currencyCode, string priceGroupCode = null, bool? includeVat = null)
         {
+            /* We are not going to find a price without a currency. */
+            if (currencyCode == null)
+                return null;
+
             var now = DateTime.Now;
 
             try
             {
                 using (var model = new CatalogModel())
-                using (var db = new CatalogDbContext())
                 {
                     var currency = CurrencyController.Currencies.Single(c => c.Code == currencyCode);
 
@@ -364,6 +367,10 @@ namespace nCode.Catalog
         /// </summary>
         public static decimal? GetItemVariantPrice(string itemNo, Guid? itemVariantID, string currencyCode, string priceGroupCode = null, bool? includeVat = null)
         {
+            /* We are not going to find a price without a currency. */
+            if (currencyCode == null)
+                return null;
+
             using (var model = new CatalogModel())
             using (var db = new CatalogDbContext())
             {

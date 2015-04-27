@@ -6,6 +6,12 @@ using System.Web.Routing;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Web;
+using nCode.Catalog.Models;
+using System.Web.UI;
+using nCode.Catalog.ViewModels;
+using System.Web.UI.HtmlControls;
+using nCode.UI;
 
 namespace nCode.Catalog.UI
 {
@@ -14,8 +20,90 @@ namespace nCode.Catalog.UI
         static Regex matchNonLatin = new Regex(@"[^A-Za-z0-9]", RegexOptions.Compiled);
         static Regex matchMultipleDashes = new Regex(@"-+", RegexOptions.Compiled);
 
-        static SeoUtilities() {
+        static SeoUtilities()
+        {
 
+        }
+
+        public static ItemViewRequest ResolveItemFromHttpContext(HttpContext context, string routeName = "Catalog.Item")
+        {
+            var itemViewRequest = new ItemViewRequest();
+            itemViewRequest.OriginalPath = context.Request.Url.PathAndQuery;
+
+            using (var catalogContext = new CatalogDbContext())
+            {
+                /* If ItemNo is available in QueryString, or has been added to the Items Collection. */
+                if (!string.IsNullOrEmpty(context.Request.QueryString["ItemNo"]) || !string.IsNullOrEmpty(context.Items["ItemNo"] as string))
+                {
+                    var itemNo = !string.IsNullOrEmpty(context.Request.QueryString["ItemNo"]) ? context.Request.QueryString["ItemNo"] : (string)HttpContext.Current.Items["ItemNo"];
+
+                    var itemView = (
+                        from i in catalogContext.Items.Where(x => x.ItemNo == itemNo)
+                        from l in i.Localizations.Where(x => x.Culture == CultureInfo.CurrentUICulture.Name).DefaultIfEmpty()
+                        from g in i.Localizations.Where(x => x.Culture == null)
+                        select new
+                        {
+                            i.ItemNo,
+                            (l ?? g).Title
+                        }
+                    ).SingleOrDefault();
+
+                    if (itemView != null)
+                    {
+                        itemViewRequest.ItemNo = itemView.ItemNo;
+                        itemViewRequest.CanonicalPath = GetItemUrl(itemView.ItemNo, itemView.Title, routeName);
+                        return itemViewRequest;
+                    }
+                }
+                else if (!string.IsNullOrEmpty(context.Request.QueryString["ID"]))
+                {
+                    var id = new Guid(context.Request.QueryString["ID"]);
+
+                    var itemView = (
+                        from i in catalogContext.Items.Where(x => x.ID == id)
+                        from l in i.Localizations.Where(x => x.Culture == CultureInfo.CurrentUICulture.Name).DefaultIfEmpty()
+                        from g in i.Localizations.Where(x => x.Culture == null)
+                        select new
+                        {
+                            i.ItemNo,
+                            (l ?? g).Title
+                        }
+                    ).SingleOrDefault();
+
+                    if (itemView != null)
+                    {
+                        itemViewRequest.ItemNo = itemView.ItemNo;
+                        itemViewRequest.CanonicalPath = GetItemUrl(itemView.ItemNo, itemView.Title, routeName);
+                        return itemViewRequest;
+                    }
+                }                
+            }
+
+            /* Unable to resolve Item. */
+            return null;
+        }
+
+        public static void AddItemSeoTags(System.Web.UI.Page page, ItemDetailView itemView)
+        {
+            /* Add Metadata */
+            if (!string.IsNullOrEmpty(itemView.SeoKeywords))
+                page.AddMetaTag("keywords", itemView.SeoKeywords);
+
+            if (!string.IsNullOrEmpty(itemView.SeoDescription))
+                page.AddMetaTag("description", itemView.SeoDescription);
+
+            /* Open Graph */
+            var ogTitle = new HtmlMeta();
+            ogTitle.Attributes.Add("property", "og:title");
+            ogTitle.Attributes.Add("content", itemView.Title);
+            page.AddMetaControl(ogTitle);
+
+            /*
+            var ogDescription = new HtmlGenericControl("meta");
+            ogDescription.Attributes.Add("property", "og:title");
+            ogDescription.Attributes.Add("content", viewData.Title);
+            Page.AddMetaControl(ogDescription);
+            */
         }
 
         public static bool UseUrlRouting
@@ -57,7 +145,7 @@ namespace nCode.Catalog.UI
         public static string GetItemUrl(string itemNo, string itemTitle, string routeName = "Catalog.Item")
         {
             var routeValues = new RouteValueDictionary();
-            
+
             routeValues.Add("ItemNo", itemNo);
 
             VirtualPathData vpd;
@@ -72,10 +160,12 @@ namespace nCode.Catalog.UI
                 routeValues.Add("Path", "catalog/Item-View");
             }
 
-            if (Settings.SupportedCultureNames.Any() && string.Equals(Settings.SupportedCultureNames.First(), CultureInfo.CurrentUICulture.Name)) {
+            if (Settings.SupportedCultureNames.Any() && string.Equals(Settings.SupportedCultureNames.First(), CultureInfo.CurrentUICulture.Name))
+            {
                 routeName += "(DefaultCulture)";
             }
-            else {
+            else
+            {
                 routeName += "(SpecificCulture)";
                 routeValues.Add("Culture", CultureInfo.CurrentUICulture.Name.ToLower());
             }

@@ -102,7 +102,6 @@
     <Compile Include="ContentPageRewriteHandler.cs" />
     <Compile Include="ContentPageRouteContraint.cs" />
     <Compile Include="ContentPageRouteHandler.cs" />
-    <Compile Include="ContentPageSearchProvider.cs" />
     <Compile Include="ContentPartContentType.cs" />
     <Compile Include="ContentTypeGroup.cs" />
     <Compile Include="ContentPageNode.cs" />

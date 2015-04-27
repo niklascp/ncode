@@ -164,7 +164,7 @@ namespace nCode.Catalog
                 {
                     using (var model = new CatalogModel())
                     {
-                        base.UnitWeight = (from i in model.Items where i.ItemNo == ItemNo select i.Weight).Single();
+                        base.UnitWeight = (from i in model.Items where i.ItemNo == ItemNo select i.Weight).SingleOrDefault();
                     }
 
                     unitWeightLoaded = true;
@@ -186,6 +186,9 @@ namespace nCode.Catalog
         {
             get
             {
+                if (ItemNo == null)
+                    return 0;
+
                 if (ItemVariantID != null)
                     return VatUtilities.GetItemVariantPrice(ItemNo, ItemVariantID.Value, Basket.CurrencyCode, PriceGroup, false) ?? 0m;
                 return VatUtilities.GetItemPrice(ItemNo, Basket.CurrencyCode, PriceGroup, false) ?? 0m;
@@ -204,6 +207,9 @@ namespace nCode.Catalog
         {
             get
             {
+                if (ItemNo == null)
+                    return 0;
+
                 if (ItemVariantID != null)
                     return VatUtilities.GetItemVariantPrice(ItemNo, ItemVariantID.Value, Basket.CurrencyCode, PriceGroup, Basket.IncludeVat) ?? 0m;
                 return VatUtilities.GetItemPrice(ItemNo, Basket.CurrencyCode, PriceGroup, Basket.IncludeVat) ?? 0m;

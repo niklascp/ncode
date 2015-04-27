@@ -240,12 +240,13 @@
     <Compile Include="ServiceModel\BindingExtenions\ClearUsernameCollectionElement.cs" />
     <Compile Include="SystemDbContext.cs" />
     <Compile Include="JobScheduling\JobEngine.cs" />
+    <Compile Include="UI\ISeoContext.cs" />
     <Compile Include="UI\NavigationTree.cs" />
     <Compile Include="UI\INavigationGraph.cs" />
     <Compile Include="UI\NavigationView.cs" />
     <Compile Include="UI\NavigationViewItem.cs" />
     <Compile Include="UI\INavigationItem.cs" />
-    <Compile Include="UI\ISearchProvider.cs" />
+    <Compile Include="UI\ISeoData.cs" />
     <Compile Include="UI\SearchResult.cs" />
     <Compile Include="UI\SiteNavigationItem.cs" />
     <Compile Include="UI\StylesHelper.cs" />

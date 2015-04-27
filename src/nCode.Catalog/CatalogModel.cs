@@ -123,56 +123,31 @@ namespace nCode.Catalog
                 if (property == null)
                     return defaultValue;
 
-                /* Copy the string data to a Memory Stream. */
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    StreamWriter sw = new StreamWriter(ms);
-                    sw.Write(property);
-                    sw.Flush();
-
-                    /* Reset the Memory Stream. */
-                    ms.Position = 0;
-
-                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-                    return (T)xmlSerializer.Deserialize(ms);
-                }
+                return GenericMetadataHelper.Deserialize<T>(property, defaultValue);
             }
         }
 
         public static void SetProperty<T>(Guid id, string key, T value)
         {
             using (CatalogModel model = new CatalogModel(SqlUtilities.ConnectionString))
-            {
-                /* Serialize the data and copy to string. */
-                using (MemoryStream ms = new MemoryStream())
+            {                
+                var property = (from p in model.ItemProperties
+                                where p.ItemID == id && p.Key == key
+                                select p).SingleOrDefault();
+
+                /* Property does not exists. */
+                if (property == null)
                 {
-                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-                    xmlSerializer.Serialize(ms, value);
-
-                    /* Reset the Memory Stream. */
-                    ms.Position = 0;
-
-                    using (StreamReader sr = new StreamReader(ms))
-                    {
-                        var property = (from p in model.ItemProperties
-                                        where p.ItemID == id && p.Key == key
-                                        select p).SingleOrDefault();
-
-                        /* Property does not exists. */
-                        if (property == null)
-                        {
-                            property = new ItemProperty();
-                            property.ID = Guid.NewGuid();
-                            property.ItemID = id;
-                            property.Key = key;
-                            model.ItemProperties.InsertOnSubmit(property);
-                        }
-
-                        property.Value = sr.ReadToEnd();
-
-                        model.SubmitChanges();
-                    }
+                    property = new ItemProperty();
+                    property.ID = Guid.NewGuid();
+                    property.ItemID = id;
+                    property.Key = key;
+                    model.ItemProperties.InsertOnSubmit(property);
                 }
+
+                property.Value = GenericMetadataHelper.Serialize<T>(value);
+
+                model.SubmitChanges();
             }
         }
 

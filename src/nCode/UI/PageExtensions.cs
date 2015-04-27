@@ -98,5 +98,32 @@ namespace nCode.UI
             metaTag.Content = content;
             AddMetaControl(page, metaTag);
         }
+
+        /// <summary>
+        /// Adds Seo-tags (Currently Meta- and Open Graph-tags) based on the given ISeoData item.
+        /// </summary>
+        public static void AddSeoTags(this System.Web.UI.Page page, ISeoData seoData)
+        {
+            /* Add Metadata */
+            if (!string.IsNullOrEmpty(seoData.SeoKeywords))
+                page.AddMetaTag("keywords", seoData.SeoKeywords);
+
+            if (!string.IsNullOrEmpty(seoData.SeoDescription))
+                page.AddMetaTag("description", seoData.SeoDescription);
+
+            /* Open Graph */
+            var ogTitle = new HtmlMeta();
+            ogTitle.Attributes.Add("property", "og:title");
+            ogTitle.Attributes.Add("content", seoData.Title);
+            page.AddMetaControl(ogTitle);
+
+            /*
+            var ogDescription = new HtmlGenericControl("meta");
+            ogDescription.Attributes.Add("property", "og:title");
+            ogDescription.Attributes.Add("content", viewData.Title);
+            Page.AddMetaControl(ogDescription);
+            */
+        }
+
     }
 }
