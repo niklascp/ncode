@@ -38,6 +38,11 @@ namespace nCode.UI
         /// </summary>
         public IEnumerable<INavigationItem> Roots { get { return roots.Value; } }
 
+        protected NavigationTree()
+        {
+            roots = new Lazy<IEnumerable<INavigationItem>>(() => Expand(null));
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigationTree"/> class.
         /// </summary>
@@ -45,13 +50,11 @@ namespace nCode.UI
         /// <param name="viewFilter">The view filter.</param>
         /// <param name="traverseFilter">The traverse filter.</param>
         /// <param name="root">The initial root of the tree, or null the true root.</param> 
-        public NavigationTree(Expression<Func<E, bool>> sourceFilter = null, Func<V, bool> viewFilter = null, Func<V, bool> traverseFilter = null, INavigationItem root = null)
+        protected NavigationTree(Expression<Func<E, bool>> sourceFilter = null, Func<V, bool> viewFilter = null, Func<V, bool> traverseFilter = null, INavigationItem root = null)
         {
             SourceFilter = sourceFilter ?? (x => true); 
             ViewFilter = viewFilter;
             TraverseFilter = traverseFilter;
-
-            items = InitializeSource();
 
             roots = new Lazy<IEnumerable<INavigationItem>>(() => Expand(root));
         }
@@ -67,6 +70,9 @@ namespace nCode.UI
         /// </summary>
         public IEnumerable<INavigationItem> Expand(INavigationItem item)
         {
+            if (items == null)
+                items = InitializeSource();
+
             if (item != null && !(item is V))
                 throw new NotSupportedException(string.Format("{0} can only expand items of type {1}.", this.GetType(), typeof(V)));
 
