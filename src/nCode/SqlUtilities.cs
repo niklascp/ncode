@@ -121,14 +121,13 @@ namespace nCode
                 sqlBuilder.AppendLine("  DROP TABLE [" + tableName + "]");
                 sqlBuilder.AppendLine("END");
 
-                SqlCommand cmd = new SqlCommand(sqlBuilder.ToString(), conn);
-                cmd.ExecuteNonQuery();
+                conn.Execute(sqlBuilder.ToString());
             }
         }
 
         public static void DropColumnIfExist(string tableName, string columnName)
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            using (var conn = new SqlConnection(ConnectionString))
             {
                 conn.Open();
 
@@ -138,17 +137,13 @@ namespace nCode
                 sqlBuilder.AppendLine("  ALTER TABLE [" + tableName + "] DROP COLUMN [" + columnName + "]");
                 sqlBuilder.AppendLine("END");
 
-                SqlCommand cmd = new SqlCommand(sqlBuilder.ToString(), conn);
-                cmd.Parameters.AddWithValue("@Table", tableName);
-                cmd.Parameters.AddWithValue("@Column", columnName);
-
-                cmd.ExecuteNonQuery();
+                conn.Execute(sqlBuilder.ToString());
             }
         }
 
         public static void DropForeignKeyIfExist(string tableName, string constraintName)
         {
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            using (var conn = new SqlConnection(ConnectionString))
             {
                 conn.Open();
 
@@ -158,8 +153,7 @@ namespace nCode
                 sqlBuilder.AppendLine("  ALTER TABLE [" + tableName + "] DROP CONSTRAINT [" + constraintName + "]");
                 sqlBuilder.AppendLine("END");
 
-                SqlCommand cmd = new SqlCommand(sqlBuilder.ToString(), conn);
-                cmd.ExecuteNonQuery();
+                conn.Execute(sqlBuilder.ToString());
             }
         }
 
@@ -169,8 +163,7 @@ namespace nCode
             {
                 conn.Open();
 
-                var sqlCommand = new SqlCommand(sql, conn);
-                sqlCommand.ExecuteNonQuery();
+                conn.Execute(sql);
             }
         }
 
