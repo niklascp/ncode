@@ -12,6 +12,14 @@ namespace nCode.Catalog.Data
     {
         private Guid campaignId;
 
+        public CampaignItemFilter(string campaignCode)
+        {
+            using (var model = new CatalogModel())
+            {
+                this.campaignId = model.Campaigns.Where(x => x.Code == campaignCode).Select(x => x.ID).SingleOrDefault();
+            }
+        }
+
         public CampaignItemFilter(Guid campaignId)
         {
             this.campaignId = campaignId;

@@ -83,29 +83,6 @@ namespace nCode.Catalog.UI
             return null;
         }
 
-        public static void AddItemSeoTags(System.Web.UI.Page page, ItemDetailView itemView)
-        {
-            /* Add Metadata */
-            if (!string.IsNullOrEmpty(itemView.SeoKeywords))
-                page.AddMetaTag("keywords", itemView.SeoKeywords);
-
-            if (!string.IsNullOrEmpty(itemView.SeoDescription))
-                page.AddMetaTag("description", itemView.SeoDescription);
-
-            /* Open Graph */
-            var ogTitle = new HtmlMeta();
-            ogTitle.Attributes.Add("property", "og:title");
-            ogTitle.Attributes.Add("content", itemView.Title);
-            page.AddMetaControl(ogTitle);
-
-            /*
-            var ogDescription = new HtmlGenericControl("meta");
-            ogDescription.Attributes.Add("property", "og:title");
-            ogDescription.Attributes.Add("content", viewData.Title);
-            Page.AddMetaControl(ogDescription);
-            */
-        }
-
         public static bool UseUrlRouting
         {
             get
