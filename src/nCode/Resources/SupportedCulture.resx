@@ -159,6 +159,12 @@
   <data name="nn_NO" xml:space="preserve">
     <value>Norsk (Nynorsk) (Norge)</value>
   </data>
+  <data name="pl" xml:space="preserve">
+    <value>Polsk</value>
+  </data>
+  <data name="pl-PL" xml:space="preserve">
+    <value>Polsk (Polen)</value>
+  </data>
   <data name="sv" xml:space="preserve">
     <value>Svensk</value>
   </data>
