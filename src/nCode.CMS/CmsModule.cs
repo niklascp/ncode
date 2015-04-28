@@ -13,7 +13,7 @@ using nCode.Configuration;
 using nCode.Data;
 using nCode.Search;
 
-using nCode.CMS.Model;
+using nCode.CMS.Models;
 
 namespace nCode.CMS
 {

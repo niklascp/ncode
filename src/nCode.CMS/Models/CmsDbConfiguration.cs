@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nCode.CMS.Model
+namespace nCode.CMS.Models
 {
     public sealed class CmsDbConfiguration : DbMigrationsConfiguration<CmsDbContext>
     {

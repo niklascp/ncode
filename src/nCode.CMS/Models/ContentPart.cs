@@ -8,8 +8,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
-namespace nCode.CMS.Model
+namespace nCode.CMS.Models
 {
     /// <summary>
     /// Represents a CMS Content Part.
@@ -18,6 +19,10 @@ namespace nCode.CMS.Model
     [RenameAttribute("CMS_ContentParts")]
     public class ContentPart : IMetadataContext
     {
+        public ContentPart()
+        {
+            Properties = new Collection<ContentPartProperty>();
+        }
         /// <summary>
         /// Gets or sets the unique identifier.
         /// </summary>

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Web;
 using System.Web.Caching;
+using nCode.CMS.Data;
 
 namespace nCode.CMS
 {
@@ -57,25 +58,10 @@ namespace nCode.CMS
 
         public static ContentPage GetContentPage(Guid id)
         {
-            ContentPage content = null;
-            using (SqlConnection conn = new SqlConnection(nCode.Settings.ConnectionString))
+            using (var cmsRepository = new CmsRepository())
             {
-                conn.Open();
-
-                SqlCommand cmdSelectPage = new SqlCommand("SELECT " + ContentPageFactory.SelectFields + " FROM CMS_ContentPage WHERE ID = @ID", conn);
-                cmdSelectPage.Parameters.AddWithValue("@ID", id);
-
-                SqlDataReader rdrPage = cmdSelectPage.ExecuteReader();
-
-                if (rdrPage.Read())
-                {
-                    content = ContentPageFactory.CreateContentPage(rdrPage);
-                }
-
-                rdrPage.Close();
+                return cmsRepository.GetContentPage(id);
             }
-
-            return content;
         }
 
         /// <summary>

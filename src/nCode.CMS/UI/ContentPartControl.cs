@@ -4,7 +4,7 @@ using System.Web.UI;
 using System.Xml.Serialization;
 using System.Data.SqlClient;
 using System.IO;
-using nCode.CMS.Model;
+using nCode.CMS.Models;
 using System.Web.UI.WebControls;
 
 namespace nCode.CMS.UI

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace nCode.CMS.Model
+namespace nCode.CMS.Models
 {
     /// <summary>
     /// Represents a CMS Content Part.

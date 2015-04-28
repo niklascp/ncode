@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nCode.CMS.Model
+namespace nCode.CMS.Models
 {
     /// <summary>
     /// Represents the CMS database.
@@ -30,6 +30,12 @@ namespace nCode.CMS.Model
         {
 
         }
+
+        /// <summary>
+        /// Gets the set of Content Parts.
+        /// </summary>
+        [ForeignEntityAtrribute]        
+        public DbSet<ContentBlock> ContentBlocks { get; set; }
 
         /// <summary>
         /// Gets the set of Content Pages.

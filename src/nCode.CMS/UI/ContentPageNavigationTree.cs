@@ -6,7 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 
 using nCode.CMS;
-using nCode.CMS.Model;
+using nCode.CMS.Models;
 using nCode.Metadata;
 using nCode.UI;
 

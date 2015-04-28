@@ -105,6 +105,8 @@
     <Compile Include="ContentPartContentType.cs" />
     <Compile Include="ContentTypeGroup.cs" />
     <Compile Include="ContentPageNode.cs" />
+    <Compile Include="Data\CmsRepository.cs" />
+    <Compile Include="Data\ICmsRepository.cs" />
     <Compile Include="GenericContentType.cs" />
     <None Include="packages.config" />
     <Compile Include="ContentPageSearchSource.cs" />
@@ -117,12 +119,13 @@
     <Compile Include="Migrations\201405281636411_RenameToContentPartInstance.Designer.cs">
       <DependentUpon>201405281636411_RenameToContentPartInstance.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\CmsDbContext.cs" />
-    <Compile Include="Model\CmsDbConfiguration.cs" />
-    <Compile Include="Model\ContentPageEntity.cs" />
-    <Compile Include="Model\ContentPartInContainer.cs" />
-    <Compile Include="Model\ContentPart.cs" />
-    <Compile Include="Model\ContentPartProperty.cs" />
+    <Compile Include="Models\CmsDbContext.cs" />
+    <Compile Include="Models\CmsDbConfiguration.cs" />
+    <Compile Include="Models\ContentPageEntity.cs" />
+    <Compile Include="Models\ContentBlock.cs" />
+    <Compile Include="Models\ContentPartInContainer.cs" />
+    <Compile Include="Models\ContentPart.cs" />
+    <Compile Include="Models\ContentPartProperty.cs" />
     <Compile Include="StaticPathUtilities.cs" />
     <Compile Include="UI\CmsNavigationExtensions.cs" />
     <Compile Include="UI\ContentBlockUtilities.cs" />

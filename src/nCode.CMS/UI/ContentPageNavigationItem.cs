@@ -5,7 +5,7 @@ using System.Linq;
 using nCode.Metadata;
 using nCode.UI;
 using nCode.CMS;
-using nCode.CMS.Model;
+using nCode.CMS.Models;
 using System.Data.SqlClient;
 using System.IO;
 using System.Xml.Serialization;

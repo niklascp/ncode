@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using nCode.UI;
 
 
-namespace nCode.CMS.Model
+namespace nCode.CMS.Models
 {
     /// <summary>
     /// Represents a CMS Content Page.

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nCode.CMS.Model
+namespace nCode.CMS.Models
 {    
     /// <summary>
     /// Represents a CMS Content Part Property.
