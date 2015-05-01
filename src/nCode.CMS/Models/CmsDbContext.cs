@@ -32,10 +32,14 @@ namespace nCode.CMS.Models
         }
 
         /// <summary>
-        /// Gets the set of Content Parts.
+        /// Gets the set of Content Blocks.
         /// </summary>
-        [ForeignEntityAtrribute]        
         public DbSet<ContentBlock> ContentBlocks { get; set; }
+
+        /// <summary>
+        /// Gets the set of Content Blocks.
+        /// </summary>
+        public DbSet<ContentBlockLocalization> ContentBlockLocalizations { get; set; }
 
         /// <summary>
         /// Gets the set of Content Pages.

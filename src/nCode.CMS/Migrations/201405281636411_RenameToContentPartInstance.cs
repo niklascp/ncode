@@ -1,4 +1,4 @@
-namespace nCode.CMS.Model
+namespace nCode.CMS.Models
 {
     using System;
     using System.Data.Entity.Migrations;
