@@ -15,14 +15,9 @@ namespace nCode.CMS.Models
     /// <summary>
     /// Represents a CMS Content Part.
     /// </summary>
-    [Table("CMS_ContentBlock")]
-    public class ContentBlock
+    [Table("CMS_ContentBlockLocalization")]
+    public class ContentBlockLocalization
     {
-        public ContentBlock()
-        {
-            Localizations = new Collection<ContentBlockLocalization>();
-        }
-
         /// <summary>
         /// Gets or sets the unique identifier.
         /// </summary>
@@ -33,24 +28,24 @@ namespace nCode.CMS.Models
         public Guid ID { get; set; }
 
         /// <summary>
-        /// Gets or sets the Date and Time for when this Content Block was Created.
+        /// Gets or sets the unique identifier of the Content Block that this Localization belongs to.
         /// </summary>
-        public DateTime Created { get; set; }
+        public Guid ContentBlockID { get; set; }
 
         /// <summary>
-        /// Gets or sets the Date and Time for when this Content Block was last Modified.
+        /// Gets or sets the Culture for this Content Block Localization, or null for the Default Culture.
         /// </summary>
-        public DateTime Modified { get; set; }
+        [MaxLength(255)]
+        public string Cultre { get; set; }
 
         /// <summary>
-        /// Gets or sets the Code for this Content Block.
+        /// Gets or sets the Content for this Content Block Localization.
         /// </summary>
-        [Required, MaxLength(255)]
-        public string Code { get; set; }
+        public string Content { get; set; }
 
         /// <summary>
         /// Gets or sets the Content Block that this Localization belongs to.
         /// </summary>
-        public virtual ICollection<ContentBlockLocalization> Localizations { get; set; }
+        public virtual ContentBlock ContentBlock { get; set; }
     }
 }
