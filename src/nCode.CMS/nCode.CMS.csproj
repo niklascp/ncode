@@ -119,8 +119,13 @@
     <Compile Include="Migrations\201405281636411_RenameToContentPartInstance.Designer.cs">
       <DependentUpon>201405281636411_RenameToContentPartInstance.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505011345414_AddingContentBlocks.cs" />
+    <Compile Include="Migrations\201505011345414_AddingContentBlocks.Designer.cs">
+      <DependentUpon>201505011345414_AddingContentBlocks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\CmsDbContext.cs" />
     <Compile Include="Models\CmsDbConfiguration.cs" />
+    <Compile Include="Models\ContentBlockLocalization.cs" />
     <Compile Include="Models\ContentPageEntity.cs" />
     <Compile Include="Models\ContentBlock.cs" />
     <Compile Include="Models\ContentPartInContainer.cs" />
@@ -206,6 +211,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201405281636411_RenameToContentPartInstance.resx">
       <DependentUpon>201405281636411_RenameToContentPartInstance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505011345414_AddingContentBlocks.resx">
+      <DependentUpon>201505011345414_AddingContentBlocks.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -107,6 +107,16 @@ namespace nCode.CMS.Models
         }
 
         /// <summary>
+        /// Gets the property as raw JSON.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns></returns>
+        public string GetPropertyJson(string key)
+        {
+            return Properties.Where(x => string.Equals(x.Key, key, StringComparison.OrdinalIgnoreCase)).Select(x => x.Value).SingleOrDefault();
+        }
+
+        /// <summary>
         /// Sets the property.
         /// </summary>
         /// <typeparam name="T"></typeparam>

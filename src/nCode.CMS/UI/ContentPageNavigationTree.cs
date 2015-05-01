@@ -54,7 +54,9 @@ where
 	cp.[Language] = @culture and
     cp.[ShowInMenu] = 1 and
     (cp.[ValidFrom] is null or cp.[ValidFrom] <= @today) and
-    (cp.[ValidTo] is null or @today <= cp.[ValidTo]);
+    (cp.[ValidTo] is null or @today <= cp.[ValidTo])
+order by
+    cp.[DisplayIndex];
 ";
         #endregion
 
