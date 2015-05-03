@@ -14,6 +14,9 @@ using nCode.Data;
 using nCode.Search;
 
 using nCode.CMS.Models;
+using Owin;
+using System.Web.Hosting;
+using Common.Logging;
 
 namespace nCode.CMS
 {
@@ -143,7 +146,7 @@ namespace nCode.CMS
             }
         }
 
-        public override void RegisterRoutes(RouteCollection routes)
+        public void RegisterRoutes(RouteCollection routes)
         {
             var routeHandler = new ContentPageRouteHandler();
             var constraint = new ContentPageRouteContraint();
@@ -172,9 +175,12 @@ namespace nCode.CMS
             }
         }
 
-        public void AddContentTypes(HttpApplication app, Module module, string searchPath)
+        public void AddContentTypes(string appPhysicalPath, Module module, string searchPath)
         {
-            var directoryInfo = new DirectoryInfo(app.Server.MapPath(searchPath));
+            var log = LogManager.GetLogger<CmsModule>();
+
+            var directoryInfo = new DirectoryInfo(searchPath.Replace("~", appPhysicalPath));
+            log.Info(string.Format("Searching for CMS Content Types in: '{0}' ...", directoryInfo.FullName));
 
             if (directoryInfo.Exists)
             {
@@ -191,6 +197,9 @@ namespace nCode.CMS
                     }
                 }
             }
+            else {
+                log.Warn(string.Format("Failed to search for CMS Content Types in: '{0}': Directory does not exists.", directoryInfo.FullName));
+            }
         }
 
         /// <summary>
@@ -198,25 +207,55 @@ namespace nCode.CMS
         /// </summary>
         /// <param name="app"></param>
         public override void ApplicationStart(HttpApplication app)
-        {        
-            /* Load Content Types */
-            foreach (var m in Settings.Modules)
-            {
-                /* Add "Custom" Content Types. */
-                AddContentTypes(app, m, "~/" + m.Name + "/ContentControls");
-                /* Add "Standard" Content Types. */
-                AddContentTypes(app, m, "~/Admin/" + m.Name + "/ContentControls");
-            }
+        {
+            var appPhysicalPath = app.Server.MapPath("~");
+            
+            LoadContentTypes(appPhysicalPath);
 
             RegisterRoutes(RouteTable.Routes);
 
             /* Add Content Rewrite Handlers. */
             ContentRewriteControl.AddHandler(new ContentPageRewriteHandler());
 
+            /* Add CMS Search Source. */
             if (SearchHandler.IsInitialized)
-            {
                 SearchHandler.AddSource(new ContentPageSearchSource());
+        }
+
+        private void LoadContentTypes(string appPhysicalPath)
+        {
+            /* Load Content Types */
+            foreach (var m in Settings.Modules)
+            {
+                /* Add "Custom" Content Types. */
+                AddContentTypes(appPhysicalPath, m, "~/" + m.Name + "/ContentControls");
+                /* Add "Standard" Content Types. */
+                AddContentTypes(appPhysicalPath, m, "~/Admin/" + m.Name + "/ContentControls");
             }
+        }
+
+        /// <summary>
+        /// Called on application startup when running on OWIN.
+        /// </summary>
+        public override void Startup(IAppBuilder app)
+        {
+            var appPhysicalPath = HostingEnvironment.MapPath("~");
+            if (appPhysicalPath == null)
+            {
+                var uriPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
+                appPhysicalPath = new Uri(uriPath).LocalPath + "/";
+            }
+
+            LoadContentTypes(appPhysicalPath);
+
+            RegisterRoutes(RouteTable.Routes);
+
+            /* Add Content Rewrite Handlers. */
+            ContentRewriteControl.AddHandler(new ContentPageRewriteHandler());
+
+            /* Add CMS Search Source. */
+            if (SearchHandler.IsInitialized)
+                SearchHandler.AddSource(new ContentPageSearchSource());
         }
     }
 }

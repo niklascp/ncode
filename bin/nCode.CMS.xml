@@ -15,6 +15,11 @@
             </summary>
             <param name="app"></param>
         </member>
+        <member name="M:nCode.CMS.CmsModule.Startup(Owin.IAppBuilder)">
+            <summary>
+            Called on application startup when running on OWIN.
+            </summary>
+        </member>
         <member name="T:nCode.CMS.ContentPageRewriteHandler">
             <summary>
             Rewites links in content to SEO-friendly style.

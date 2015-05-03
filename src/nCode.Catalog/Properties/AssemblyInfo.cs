@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("nCode.Catalog")]
+[assembly: AssemblyTitle("nCode Catalog")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("nCode")]
-[assembly: AssemblyProduct("nCode.Catalog")]
-[assembly: AssemblyCopyright("Copyright © nCode 2009")]
+[assembly: AssemblyProduct("nCode")]
+[assembly: AssemblyCopyright("Copyright © nCode 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

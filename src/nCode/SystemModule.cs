@@ -11,11 +11,47 @@ using nCode.Configuration;
 using nCode.Data;
 using nCode.Metadata;
 using nCode.Security;
+using Owin;
 
 namespace nCode
 {
+    /// <summary>
+    /// Represents the System Module.
+    /// </summary>
     public class SystemModule : Module
     {
+        private void RegisterRoutes(RouteCollection routes)
+        {
+            var routeHandler = new CultureRouteHandler();
+
+            /* Add Route Mappings */
+            routes.Add(
+                "System.Page(SpecificCulture)",
+                    new Route("{Culture}/{*Path}",
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary() { { "Culture", "[a-z]{2}-[a-z]{2,3}" }, { "Path", new CultureRouteContraint() } },
+                        routeHandler)
+                );
+
+            routes.Add(
+                "System.Page(DefaultCulture)",
+                    new Route("{*Path}",
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary() { { "Path", new CultureRouteContraint() } },
+                        routeHandler)
+                );
+        }
+
+        private void GenericStartup()
+        {
+            RegisterRoutes(RouteTable.Routes);
+
+            ContentRewriteControl.AddHandler(new ObfuscateEmailRewriteHandler());
+
+            /* Register MetadataTypes Mappings */
+            EditControlBindings.Bindings.Add(typeof(string), "~/Admin/System/MetadataEditControls/TextBox.ascx");
+        }
+
         public override decimal Version
         {
             get
@@ -70,30 +106,13 @@ namespace nCode
         }
 
         public override void ApplicationStart(HttpApplication app)
-        {            
-            var routeHandler = new CultureRouteHandler();
+        {
+            GenericStartup();
+        }
 
-            /* Add Route Mappings */
-            RouteTable.Routes.Add(
-                "System.Page(SpecificCulture)",
-                    new Route("{Culture}/{*Path}",
-                        new RouteValueDictionary(),
-                        new RouteValueDictionary() { { "Culture", "[a-z]{2}-[a-z]{2,3}" }, { "Path", new CultureRouteContraint() } },
-                        routeHandler)
-                );
-
-            RouteTable.Routes.Add(
-                "System.Page(DefaultCulture)",
-                    new Route("{*Path}",
-                        new RouteValueDictionary(),
-                        new RouteValueDictionary() { { "Path", new CultureRouteContraint() } },
-                        routeHandler)
-                );
-
-            ContentRewriteControl.AddHandler(new ObfuscateEmailRewriteHandler());
-
-            /* Register MetadataTypes Mappings */
-            EditControlBindings.Bindings.Add(typeof(string), "~/Admin/System/MetadataEditControls/TextBox.ascx");
+        public override void Startup(IAppBuilder app)
+        {
+            GenericStartup();
         }
     }
 }

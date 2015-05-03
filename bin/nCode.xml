@@ -394,6 +394,11 @@
             Background Job Parameters for Reindex Source Jobs.
             </summary>
         </member>
+        <member name="T:nCode.Startup">
+            <summary>
+            Main startup class for OWIN.
+            </summary>
+        </member>
         <member name="T:nCode.CultureRouteContraint">
             <summary>
             Checkes the Culture and the StaticPath parameter, and returns true if a corresponding content page exists.
@@ -963,14 +968,14 @@
             </summary>
             <param name="app"></param>
         </member>
-        <member name="M:nCode.Configuration.Module.RegisterRoutes(System.Web.Routing.RouteCollection)">
+        <member name="M:nCode.Configuration.Module.Startup(Owin.IAppBuilder)">
             <summary>
-            Called on Application Start. Allows the module to register routes.
+            Called on application startup when running on OWIN.
             </summary>
         </member>
         <member name="M:nCode.Configuration.Module.Upgrade">
             <summary>
-            Called on Application Start. Allows the module to register routes.
+            Upgrades this module to its latest version.
             </summary>
         </member>
         <member name="M:nCode.Metadata.GenericMetadataHelper.Serialize``1(``0)">
@@ -1067,6 +1072,11 @@
         <member name="P:nCode.UI.TreeNavigationItem.HasChildren">
             <summary>
             Gets or set a value indicating if this node has child nodes.
+            </summary>
+        </member>
+        <member name="T:nCode.SystemModule">
+            <summary>
+            Represents the System Module.
             </summary>
         </member>
         <member name="T:nCode.Data.ForeignKey">

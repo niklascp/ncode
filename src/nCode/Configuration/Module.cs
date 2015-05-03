@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Routing;
 using System.Xml;
 using System.Xml.Linq;
+using Owin;
 
 namespace nCode.Configuration
 {
@@ -132,12 +133,12 @@ namespace nCode.Configuration
         public virtual void ApplicationStart(HttpApplication app) { }
 
         /// <summary>
-        /// Called on Application Start. Allows the module to register routes.
+        /// Called on application startup when running on OWIN.
         /// </summary>
-        public virtual void RegisterRoutes(RouteCollection routes) { }
+        public virtual void Startup(IAppBuilder app) { }
 
         /// <summary>
-        /// Called on Application Start. Allows the module to register routes.
+        /// Upgrades this module to its latest version.
         /// </summary>
         public virtual void Upgrade() { }
     }

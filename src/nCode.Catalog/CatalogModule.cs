@@ -10,6 +10,7 @@ using nCode.Configuration;
 using nCode.Data;
 using nCode.Search;
 using nCode.Catalog.Models;
+using Owin;
 
 namespace nCode.Catalog
 {
@@ -17,6 +18,59 @@ namespace nCode.Catalog
     {
         private const string showPricesIncludingVatKey = "nCode.Catalog.Sales.ShowPricesIncludingVatKey";
         private const string pricesIncludesVatKey = "nCode.Catalog.Sales.PricesIncludesVat";
+
+        private void RegisterRoutes(RouteCollection routes)
+        {
+            routes.MapHttpRoute(
+                name: "CatalogAdminApi",
+                routeTemplate: "admin/catalog/api/{controller}/{action}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+
+            /* Some sites have custom implementations that predates this. */
+            if (routes["Catalog.Category"] == null)
+            {
+                routes.Add(
+                    "Catalog.Category",
+                        new Route("{Culture}/category/{CategoryTitle}/{CategoryNo}",
+                            new RouteValueDictionary(),
+                            new RouteValueDictionary() { { "Culture", "[a-z]{2}-[a-z]{2,3}" }, { "CategoryTitle", @"[A-Za-z0-9-]+" }, { "CategoryNo", @"[0-9]+" } },
+                            new CategoryRouteHandler())
+                    );
+            }
+
+            routes.Add(
+                "Catalog.Item(SpecificCulture)",
+                    new Route("{Culture}/item/{ItemTitle}/{*ItemNo}",
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary() { { "Culture", "[a-z]{2}-[a-z]{2,3}" }, { "ItemTitle", @"[A-Za-z0-9-]+" } },
+                        new ItemRouteHandler())
+                );
+            routes.Add(
+                "Catalog.Item(DefaultCulture)",
+                    new Route("item/{ItemTitle}/{*ItemNo}",
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary() { { "ItemTitle", @"[A-Za-z0-9-]+" } },
+                        new ItemRouteHandler())
+                );
+        }
+
+        private void GenericStartup()
+        {
+            RegisterRoutes(RouteTable.Routes);
+
+            TermEvaluators.Add("ActiveteSalesFeatures", () => SalesSettings.ActivateSalesFeatures);
+            TermEvaluators.Add("ActiveteSalesStatistics", () => SalesSettings.ActivateSalesStatistics);
+
+            TermEvaluators.Add("UseDiscountCodes", () => SalesSettings.AllowDiscountCodes);
+
+            TermEvaluators.Add("UseAdvancedStockControlLevel", () => SalesSettings.StockControlLevel == StockControlLevel.Advanced);
+
+            ContentRewriteControl.AddHandler(new ItemRewriteHandler());
+
+            if (SearchHandler.IsInitialized)
+                SearchHandler.AddSource(new ItemSearchSource());
+        }
 
         public override decimal Version
         {
@@ -182,57 +236,14 @@ namespace nCode.Catalog
             #endregion
         }
 
-        public override void RegisterRoutes(RouteCollection routes)
-        {
-            routes.MapHttpRoute(
-                name: "CatalogAdminApi",
-                routeTemplate: "admin/catalog/api/{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
-
-            /* Some sites have custom implementations that predates this. */
-            if (routes["Catalog.Category"] == null)
-            {
-                routes.Add(
-                    "Catalog.Category",
-                        new Route("{Culture}/category/{CategoryTitle}/{CategoryNo}",
-                            new RouteValueDictionary(),
-                            new RouteValueDictionary() { { "Culture", "[a-z]{2}-[a-z]{2,3}" }, { "CategoryTitle", @"[A-Za-z0-9-]+" }, { "CategoryNo", @"[0-9]+" } },
-                            new CategoryRouteHandler())
-                    );
-            }
-
-            routes.Add(
-                "Catalog.Item(SpecificCulture)",
-                    new Route("{Culture}/item/{ItemTitle}/{*ItemNo}",
-                        new RouteValueDictionary(),
-                        new RouteValueDictionary() { { "Culture", "[a-z]{2}-[a-z]{2,3}" }, { "ItemTitle", @"[A-Za-z0-9-]+" } },
-                        new ItemRouteHandler())
-                );
-            routes.Add(
-                "Catalog.Item(DefaultCulture)",
-                    new Route("item/{ItemTitle}/{*ItemNo}",
-                        new RouteValueDictionary(),
-                        new RouteValueDictionary() { { "ItemTitle", @"[A-Za-z0-9-]+" } },
-                        new ItemRouteHandler())
-                );
-        }
-
         public override void ApplicationStart(System.Web.HttpApplication app)
         {
-            RegisterRoutes(RouteTable.Routes);
+            GenericStartup();
+        }
 
-            TermEvaluators.Add("ActiveteSalesFeatures", () => SalesSettings.ActivateSalesFeatures);
-            TermEvaluators.Add("ActiveteSalesStatistics", () => SalesSettings.ActivateSalesStatistics);
-
-            TermEvaluators.Add("UseDiscountCodes", () => SalesSettings.AllowDiscountCodes);
-
-            TermEvaluators.Add("UseAdvancedStockControlLevel", () => SalesSettings.StockControlLevel == StockControlLevel.Advanced);
-
-            ContentRewriteControl.AddHandler(new ItemRewriteHandler());
-
-            if (SearchHandler.IsInitialized)
-                SearchHandler.AddSource(new ItemSearchSource());
+        public override void Startup(IAppBuilder app)
+        {
+            GenericStartup();
         }
     }
 }
