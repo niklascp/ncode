@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+    <configSections xdt:Transform="InsertIfMissing">
+        <section name="log4net" xdt:Locator="Match(name)" xdt:Transform="Remove" />
+        <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" xdt:Locator="Match(name)" xdt:Transform="InsertIfMissing" />
+        <sectionGroup name="nCode" xdt:Locator="Match(name)" xdt:Transform="InsertIfMissing" >
+      		<section name="adminInterface" type="nCode.Configuration.AdminInterfaceSection, nCode" />
+      		<section name="globalization" type="nCode.Configuration.GlobalizationSection, nCode" />
+    	</sectionGroup>
+    </configSections>
+    <appSettings xdt:Transform="InsertIfMissing">
+    	<add key="owin:AutomaticAppStartup" xdt:Locator="Match(key)" xdt:Transform="Remove" />
+
+    	<add key="owin:appStartup" xdt:Locator="Match(key)" xdt:Transform="Remove" />
+    	<add key="owin:appStartup" value="nCode.Startup, nCode" xdt:Locator="Match(key)" xdt:Transform="InsertIfMissing" />
+
+		<add key="ValidationSettings:UnobtrusiveValidationMode" xdt:Locator="Match(key)" xdt:Transform="Remove" />
+    	<add key="ValidationSettings:UnobtrusiveValidationMode" value="None" xdt:Locator="Match(key)" xdt:Transform="InsertIfMissing" />
+	</appSettings>
+
+	<!-- Database Configuration -->
+	<connectionStrings xdt:Transform="InsertIfMissing">		
+    	<add name="Web" connectionString="" providerName="System.Data.SqlClient" xdt:Locator="Match(name)" xdt:Transform="InsertIfMissing" />
+	</connectionStrings>
+
+	<!-- log4net Configuration -->
+  	<log4net configSource="Config\Log.config" xdt:Transform="InsertIfMissing" />
+
+	<!-- nCode Configuration -->
+	<nCode xdt:Transform="InsertIfMissing">
+		<adminInterface>
+			<modules>
+				<add name="System" type="nCode.SystemModule, nCode" file="~/Admin/System/Module.xml" />
+			</modules>
+		</adminInterface>
+		<globalization>
+			<supportedCultures>
+				<add name="da-DK" />
+      		</supportedCultures>
+    	</globalization>
+  	</nCode>
+</configuration>

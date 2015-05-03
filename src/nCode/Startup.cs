@@ -23,9 +23,19 @@ namespace nCode
             var log = LogManager.GetLogger<Startup>();
             log.Info("Application is starting on OWIN ...");
 
-            //SearchHandler.Initialize(new LuceneSearchEngine(this));
-            log.Info("Starting Job Scheduling Middleware ...");
-            JobHandler.Initialize(new HangfireJobEngine());
+            /* Test if system has been configured to enable Setup Middleware. */
+            if (string.IsNullOrEmpty(Settings.ConnectionString) || !Settings.GetProperty("nCode.System.Setup", false))
+            {
+                log.Info("System has not been configured - injecting Setup middleware");
+                app.Use<SetupMiddleware>();
+            }
+            /* Otherwise system has been configured and actual Middleware will be enabled. */
+            else
+            {
+                //SearchHandler.Initialize(new LuceneSearchEngine(this));
+                log.Info("Starting Job Scheduling Middleware ...");
+                JobHandler.Initialize(new HangfireJobEngine());
+            }
 
             /* */
             foreach (var module in Settings.Modules)
@@ -35,7 +45,7 @@ namespace nCode
             }
 
             log.Info("Starting WebApi Middleware ...");
-            var httpConfiguration = new HttpConfiguration();            
+            var httpConfiguration = new HttpConfiguration();
             httpConfiguration.MapHttpAttributeRoutes();
             httpConfiguration.Formatters.JsonFormatter.SupportedMediaTypes.Add(new System.Net.Http.Headers.MediaTypeHeaderValue("text/html"));
             httpConfiguration.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();

@@ -394,6 +394,21 @@
             Background Job Parameters for Reindex Source Jobs.
             </summary>
         </member>
+        <member name="T:nCode.SetupMiddleware">
+            <summary>
+            Middleware for System Setup.
+            </summary>
+        </member>
+        <member name="M:nCode.SetupMiddleware.#ctor(Microsoft.Owin.OwinMiddleware)">
+            <summary>
+            Creates a SetupMiddleware
+            </summary>
+        </member>
+        <member name="M:nCode.SetupMiddleware.Invoke(Microsoft.Owin.IOwinContext)">
+            <summary>
+            Invokes SetupMiddleware
+            </summary>
+        </member>
         <member name="T:nCode.Startup">
             <summary>
             Main startup class for OWIN.

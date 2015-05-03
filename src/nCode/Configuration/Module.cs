@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Configuration;
 using System.Configuration.Provider;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Routing;
@@ -47,8 +48,11 @@ namespace nCode.Configuration
             {
                 string file = HttpContext.Current.Server.MapPath(config["file"]);
 
-                XDocument docModule = XDocument.Load(file);
-                configFile = docModule.Root;
+                if (File.Exists(file))
+                {
+                    XDocument docModule = XDocument.Load(file);
+                    configFile = docModule.Root;
+                }
             }
 
             if (!string.IsNullOrEmpty((string)config["title"]))

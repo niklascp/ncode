@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+    <!-- nCode Configuration -->
+    <nCode>
+        <adminInterface>
+            <modules>
+                <add name="CMS" type="nCode.CMS.CmsModule, nCode.CMS" file="~/Admin/CMS/Module.xml" xdt:Locator="Match(name)" xdt:Transform="Remove" />
+            </modules>
+        </adminInterface>
+    </nCode>
+</configuration>
