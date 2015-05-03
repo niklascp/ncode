@@ -180,10 +180,11 @@ namespace nCode.CMS
             var log = LogManager.GetLogger<CmsModule>();
 
             var directoryInfo = new DirectoryInfo(searchPath.Replace("~", appPhysicalPath));
-            log.Info(string.Format("Searching for CMS Content Types in: '{0}' ...", directoryInfo.FullName));
 
             if (directoryInfo.Exists)
             {
+                log.Info(string.Format("Searching for CMS Content Types in: '{0}' ...", directoryInfo.FullName));
+
                 var contentTypeDirectories = directoryInfo.GetDirectories();
                 foreach (var contentTypeDirectory in contentTypeDirectories)
                 {
@@ -197,8 +198,9 @@ namespace nCode.CMS
                     }
                 }
             }
-            else {
-                log.Warn(string.Format("Failed to search for CMS Content Types in: '{0}': Directory does not exists.", directoryInfo.FullName));
+            else
+            {
+                log.Debug(string.Format("Skipping searching for CMS Content Types in: '{0}': Directory does not exists.", directoryInfo.FullName));
             }
         }
 
