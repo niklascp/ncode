@@ -759,36 +759,6 @@
             Represents a node i the navigation graph.
             </summary>
         </member>
-        <member name="M:nCode.UI.NavigationViewItem.GetChildren">
-            <summary>
-            Gets an enumeration object that represents all the child nodes of the current hierarchical node.
-            </summary>
-        </member>
-        <member name="M:nCode.UI.NavigationViewItem.GetParent">
-            <summary>
-            Gets an IHierarchyData object that represents the parent node of the current hierarchical node.
-            </summary>
-        </member>
-        <member name="P:nCode.UI.NavigationViewItem.HasChildren">
-            <summary>
-            Gets a valie that indicates wheather this node has decendents.
-            </summary>
-        </member>
-        <member name="P:nCode.UI.NavigationViewItem.Item">
-            <summary>
-            Gets the hierarchical data node that the object represents.
-            </summary>
-        </member>
-        <member name="P:nCode.UI.NavigationViewItem.Path">
-            <summary>
-            Gets the hierarchical path of the node.
-            </summary>
-        </member>
-        <member name="P:nCode.UI.NavigationViewItem.Type">
-            <summary>
-            Gets a string that identifies the type of the node.
-            </summary>
-        </member>
         <member name="T:nCode.UI.INavigationItem">
             <summary>
             Represents requirements for implementing a Navigation Item.
@@ -812,6 +782,56 @@
         <member name="P:nCode.UI.INavigationItem.Url">
             <summary>
             Gets a possible frindly URL that can be used for navigation to this Navigation Item.
+            </summary>
+        </member>
+        <member name="M:nCode.UI.NavigationViewItem.GetChildren">
+            <summary>
+            Gets an enumeration object that represents all the child nodes of the current hierarchical node.
+            </summary>
+        </member>
+        <member name="M:nCode.UI.NavigationViewItem.GetParent">
+            <summary>
+            Gets an IHierarchyData object that represents the parent node of the current hierarchical node.
+            </summary>
+        </member>
+        <member name="M:nCode.UI.NavigationViewItem.nCode#UI#INavigationItem#GetParent">
+            <summary>
+            Gets a possibly context-specific logical Parent of the Navigation Item in the Navigation Graph. This is used to automatically calculate the breadcrumb path available in <see cref="P:nCode.UI.Navigation.CurrentPath"/>.
+            </summary>
+        </member>
+        <member name="P:nCode.UI.NavigationViewItem.HasChildren">
+            <summary>
+            Gets a valie that indicates wheather this node has decendents.
+            </summary>
+        </member>
+        <member name="P:nCode.UI.NavigationViewItem.Item">
+            <summary>
+            Gets the hierarchical data node that the object represents.
+            </summary>
+        </member>
+        <member name="P:nCode.UI.NavigationViewItem.Path">
+            <summary>
+            Gets the hierarchical path of the node.
+            </summary>
+        </member>
+        <member name="P:nCode.UI.NavigationViewItem.Type">
+            <summary>
+            Gets a string that identifies the type of the node.
+            </summary>
+        </member>
+        <member name="P:nCode.UI.NavigationViewItem.ID">
+            <summary>
+            Gets the unique identifier of the Navigation Item.
+            </summary>
+        </member>
+        <member name="P:nCode.UI.NavigationViewItem.Title">
+            <summary>
+            Gets the title of the Navigation Item.
+            </summary>
+        </member>
+        <member name="P:nCode.UI.NavigationViewItem.Url">
+            <summary>
+            Gets a possible frindly URL that can be used for navigation to the Navigation Item.
             </summary>
         </member>
         <member name="T:nCode.UI.ISeoData">

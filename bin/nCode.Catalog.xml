@@ -1788,6 +1788,61 @@
             </summary>
             <param name="nvpstring"></param>
         </member>
+        <member name="T:nCode.Catalog.UI.ItemListByBrandRequest">
+            <summary>
+            Represents a item list request filtered by brand.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListRequest.GetContextView(nCode.Catalog.Data.ICatalogRepository)">
+            <summary>
+            Gets a contextual view about the item list which provide information to the end user.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListRequest.GetItemList(nCode.Catalog.Data.ICatalogRepository)">
+            <summary>
+            Gets a the item list requested.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListRequest.ListSettings">
+            <summary>
+            Gets item list settings for the request. 
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListByBrandRequest.GetContextView(nCode.Catalog.Data.ICatalogRepository)">
+            <summary>
+            Gets a contextual view about the item list which provide information to the end user.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListByBrandRequest.GetItemList(nCode.Catalog.Data.ICatalogRepository)">
+            <summary>
+            Gets a the item list requested.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListByBrandRequest.BrandID">
+            <summary>
+            Gets the unique identifier of the brand requested by this item list request.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.UI.ItemListByCategoryRequest">
+            <summary>
+            Represents a item list request filtered by category.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListByCategoryRequest.GetContextView(nCode.Catalog.Data.ICatalogRepository)">
+            <summary>
+            Gets a contextual view about the item list which provide information to the end user.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListByCategoryRequest.GetItemList(nCode.Catalog.Data.ICatalogRepository)">
+            <summary>
+            Gets a the item list requested.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListByCategoryRequest.CategoryID">
+            <summary>
+            Gets the unique identifier of the category requested by this item list request.
+            </summary>
+        </member>
         <member name="T:nCode.Catalog.SalesSettings">
             <summary>
             Settings for sales made through the Catalog Module.
