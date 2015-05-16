@@ -9,7 +9,7 @@ namespace nCode.UI
     /// <summary>
     /// Represents a node i the navigation graph.
     /// </summary>
-    public class NavigationViewItem : IHierarchyData
+    public class NavigationViewItem : IHierarchyData, INavigationItem
     {
         private NavigationViewItem parent;
         private INavigationGraph graph;
@@ -91,6 +91,38 @@ namespace nCode.UI
             {
                 return item.GetType().ToString();
             }
+        }
+
+        /// <summary>
+        /// Gets the unique identifier of the Navigation Item.
+        /// </summary>
+        public Guid ID
+        {
+            get { return item.ID; }
+        }
+
+        /// <summary>
+        /// Gets the title of the Navigation Item.
+        /// </summary>
+        public string Title
+        {
+            get { return item.Title; }
+        }
+
+        /// <summary>
+        /// Gets a possible frindly URL that can be used for navigation to the Navigation Item.
+        /// </summary>
+        public string Url
+        {
+            get { return item.Url; }
+        }
+
+        /// <summary>
+        /// Gets a possibly context-specific logical Parent of the Navigation Item in the Navigation Graph. This is used to automatically calculate the breadcrumb path available in <see cref="Navigation.CurrentPath"/>.
+        /// </summary>
+        INavigationItem INavigationItem.GetParent()
+        {
+            return parent;
         }
     }
 }
