@@ -203,7 +203,13 @@
     <Compile Include="Payment\PayPal\PayPalApiData.cs" />
     <Compile Include="Payment\PayPal\PayPalPaymentProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\ItemListByBrandRequest.cs" />
+    <Compile Include="UI\ItemListByCategoryRequest.cs" />
+    <Compile Include="UI\ItemListRequest.cs" />
     <Compile Include="UI\ItemViewRequest.cs" />
+    <Compile Include="ViewModels\BrandView.cs" />
+    <Compile Include="ViewModels\IItemListContextView.cs" />
+    <Compile Include="ViewModels\CategoryView.cs" />
     <Compile Include="ViewModels\ItemDetailView.cs" />
     <Compile Include="ViewModels\ItemListView.cs" />
     <None Include="packages.config" />

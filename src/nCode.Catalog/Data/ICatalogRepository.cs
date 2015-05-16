@@ -6,9 +6,13 @@ using System.Linq.Expressions;
 
 namespace nCode.Catalog.Data
 {
-    interface ICatalogRepository : IDisposable
+    public interface ICatalogRepository : IDisposable
     {
-        IEnumerable<ItemListView> GetItemList(IFilterExpression<CatalogModel, Item> sourceFilter, IOrderByExpression<Item> sourceOrder, int skip = 0, int? take = null);
+        CategoryView GetCategory(Guid categoryId);
+
+        BrandView GetBrand(Guid brandId);
+
+        IEnumerable<ItemListView> GetItemList(IFilterExpression<CatalogModel, Item> filter, IOrderByExpression<Item> order = null, int skip = 0, int? take = null);
 
         ItemDetailView GetItemDetail(string itemNo);
     }

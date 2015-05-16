@@ -25,6 +25,49 @@ namespace nCode.Catalog.UI
 
         }
 
+        public static ItemListRequest ResolveItemListFromHttpContext(HttpContext context)
+        {
+            /* Test for Category Number */
+            if (context.Request.RequestContext.RouteData.Values["CategoryNo"] != null)
+            {
+                int categoryNo;
+
+                if (int.TryParse(context.Request.RequestContext.RouteData.Values["CategoryNo"].ToString(), out categoryNo))
+                {
+                    using (var catalogModel = new CatalogModel())
+                    {
+                        var categoryId = catalogModel.Categories.Where(x => x.CategoryNo == categoryNo).Select(x => x.ID).SingleOrDefault();
+
+                        if (categoryId != null)
+                        {
+                            return new ItemListByCategoryRequest
+                            {
+                                CategoryID = categoryId
+                            };
+                        }
+                    }
+                }
+
+                /* Category No an integer, or category was not found. */
+            }
+            /* Test for Brand Filter */
+            else if (context.Request.QueryString["Brand"] != null)
+            {
+                Guid brandId;
+
+                if (Guid.TryParse(context.Request.QueryString["Brand"], out brandId)) 
+                {
+                    return new ItemListByBrandRequest
+                    {
+                        BrandID = brandId
+                    };
+                }
+            }
+
+            throw new HttpException(404, "Could not resolve item list.");
+        }
+
+
         public static ItemViewRequest ResolveItemFromHttpContext(HttpContext context, string routeName = "Catalog.Item")
         {
             var itemViewRequest = new ItemViewRequest();

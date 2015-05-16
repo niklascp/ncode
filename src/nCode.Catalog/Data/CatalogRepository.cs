@@ -32,6 +32,43 @@ namespace nCode.Catalog.Data
             dbModel = new CatalogModel();
         }
 
+        public CategoryView GetCategory(Guid categoryId)
+        {
+            var categoryView = (from c in dbModel.Categories
+                                from l in c.Localizations.Where(x => x.Culture == CultureInfo.CurrentUICulture.Name).DefaultIfEmpty()
+                                from g in c.Localizations.Where(x => x.Culture == null)
+                                where c.ID == categoryId
+                                select new CategoryView
+                                {
+                                    ID = c.ID,
+                                    Title = (l ?? g).Title,
+                                    Description = (l ?? g).Description,
+                                    SeoDescription = (l ?? g).SeoDescription,
+                                    SeoKeywords = (l ?? g).SeoKeywords
+                                }).SingleOrDefault();
+
+            return categoryView;
+        }
+
+        public BrandView GetBrand(Guid brandId)
+        {
+            var brandView = (from b in dbModel.Brands
+                             from l in b.Localizations.Where(x => x.Culture == CultureInfo.CurrentUICulture.Name).DefaultIfEmpty()
+                             from g in b.Localizations.Where(x => x.Culture == null)
+                             where b.ID == brandId
+                             select new BrandView
+                             {
+                                 ID = b.ID,
+                                 Title = b.Name,
+                                 Description = (l ?? g).Description,
+                                 SeoDescription = (l ?? g).SeoDescription,
+                                 SeoKeywords = (l ?? g).SeoKeywords
+                             }).SingleOrDefault();
+
+            return brandView;
+        }
+
+
         public IEnumerable<ItemListView> GetItemList(IFilterExpression<CatalogModel, Item> filter, IOrderByExpression<Item> order = null, int skip = 0, int? take = null)
         {
             var items = dbModel.Items.AsQueryable();
@@ -118,7 +155,7 @@ namespace nCode.Catalog.Data
 
         public void Dispose()
         {
-            dbModel.Dispose();   
+            dbModel.Dispose();
         }
     }
 }

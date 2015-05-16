@@ -10,6 +10,9 @@ namespace nCode.Catalog.Models
     {
         public ItemListSettings()
         {
+            ShowBreadcrumb = true;
+            NoImageImageFile = LayoutSettings.NoImageImageFile;
+
             ShowTitle = true;
             ShowItemNo = false;
             ShowBrandName = false;
@@ -18,6 +21,11 @@ namespace nCode.Catalog.Models
 
             ShowBuyButton = false;
         }
+
+        public bool ShowBreadcrumb { get; set; }
+
+        public string NoImageImageFile { get; set; }
+
 
         public bool ShowTitle { get; set; }
 
