@@ -21,7 +21,7 @@ namespace nCode.Search
         public LS.Directory IndexDirectory { get; private set; }
         private IndexSearcher indexSearcher;
 
-        public LuceneSearchEngine(HttpApplication app)
+        public LuceneSearchEngine()
         {
             IndexDirectory = LS.FSDirectory.Open(LuceneSearchSettings.LucenePath);
 

@@ -4,6 +4,7 @@ using Common.Logging;
 using nCode.JobScheduling;
 using nCode.JobScheduling.Hangfire;
 using nCode.Logging.Log4Net;
+using nCode.Search;
 using Owin;
 
 namespace nCode
@@ -32,12 +33,13 @@ namespace nCode
             /* Otherwise system has been configured and actual Middleware will be enabled. */
             else
             {
-                //SearchHandler.Initialize(new LuceneSearchEngine(this));
+                log.Info("Starting Search Middleware ...");
+                SearchHandler.Initialize(new LuceneSearchEngine());
                 log.Info("Starting Job Scheduling Middleware ...");
                 JobHandler.Initialize(new HangfireJobEngine());
             }
 
-            /* */
+            /* Start each module. */
             foreach (var module in Settings.Modules)
             {
                 log.Info(string.Format("Staring module: {0} ({1}) ...", module.Name, module.Version.ToString(CultureInfo.InvariantCulture)));
