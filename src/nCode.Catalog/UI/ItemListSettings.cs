@@ -4,8 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nCode.Catalog.Models
+namespace nCode.Catalog.UI
 {
+    /// <summary>
+    /// Represents settings for an item list view.
+    /// </summary>
     public class ItemListSettings
     {
         public ItemListSettings()

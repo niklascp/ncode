@@ -153,7 +153,8 @@
     <Compile Include="Models\BrandLocalization.cs" />
     <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\Campaign.cs" />
-    <Compile Include="Models\ItemListSettings.cs" />
+    <Compile Include="UI\ItemViewSettings.cs" />
+    <Compile Include="UI\ItemListSettings.cs" />
     <Compile Include="Models\VariantMode.cs" />
     <Compile Include="Models\VatGroup.cs" />
     <Compile Include="Models\PriceGroup.cs" />
