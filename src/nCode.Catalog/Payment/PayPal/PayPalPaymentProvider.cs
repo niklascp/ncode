@@ -8,6 +8,7 @@ using System.Collections.Specialized;
 using System.Configuration.Provider;
 using System.Web;
 using System.Globalization;
+using Common.Logging;
 
 namespace nCode.Catalog.Payment.PayPal
 {
@@ -17,12 +18,14 @@ namespace nCode.Catalog.Payment.PayPal
          * {0} Current Hostname
          * {1} Culture Code
          * {2} Order No                             */
-        const string returnUrlFormat = "http:/{0}/{1}/catalog/checkout/Confirmation?OrderNo={2}";
-        const string cancelUrlFormat = "http:/{0}/{1}/catalog/catalog/checkout/Summary";
+        private const string returnUrlFormat = "http://{0}/{1}/catalog/checkout/Confirmation?OrderNo={2}";
+        private const string cancelUrlFormat = "http://{0}/{1}/catalog/catalog/checkout/Summary";
 
         /* Default Values */
-        const string apiHost = "www.paypal.com";
-        const string apiEndPointUrl = "https://api-3t.paypal.com/nvp";
+        private const string apiHost = "www.paypal.com";
+        private const string apiEndPointUrl = "https://api-3t.paypal.com/nvp";
+
+        private readonly ILog log = LogManager.GetLogger<PayPalPaymentProvider>();
 
         public string ApiHost { get; set; }
 
@@ -41,7 +44,7 @@ namespace nCode.Catalog.Payment.PayPal
             if (config["apiHost"] != null)
                 ApiHost = config["apiHost"];
             else
-                ApiHost = apiEndPointUrl;
+                ApiHost = apiHost;
 
             if (config["apiEndPointUrl"] != null)
                 ApiEndPointUrl = config["apiEndPointUrl"];
@@ -108,7 +111,7 @@ namespace nCode.Catalog.Payment.PayPal
             }
             else
             {
-                throw new ApplicationException(string.Format("Error in Paypal checkout. Returned message: {0}.", returnMessage));
+                throw new ApplicationException(string.Format("Error in Paypal checkout. Returned message: '{0}'.", returnMessage));
             }
         }
 
@@ -136,7 +139,7 @@ namespace nCode.Catalog.Payment.PayPal
             }
             else
             {
-                Log.WriteEntry(EntryType.Error, "Catalog", "PayPal Confirm Payment", returnMessage);
+                log.Error("PayPal Confirm Payment failed: " + returnMessage);
             }
         }
     }
