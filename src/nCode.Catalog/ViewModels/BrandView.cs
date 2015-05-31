@@ -15,6 +15,7 @@ namespace nCode.Catalog.ViewModels
         public string Description { get; set; }
         public string SeoDescription { get; set; }
         public string SeoKeywords { get; set; }
+        public string LogoImageFile { get; set; }
 
         public T GetProperty<T>(string key, T defaultValue)
         {

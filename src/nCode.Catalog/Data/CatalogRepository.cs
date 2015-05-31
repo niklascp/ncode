@@ -62,12 +62,12 @@ namespace nCode.Catalog.Data
                                  Title = b.Name,
                                  Description = (l ?? g).Description,
                                  SeoDescription = (l ?? g).SeoDescription,
-                                 SeoKeywords = (l ?? g).SeoKeywords
+                                 SeoKeywords = (l ?? g).SeoKeywords,
+                                 LogoImageFile = b.Image1
                              }).SingleOrDefault();
 
             return brandView;
         }
-
 
         public IEnumerable<ItemListView> GetItemList(IFilterExpression<CatalogModel, Item> filter, IOrderByExpression<Item> order = null, int skip = 0, int? take = null)
         {
@@ -152,6 +152,32 @@ namespace nCode.Catalog.Data
             return GetItemDetail(itemViewRequest.ItemNo);
         }
 
+        public IEnumerable<ItemListView> ListRelatedItems(Guid itemID)
+        {
+            var viewData = from i in dbModel.Items
+                           from g in dbModel.ItemLocalizations.Where(x => x.ItemID == i.ID && x.Culture == null)
+                           from l in dbModel.ItemLocalizations.Where(x => x.ItemID == i.ID && x.Culture == CultureInfo.CurrentUICulture.Name).DefaultIfEmpty()
+                           from ct in i.ListPrices.Where(x => x.CurrencyCode == CurrencyController.CurrentCurrency.Code && x.PriceGroupCode == priceGroup).DefaultIfEmpty()
+                           from dt in i.ListPrices.Where(x => x.CurrencyCode == CurrencyController.DefaultCurrency.Code && x.PriceGroupCode == priceGroup).DefaultIfEmpty()
+                           from c in i.ListPrices.Where(x => x.CurrencyCode == CurrencyController.CurrentCurrency.Code && x.PriceGroupCode == null).DefaultIfEmpty()
+                           from d in i.ListPrices.Where(x => x.CurrencyCode == CurrencyController.DefaultCurrency.Code && x.PriceGroupCode == null).DefaultIfEmpty()
+                           where i.IsActive && dbModel.ItemRelations.Any(x => x.ItemID == itemID && x.RelatedItemID == i.ID)
+                           select new ItemListView
+                           {
+                               ID = i.ID,
+                               ItemNo = i.ItemNo,
+                               Title = (l ?? g).Title,
+                               ListPrice = dt != null ? (ct ?? dt) : (c ?? d),
+                               DefaultListPrice = (c ?? d),
+                               OnSale = i.OnSale,
+                               IsAvailable = i.IsAvailable,
+                               VariantMode = i.VariantMode,
+                               BrandName = (i.Brand != null ? i.Brand.Name : null),
+                               ImageFile = (from img in i.Images orderby img.DisplayIndex select img.ImageFile).FirstOrDefault()
+                           };
+
+            return viewData.ToList();
+        }
 
         public void Dispose()
         {

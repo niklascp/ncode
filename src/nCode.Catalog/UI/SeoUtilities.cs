@@ -84,6 +84,7 @@ namespace nCode.Catalog.UI
                         from i in catalogContext.Items.Where(x => x.ItemNo == itemNo)
                         from l in i.Localizations.Where(x => x.Culture == CultureInfo.CurrentUICulture.Name).DefaultIfEmpty()
                         from g in i.Localizations.Where(x => x.Culture == null)
+                        where i.IsActive
                         select new
                         {
                             i.ItemNo,
@@ -106,6 +107,7 @@ namespace nCode.Catalog.UI
                         from i in catalogContext.Items.Where(x => x.ID == id)
                         from l in i.Localizations.Where(x => x.Culture == CultureInfo.CurrentUICulture.Name).DefaultIfEmpty()
                         from g in i.Localizations.Where(x => x.Culture == null)
+                        where i.IsActive
                         select new
                         {
                             i.ItemNo,
