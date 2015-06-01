@@ -45,20 +45,29 @@ namespace nCode.Catalog
             {
                 lock (lockObject)
                 {
+                    /* Try to get Current Currency from Request State, if present. */
                     Currency currentCurrency = HttpContext.Current.Items[currentCurrencyKey] as Currency;
 
                     if (currentCurrency != null)
                         return currentCurrency;
 
-                    string currencyCode = (string)HttpContext.Current.Session[currentCurrencyKey];
+                    string currencyCode = null;
+                    
+                    /* Try to get Current Currency from Session State, if present. */
+                    if (HttpContext.Current.Session != null)
+                        currencyCode = (string)HttpContext.Current.Session[currentCurrencyKey];
 
                     if (currencyCode != null)
                         currentCurrency = Currencies.SingleOrDefault(x => x.Code == currencyCode);
 
+                    /* Otherwise, get the Default Currency. */
                     if (currentCurrency == null)
                         currentCurrency = Currencies.SingleOrDefault(x => x.IsDefault);
 
+                    /* Store it in Request State for future quries. */
                     HttpContext.Current.Items[currentCurrencyKey] = currentCurrency;
+
+                    /* Return */
                     return currentCurrency;
                 }
             }

@@ -14,7 +14,9 @@ namespace nCode.Catalog.Data
 
         IEnumerable<ItemListView> GetItemList(IFilterExpression<CatalogModel, Item> filter, IOrderByExpression<Item> order = null, int skip = 0, int? take = null);
 
-        ItemDetailView GetItemDetail(string itemNo);
+        IEnumerable<ItemListView> SearchItems(string query, bool includeInActive = false, int skip = 0, int? take = null);
+
+        ItemDetailView GetItem(string itemNo);
 
         IEnumerable<ItemListView> ListRelatedItems(Guid itemID);
     }

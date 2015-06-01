@@ -7,6 +7,7 @@ using nCode.Catalog.Data;
 using nCode.Catalog.Models;
 using nCode.Catalog.ViewModels;
 using nCode.Data.Linq;
+using nCode.UI;
 
 namespace nCode.Catalog.UI
 {
@@ -22,6 +23,11 @@ namespace nCode.Catalog.UI
                 return LayoutSettings.DefaultItemListSettings;
             }
         }
+
+        /// <summary>
+        /// Gets a contextual navigation item for the item list.
+        /// </summary>
+        public abstract INavigationItem GetNavigationItem();
 
         /// <summary>
         /// Gets a contextual view about the item list which provide information to the end user.

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using nCode.Catalog.Data;
 using nCode.Catalog.ViewModels;
 using nCode.Data.Linq;
+using nCode.UI;
 
 namespace nCode.Catalog.UI
 {
@@ -15,6 +16,14 @@ namespace nCode.Catalog.UI
         /// Gets the unique identifier of the brand requested by this item list request.
         /// </summary>
         public Guid BrandID { get; set; }
+
+        /// <summary>
+        /// Gets a contextual navigation item for the item list.
+        /// </summary>
+        public override INavigationItem GetNavigationItem()
+        {
+            return BrandNavigationItem.GetFromID(BrandID);
+        }
 
         /// <summary>
         /// Gets a contextual view about the item list which provide information to the end user.
@@ -30,7 +39,7 @@ namespace nCode.Catalog.UI
         public override IEnumerable<ItemListView> GetItemList(ICatalogRepository catelogRepository)
         {
             return catelogRepository.GetItemList(
-                    filter: new FilterExpression<CatalogModel, Item>(x => x.BrandID == BrandID),
+                    filter: new FilterExpression<CatalogModel, Item>(x => x.IsActive && x.BrandID == BrandID),
                     order: CatalogRepository.ItemBrandOrder
                 );
         }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using nCode.Catalog.Data;
 using nCode.Catalog.ViewModels;
 using nCode.Data.Linq;
+using nCode.UI;
 
 namespace nCode.Catalog.UI
 {
@@ -18,6 +19,14 @@ namespace nCode.Catalog.UI
         /// Gets the unique identifier of the category requested by this item list request.
         /// </summary>
         public Guid CategoryID { get; set; }
+
+        /// <summary>
+        /// Gets a contextual navigation item for the item list.
+        /// </summary>
+        public override INavigationItem GetNavigationItem()
+        {
+            return CategoryNavigationItem.GetFromID(CategoryID);
+        }
 
         /// <summary>
         /// Gets a contextual view about the item list which provide information to the end user.
@@ -33,7 +42,7 @@ namespace nCode.Catalog.UI
         public override IEnumerable<ItemListView> GetItemList(ICatalogRepository catelogRepository)
         {
             return catelogRepository.GetItemList(
-                    filter: new FilterExpression<CatalogModel, Item>(x => x.CategoryID == CategoryID),
+                    filter: new FilterExpression<CatalogModel, Item>(x => x.IsActive && x.CategoryID == CategoryID),
                     order: CatalogRepository.ItemCategoryOrder
                 );
         }

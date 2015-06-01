@@ -130,7 +130,7 @@
     <Compile Include="CatalogModule.cs" />
     <Compile Include="Data\CatalogRepository.cs" />
     <Compile Include="CatalogSettings.cs" />
-    <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\ItemAdministrationController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\PackageController.cs" />
     <Compile Include="Data\CampaignItemFilter.cs" />
@@ -212,6 +212,7 @@
     <Compile Include="ViewModels\IItemListContextView.cs" />
     <Compile Include="ViewModels\CategoryView.cs" />
     <Compile Include="ViewModels\ItemDetailView.cs" />
+    <Compile Include="ViewModels\ItemListPriceView.cs" />
     <Compile Include="ViewModels\ItemListView.cs" />
     <None Include="packages.config" />
     <Compile Include="SalesSettings.cs" />
