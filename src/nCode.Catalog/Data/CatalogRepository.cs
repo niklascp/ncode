@@ -134,7 +134,7 @@ namespace nCode.Catalog.Data
                     MultiplePrices = x.ListPrice.MultiplePrices,
                     Price = x.ListPrice.Price
                 } : null,
-                DefaultListPrice = x.DefaultListPrice != null ? new ItemListPriceView()
+                DefaultListPrice = x.DefaultListPrice != x.ListPrice ? new ItemListPriceView()
                 {
                     CurrencyCode = x.DefaultListPrice.CurrencyCode,
                     PriceGroupCode = x.DefaultListPrice.PriceGroupCode,
@@ -261,7 +261,7 @@ namespace nCode.Catalog.Data
                     MultiplePrices = x.ListPrice.MultiplePrices,
                     Price = x.ListPrice.Price
                 } : null,
-                DefaultListPrice = x.DefaultListPrice != null ? new ItemListPriceView()
+                DefaultListPrice = x.DefaultListPrice != x.ListPrice ? new ItemListPriceView()
                 {
                     CurrencyCode = x.DefaultListPrice.CurrencyCode,
                     PriceGroupCode = x.DefaultListPrice.PriceGroupCode,

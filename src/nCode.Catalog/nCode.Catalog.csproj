@@ -114,7 +114,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ajax\ItemInfo.cs" />
     <Compile Include="Basket.cs" />
     <Compile Include="BasketItem.cs" />
     <Compile Include="BasketController.cs" />

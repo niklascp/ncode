@@ -12,6 +12,7 @@ using nCode.Catalog.Data;
 using nCode.Catalog.Models;
 using nCode.Catalog.ViewModels;
 using nCode.Imaging;
+using System.Net.Http;
 
 namespace nCode.Catalog.Controllers
 {
@@ -28,9 +29,10 @@ namespace nCode.Catalog.Controllers
             {
                 IFilterExpression<CatalogModel, Item> filter = null;
                 IOrderByExpression<Item> order = null;
+                IEnumerable<ItemListView> data = null;
 
                 var parts = path.Split(new char[] { ':' }, 2);
-                
+
                 if (parts.Length < 2)
                     throw new ArgumentException("Invalid path.");
 
@@ -43,6 +45,8 @@ namespace nCode.Catalog.Controllers
 
                     filter = new FilterExpression<CatalogModel, Item>(x => categoryId != null ? x.CategoryID == categoryId : x.CategoryID == null);
                     order = new OrderByExpression<Item, int>(x => x.Index);
+
+                    data = catalogRepository.GetItemList(filter, order);
                 }
                 else if (string.Equals(parts[0], "B"))
                 {
@@ -51,31 +55,81 @@ namespace nCode.Catalog.Controllers
                     if (brandId == Guid.Empty)
                         brandId = null;
 
-                    if (brandId != null)
-                    {
-                        filter = new FilterExpression<CatalogModel, Item>(x => brandId != null ? x.BrandID == brandId : x.BrandID == null);
-                        order = new OrderByExpression<Item, int>(x => x.BrandIndex);
-                    }
+                    filter = new FilterExpression<CatalogModel, Item>(x => brandId != null ? x.BrandID == brandId : x.BrandID == null);
+                    order = new OrderByExpression<Item, int>(x => x.BrandIndex);
+
+                    data = catalogRepository.GetItemList(filter, order);
                 }
                 else if (string.Equals(parts[0], "S"))
                 {
-                    filter = new FilterExpression<CatalogModel, Item>(x => x.ItemNo.Contains(parts[1]));
-                    order = new OrderByExpression<Item, string>(x => x.ItemNo);
+                    data = catalogRepository.SearchItems(parts[1], includeInActive: true);
                 }
                 else
                 {
                     throw new ArgumentException("Unknown prefix '" + parts[0] + "'");
                 }
 
-                var data = catalogRepository.GetItemList(filter, order);
-
-                foreach (var item in data)
+                if (data != null)
                 {
-                    item.ImageFile = item.ImageFile != null ? ImageUtilities.EnsureImageSize(item.ImageFile, 100, 80) : null;
+                    foreach (var item in data)
+                    {
+                        item.ImageFile = item.ImageFile != null ? ImageUtilities.EnsureImageSize(item.ImageFile, 100, 80) : null;
+                    }
                 }
 
                 return data;
             }
+        }
+
+        /// <summary>
+        /// Returns a list of related items given an item id.
+        /// </summary>
+        [Route("related")]
+        [HttpGet]
+        public IEnumerable<ItemListView> ListRelatedItems([FromUri]Guid itemID)
+        {
+            using (var catalogRepository = new CatalogRepository())
+            {
+                var viewData = catalogRepository.ListRelatedItems(itemID);
+
+                foreach (var itemView in viewData)
+                {
+                    itemView.ImageFile = itemView.ImageFile != null ? ImageUtilities.EnsureImageSize(itemView.ImageFile, 100, 80) : null;
+                }
+
+                return viewData;
+            }
+        }
+
+        /// <summary>
+        /// Updates the related items of the given item id with the given list of related item ids.
+        /// </summary>
+        [Route("related")]
+        [HttpPost]
+        public IHttpActionResult UpdateRelatedItems([FromUri]Guid itemID, [FromBody]Guid[] relatedItemIDs)
+        {
+            using (var model = new CatalogModel())
+            {
+                model.ItemRelations.DeleteAllOnSubmit(model.ItemRelations.Where(r => r.ItemID == itemID));
+
+                int displayIndex = 0;
+                foreach (Guid relatedItemID in relatedItemIDs)
+                {
+                    ItemRelation itemRelation = new ItemRelation();
+                    itemRelation.ID = Guid.NewGuid();
+                    itemRelation.ItemID = itemID;
+                    itemRelation.DisplayIndex = displayIndex;
+                    itemRelation.RelatedItemID = relatedItemID;
+
+                    model.ItemRelations.InsertOnSubmit(itemRelation);
+
+                    displayIndex++;
+                }
+
+                model.SubmitChanges();
+            }
+
+            return Ok();
         }
     }
 }
