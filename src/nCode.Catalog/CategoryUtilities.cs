@@ -1,4 +1,7 @@
-﻿using System;
+﻿/* Obsolete Code - Disable Missing Comment Warnings. */
+#pragma warning disable 1591
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -72,6 +75,7 @@ namespace nCode.Catalog
             return childs.AsReadOnly();
         }
 
+        [Obsolete("Please use the new Navigation Framework.")]
         public static IList<CategoryInfoNode> GetCategoryTree(string language = null, CategoryInfoNodeFilter viewFilter = null, CategoryInfoNodeFilter traverseFilter = null, CategoryInfoNode parentNode = null)
         {
             using (var model = new CatalogModel())
@@ -80,6 +84,7 @@ namespace nCode.Catalog
             }
         }
 
+        [Obsolete("Please use the new Navigation Framework.")]
         public static CategoryInfo GetCategoryInfo(Guid id)
         {
             using (CatalogModel model = new CatalogModel(SqlUtilities.ConnectionString))

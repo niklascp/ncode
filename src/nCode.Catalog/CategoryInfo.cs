@@ -15,6 +15,7 @@ using nCode.UI;
 
 namespace nCode.Catalog
 {
+    [Obsolete("Please use the new Navigation Framework.")]
     public class CategoryInfo : IMetadataContext
     {
         private Guid id;
@@ -97,10 +98,19 @@ namespace nCode.Catalog
 
             var parameters = new RouteValueDictionary  
                     { 
-                        { "Culture", CultureInfo.CurrentUICulture.Name.ToLower() }, 
                         { "CategoryTitle", seoTitle } , 
                         { "CategoryNo", CategoryNo.ToString() }
                     };
+
+            if (string.Equals(CultureInfo.CurrentUICulture.Name, Settings.SupportedCultureNames.FirstOrDefault()))
+            {
+                routeName += "(DefaultCulture)";
+            }
+            else
+            {
+                routeName += "(SpecificCulture)";
+                parameters.Add("Culture", CultureInfo.CurrentUICulture.Name.ToLower());
+            }
 
             var vp = RouteTable.Routes.GetVirtualPath(null, routeName, parameters);
 
@@ -120,6 +130,7 @@ namespace nCode.Catalog
         }
     }
 
+    [Obsolete("Please use the new Navigation Framework.")]
     public class CategoryInfoNode : CategoryInfo
     {
         private CategoryInfoNode parent;

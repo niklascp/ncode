@@ -21,23 +21,22 @@ namespace nCode.Catalog
 
         private void RegisterRoutes(RouteCollection routes)
         {
-            routes.MapHttpRoute(
-                name: "CatalogAdminApi",
-                routeTemplate: "admin/catalog/api/{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+            var categoryRouteHandler = new CategoryRouteHandler();
 
-            /* Some sites have custom implementations that predates this. */
-            if (routes["Catalog.Category"] == null)
-            {
-                routes.Add(
-                    "Catalog.Category",
-                        new Route("{Culture}/category/{CategoryTitle}/{CategoryNo}",
-                            new RouteValueDictionary(),
-                            new RouteValueDictionary() { { "Culture", "[a-z]{2}-[a-z]{2,3}" }, { "CategoryTitle", @"[A-Za-z0-9-]+" }, { "CategoryNo", @"[0-9]+" } },
-                            new CategoryRouteHandler())
-                    );
-            }
+            routes.Add(
+                "Catalog.Category(SpecificCulture)",
+                    new Route("{Culture}/category/{CategoryTitle}/{CategoryNo}",
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary() { { "Culture", "[a-z]{2}-[a-z]{2,3}" }, { "CategoryTitle", @"[A-Za-z0-9-]+" }, { "CategoryNo", @"[0-9]+" } },
+                        categoryRouteHandler)
+                );
+            routes.Add(
+                "Catalog.Category(DefaultCulture)",
+                    new Route("category/{CategoryTitle}/{CategoryNo}",
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary() { { "CategoryTitle", @"[A-Za-z0-9-]+" }, { "CategoryNo", @"[0-9]+" } },
+                        categoryRouteHandler)
+                );
 
             routes.Add(
                 "Catalog.Item(SpecificCulture)",

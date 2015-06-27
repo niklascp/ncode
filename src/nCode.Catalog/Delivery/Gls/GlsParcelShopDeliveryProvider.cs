@@ -55,7 +55,6 @@ namespace nCode.Catalog.Delivery.Gls
             {
                 return base.GetOrderString(model, order, deliveryType);
             }
-            return base.GetOrderString(model, order, deliveryType);
         }
 
         /// <summary>

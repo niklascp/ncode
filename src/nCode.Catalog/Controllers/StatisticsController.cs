@@ -12,7 +12,7 @@ using Dapper;
 namespace nCode.Catalog.Controllers
 {
     [RoutePrefix("admin/catalog/statistics")]
-    public class StatisticsController : ApiController
+    public class SalesStatisticsAdminController : ApiController
     {
         #region Declare SQL Statements.
   
@@ -142,6 +142,33 @@ where
 group by
     round(ol.[Latitude], @zoom),
     round(ol.[Longitude], @zoom)
+";
+
+        const string saleByMunicipality = @"
+/* For testing purposes only: */
+--declare @fromDate date = '2014-01-01';
+--declare @toDate date = '2014-12-31';
+
+/* Calculates sales in the default currency. */
+select
+	[MunicipalityCode],
+    [ItemCount] = sum(oi.[Qty]),
+    [Amount] = sum(
+		case when oc.[Code] <> dc.[Code] then dc.[Rate] / oc.[Rate] else 1 end * 
+		case when o.[VatIncluded] = 0 and vg.[Rate] > 0 then 1 + vg.[Rate] else 1 end * 
+		oi.[Qty] * oi.[UnitPrice])
+from
+    [Catalog_Order] o 
+    join [Catalog_OrderItem] oi on oi.[OrderNo] = o.[OrderNo] 
+    join [Catalog_Currency] oc on oc.[Code] = o.[CurrencyCode]
+    join [Catalog_Currency] dc on dc.[IsDefault] = 1
+	left join [Catalog_VatGroup] vg on vg.[Code] = oi.[VatGroupCode]
+	join [Catalog_OrderLocation] ol on ol.[OrderNo] = o.[OrderNo] and ol.[LocationCode] = 'BILL'
+where
+    o.[Status] = 1 
+	and o.[InvoiceDate] between @fromDate and @toDate 
+group by
+	[MunicipalityCode]
 ";
 
         const string agentTypeQuery = @"
@@ -360,6 +387,16 @@ order by
             {
                 conn.Open();
                 return conn.Query(saleByLocation, new { fromDate = fromDate, toDate = toDate, zoom = zoom });                
+            }
+        }
+
+        [Route("SaleByMunicipality")]
+        public dynamic GetSaleByMunicipality(DateTime fromDate, DateTime toDate)
+        {
+            using (var conn = new SqlConnection(Settings.ConnectionString))
+            {
+                conn.Open();
+                return conn.Query(saleByMunicipality, new { fromDate = fromDate, toDate = toDate });
             }
         }
 

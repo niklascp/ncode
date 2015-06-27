@@ -37,7 +37,7 @@ namespace nCode.Catalog.UI
                             Title = (l ?? g).Title
                         }).SingleOrDefault();
             }
-        }        
+        }
 
         public int CategoryNo { get; set; }
 
@@ -77,15 +77,25 @@ namespace nCode.Catalog.UI
         {
             var seoTitle = SeoUtilities.GetSafeTitle(Title);
 
+            /* Ensure a seo title */
             if (string.IsNullOrWhiteSpace(seoTitle))
                 seoTitle = CategoryNo.ToString();
 
-            var parameters = new RouteValueDictionary  
+            var parameters = new RouteValueDictionary
                     { 
-                        { "Culture", CultureInfo.CurrentUICulture.Name.ToLower() }, 
                         { "CategoryTitle", seoTitle } , 
                         { "CategoryNo", CategoryNo.ToString() }
                     };
+
+            if (string.Equals(CultureInfo.CurrentUICulture.Name, Settings.SupportedCultureNames.FirstOrDefault()))
+            {
+                routeName += "(DefaultCulture)";
+            }
+            else
+            {
+                routeName += "(SpecificCulture)";
+                parameters.Add("Culture", CultureInfo.CurrentUICulture.Name.ToLower());
+            }
 
             var vp = RouteTable.Routes.GetVirtualPath(null, routeName, parameters);
 
