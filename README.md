@@ -14,7 +14,7 @@ Installation
 License
 --------
 
-Copyright (c) 2008-2014 Niklas Christoffer Petersen
+Copyright (c) 2008-2015 Niklas Christoffer Petersen
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
