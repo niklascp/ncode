@@ -16,6 +16,9 @@ namespace nCode.UI
         private NavigationView children;
         private INavigationItem item;
 
+        /// <summary>
+        /// Ensures that the associated INavigationGraph is expanded for the current node.
+        /// </summary>
         private void EnsureChildren()
         {
             if (children == null)

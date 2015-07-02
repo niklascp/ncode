@@ -22,11 +22,7 @@ namespace nCode.UI
             return v;
         }
 
-        //INavigationRelation relation; 
-        INavigationGraph graph;
         IList<NavigationViewItem> list;
-
-        //public INavigationRelation Relation { get { return relation; } }
 
         public NavigationView(IEnumerable<INavigationItem> items, INavigationGraph relation, NavigationViewItem parent)
         {
@@ -43,9 +39,7 @@ namespace nCode.UI
 
         public NavigationView(INavigationGraph graph)
             : this(graph.Roots, graph, null)
-        {
-            this.graph = graph;
-        }
+        { }
 
         public IHierarchyData GetHierarchyData(object enumeratedItem)
         {

@@ -11,9 +11,9 @@ using System.Collections;
 namespace nCode.UI
 {
     /// <summary>
-    /// Represents a the Brand Tree in the Navigation Framework.
+    /// Represents a the Genric Navigation Tree in the Navigation Framework.
     /// </summary>
-    public abstract class NavigationTree<E, V> : INavigationGraph, IEnumerable<INavigationItem> where V : TreeNavigationItem
+    public abstract class NavigationTree<E, V> : INavigationGraph, IEnumerable<V> where V : TreeNavigationItem
     {
         private Lazy<IEnumerable<INavigationItem>> roots;
         private IQueryable<V> items { get; set; }
@@ -84,11 +84,13 @@ namespace nCode.UI
 
                 foreach (var child in children) {
                     child.Depth = item != null ? ((TreeNavigationItem)item).Depth + 1 : 0;
-                    child.HasChildren = items.Where(x => x.ParentID == child.ID).Any();
                 }
 
                 if (ViewFilter != null)
                     children = children.Where(ViewFilter).ToList().AsQueryable();
+
+                if (item != null && children.Any())
+                    ((V)item).HasChildren = true;
 
                 return children;
             }
@@ -96,14 +98,14 @@ namespace nCode.UI
             return null;
         }
 
-        public IEnumerator<INavigationItem> GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return Roots.GetEnumerator();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        IEnumerator<V> IEnumerable<V>.GetEnumerator()
         {
-            return Roots.GetEnumerator();
+            return Roots.Cast<V>().GetEnumerator();
         }
     }
 }

@@ -711,7 +711,7 @@
         </member>
         <member name="T:nCode.UI.NavigationTree`2">
             <summary>
-            Represents a the Brand Tree in the Navigation Framework.
+            Represents a the Genric Navigation Tree in the Navigation Framework.
             </summary>
         </member>
         <member name="M:nCode.UI.NavigationTree`2.#ctor(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}},System.Func{`1,System.Boolean},System.Func{`1,System.Boolean},nCode.UI.INavigationItem)">
@@ -782,6 +782,11 @@
         <member name="P:nCode.UI.INavigationItem.Url">
             <summary>
             Gets a possible frindly URL that can be used for navigation to this Navigation Item.
+            </summary>
+        </member>
+        <member name="M:nCode.UI.NavigationViewItem.EnsureChildren">
+            <summary>
+            Ensures that the associated INavigationGraph is expanded for the current node.
             </summary>
         </member>
         <member name="M:nCode.UI.NavigationViewItem.GetChildren">

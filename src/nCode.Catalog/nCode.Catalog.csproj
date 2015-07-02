@@ -141,6 +141,7 @@
       <DependentUpon>CatalogModel.dbml</DependentUpon>
     </Compile>
     <Compile Include="CatalogModule.cs" />
+    <Compile Include="Controllers\CatalogSettingsAdministrationController.cs" />
     <Compile Include="Data\CatalogRepository.cs" />
     <Compile Include="CatalogSettings.cs" />
     <Compile Include="Controllers\ItemAdministrationController.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\Campaign.cs" />
     <Compile Include="Models\MunicipalityPopulation.cs" />
+    <Compile Include="UI\ItemListGroupByMode.cs" />
     <Compile Include="UI\ItemViewSettings.cs" />
     <Compile Include="UI\ItemListSettings.cs" />
     <Compile Include="Models\VariantMode.cs" />

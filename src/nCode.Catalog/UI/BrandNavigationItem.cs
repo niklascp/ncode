@@ -10,7 +10,7 @@ namespace nCode.Catalog.UI
     /// <summary>
     /// Represents an Brand in the Navigation Framework.
     /// </summary>
-    public class BrandNavigationItem : INavigationItem, IMetadataContext
+    public class BrandNavigationItem : TreeNavigationItem, IMetadataContext
     {
         public static BrandNavigationItem GetFromID(Guid id)
         {
@@ -33,17 +33,6 @@ namespace nCode.Catalog.UI
             }
         }        
 
-        public Guid ID { get; set; }
-
-        public Guid? ParentID { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Title for this Navigation Item.
-        /// </summary>
-        public string Title { get; set; }
-
-        public bool IsVisible { get; set; }
-
         public string Permalink
         {
             get
@@ -55,7 +44,7 @@ namespace nCode.Catalog.UI
             }
         }
 
-        public string Url
+        public override string Url
         {
             get
             {
@@ -71,17 +60,9 @@ namespace nCode.Catalog.UI
                 */
                 return Permalink;
             }
-        }        
-
-        public int Depth { get; set; }
-
-        public bool IsActive
-        {
-            get
-            {
-                return Navigation.CurrentPath.Any(x => x.ID == ID);
-            }
         }
+
+        public string LogoImageFile { get { return Image1; } }
 
         public string Image1 { get; set; }
 

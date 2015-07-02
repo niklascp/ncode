@@ -682,9 +682,35 @@
             Gets a value indicating whether this Discount Code is valid.
             </summary>
         </member>
+        <member name="T:nCode.Catalog.Controllers.CatalogSettingsAdministrationController">
+            <summary>
+            Api Controller from Catalog Settings Administration.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Controllers.CatalogSettingsAdministrationController.GetListSettings(System.String)">
+            <summary>
+            Gets the item list settings for the given path.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:nCode.Catalog.Controllers.CatalogSettingsAdministrationController.PostListSettings(System.String,nCode.Catalog.UI.ItemListSettings)" -->
         <member name="P:nCode.Catalog.CatalogSettings.AutoAssignItemNo">
             <summary>
             Gets or sets a value indicating wheather Brands can be nested. Default value is false.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.Controllers.ItemAdministrationController">
+            <summary>
+            Api Controller from Item Administration.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Controllers.ItemAdministrationController.ListRelatedItems(System.Guid)">
+            <summary>
+            Returns a list of related items given an item id.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Controllers.ItemAdministrationController.UpdateRelatedItems(System.Guid,System.Guid[])">
+            <summary>
+            Updates the related items of the given item id with the given list of related item ids.
             </summary>
         </member>
         <member name="T:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider">
@@ -996,6 +1022,71 @@
             The name.
             </value>
         </member>
+        <member name="T:nCode.Catalog.UI.ItemListGroupByMode">
+            <summary>
+            Represents group by modes for an item list view.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.UI.ItemViewSettings">
+            <summary>
+            Represents settings for an item detail view.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.UI.ItemListSettings">
+            <summary>
+            Represents settings for an item list view.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListSettings.#ctor">
+            <summary>
+            Initializes a new instance of settings for an item list view. 
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowBreadcrumb">
+            <summary>
+            Gets or sets whether an breadcrumb element in the top of the list view.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListSettings.NoImageImageFile">
+            <summary>
+            Gets or sets the image file that should be used in no item image is available.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowTitle">
+            <summary>
+            Gets or sets whether the item title should be shown in the list view.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowItemNo">
+            <summary>
+            Gets or sets whether the item no. should be shown in the list view.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowBrandName">
+            <summary>
+            Gets or sets whether the brand name should be shown in the list view.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowPrice">
+            <summary>
+            Gets or sets whether the price should be shown in the list view.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowDefaultPrice">
+            <summary>
+            Gets or sets whether the default price should be shown in the list view, if the item is on sale to a lower price.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowBuyButton">
+            <summary>
+            Gets or sets whether a buy button should be shown in the list view.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListSettings.GroupByMode">
+            <summary>
+            Gets or sets the group by modes for the item list view.
+            </summary>
+        </member>
         <member name="T:nCode.Catalog.Models.VatGroup">
             <summary>
             Represents a PriceGroup.
@@ -1146,11 +1237,6 @@
             <typeparam name="T">The type of the property.</typeparam>
             <param name="key">The key.</param>
             <param name="value">The value.</param>
-        </member>
-        <member name="P:nCode.Catalog.UI.BrandNavigationItem.Title">
-            <summary>
-            Gets or sets the Title for this Navigation Item.
-            </summary>
         </member>
         <member name="T:nCode.Catalog.ItemRewriteHandler">
             <summary>
@@ -1457,6 +1543,11 @@
         <member name="P:nCode.Catalog.LayoutSettings.DefaultItemListSettings">
             <summary>
             Gets or sets the default settings for item list views.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.LayoutSettings.DefaultItemViewSettings">
+            <summary>
+            Gets or sets the default settings for item detail views.
             </summary>
         </member>
         <member name="P:nCode.Catalog.LayoutSettings.NoImageImageFile">
@@ -1793,6 +1884,11 @@
             Represents a item list request filtered by brand.
             </summary>
         </member>
+        <member name="M:nCode.Catalog.UI.ItemListRequest.GetNavigationItem">
+            <summary>
+            Gets a contextual navigation item for the item list.
+            </summary>
+        </member>
         <member name="M:nCode.Catalog.UI.ItemListRequest.GetContextView(nCode.Catalog.Data.ICatalogRepository)">
             <summary>
             Gets a contextual view about the item list which provide information to the end user.
@@ -1806,6 +1902,11 @@
         <member name="P:nCode.Catalog.UI.ItemListRequest.ListSettings">
             <summary>
             Gets item list settings for the request. 
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListByBrandRequest.GetNavigationItem">
+            <summary>
+            Gets a contextual navigation item for the item list.
             </summary>
         </member>
         <member name="M:nCode.Catalog.UI.ItemListByBrandRequest.GetContextView(nCode.Catalog.Data.ICatalogRepository)">
@@ -1828,6 +1929,11 @@
             Represents a item list request filtered by category.
             </summary>
         </member>
+        <member name="M:nCode.Catalog.UI.ItemListByCategoryRequest.GetNavigationItem">
+            <summary>
+            Gets a contextual navigation item for the item list.
+            </summary>
+        </member>
         <member name="M:nCode.Catalog.UI.ItemListByCategoryRequest.GetContextView(nCode.Catalog.Data.ICatalogRepository)">
             <summary>
             Gets a contextual view about the item list which provide information to the end user.
@@ -1841,6 +1947,11 @@
         <member name="P:nCode.Catalog.UI.ItemListByCategoryRequest.CategoryID">
             <summary>
             Gets the unique identifier of the category requested by this item list request.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemViewRequest.ViewSettings">
+            <summary>
+            Gets item list settings for the request. 
             </summary>
         </member>
         <member name="T:nCode.Catalog.SalesSettings">
@@ -1996,39 +2107,14 @@
             Represents a the Brand Tree in the Navigation Framework.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.UI.BrandNavigationTree.#ctor(System.Func{nCode.Catalog.Brand,System.Boolean},System.Func{nCode.Catalog.UI.BrandNavigationItem,System.Boolean},System.Func{nCode.Catalog.UI.BrandNavigationItem,System.Boolean},nCode.Catalog.UI.BrandNavigationItem)">
+        <member name="M:nCode.Catalog.UI.BrandNavigationTree.#ctor(System.Linq.Expressions.Expression{System.Func{nCode.Catalog.Models.Brand,System.Boolean}},System.Func{nCode.Catalog.UI.BrandNavigationItem,System.Boolean},System.Func{nCode.Catalog.UI.BrandNavigationItem,System.Boolean},nCode.Catalog.UI.BrandNavigationItem)">
             <summary>
             Initializes a new instance of the <see cref="T:nCode.Catalog.UI.BrandNavigationTree"/> class.
             </summary>
             <param name="sourceFilter">The source filter.</param>
             <param name="viewFilter">The view filter.</param>
             <param name="traverseFilter">The traverse filter.</param>
-            <param name="root">The root.</param> 
-        </member>
-        <member name="M:nCode.Catalog.UI.BrandNavigationTree.Expand(nCode.UI.INavigationItem)">
-            <summary>
-            Expands the specified item.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.BrandNavigationTree.SourceFilter">
-            <summary>
-            Gets the source filter.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.BrandNavigationTree.ViewFilter">
-            <summary>
-            Gets the view filter.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.BrandNavigationTree.TraverseFilter">
-            <summary>
-            Gets the traverse filter.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.BrandNavigationTree.Roots">
-            <summary>
-            Gets the roots of the tree.
-            </summary>
+            <param name="root">The root.</param>
         </member>
         <member name="T:nCode.Catalog.UI.CategoryNavigationTree">
             <summary>
