@@ -2,6 +2,7 @@
 using System.Web.Http;
 
 using nCode.Catalog.UI;
+using nCode.Metadata;
 
 namespace nCode.Catalog.Controllers
 {
@@ -11,14 +12,18 @@ namespace nCode.Catalog.Controllers
     [RoutePrefix("admin/catalog/settings")]
     public class CatalogSettingsAdministrationController : ApiController
     {
-        private const string itemListSettingsKeyPrefix = "nCode.Catalog.ItemListSettings";
+        private const string defaultItemListSettingsKey = "nCode.Catalog.DefaultItemListSettings";
+        private const string itemListSettingsKey = "nCode.Catalog.ItemListSettings";
 
         /// <summary>
         /// Gets the item list settings for the given path.
         /// </summary>
-        [Route("listsettings")]
+        [Route("itemlistsettings")]
         public IHttpActionResult GetListSettings([FromUri]string path)
         {
+            if (string.IsNullOrEmpty(path))
+                return Ok(Settings.GetProperty<ItemListSettings>(defaultItemListSettingsKey, null));
+
             var parts = path.Split(new char[] { ':' }, 2);
 
             if (parts.Length < 2)
@@ -34,10 +39,20 @@ namespace nCode.Catalog.Controllers
                 if (id == Guid.Empty)
                     id = null;
 
-                if (id != null)
-                    return Ok(Settings.GetProperty<ItemListSettings>(itemListSettingsKeyPrefix + "(" + path + ")", null));
+                if (id == null)
+                    return Ok(Settings.GetProperty<ItemListSettings>(defaultItemListSettingsKey + "(" + prefix + ")", null));
+
+                IMetadataContext metadataContext = null;
+
+                if (prefix == "C")
+                    metadataContext = CategoryNavigationItem.GetFromID(id.Value);
+                else if (prefix == "B")
+                    metadataContext = BrandNavigationItem.GetFromID(id.Value);
+
+                if (metadataContext != null)
+                    return Ok(metadataContext.GetProperty<ItemListSettings>(itemListSettingsKey, null));
                 else
-                    return Ok(Settings.GetProperty<ItemListSettings>(itemListSettingsKeyPrefix + "(" + parts[0] + ":default)", null));
+                    return NotFound();
             }
 
             return BadRequest(string.Format("Invalid path: Unknown prefix: '{0}'.", parts[0]));
@@ -45,13 +60,20 @@ namespace nCode.Catalog.Controllers
 
         /// <Updates the item list settings for the given path.
         /// </summary>
-        [Route("listsettings")]
+        [Route("itemlistsettings")]
         public IHttpActionResult PostListSettings([FromUri]string path, [FromBody]ItemListSettings listSettings)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                Settings.SetProperty<ItemListSettings>(defaultItemListSettingsKey, listSettings);
+                return Ok();
+            }
+
             var parts = path.Split(new char[] { ':' }, 2);
 
             if (parts.Length < 2)
                 return BadRequest(string.Format("Invalid path: '{0}.'", path));
+
             var prefix = parts[0].ToUpper();
 
             /* Category or Brand prefix. */
@@ -62,12 +84,27 @@ namespace nCode.Catalog.Controllers
                 if (id == Guid.Empty)
                     id = null;
 
-                if (id != null)
-                    Settings.SetProperty<ItemListSettings>(itemListSettingsKeyPrefix + "(" + path + ")", listSettings);
-                else
-                    Settings.SetProperty<ItemListSettings>(itemListSettingsKeyPrefix + "(C:default)", listSettings);
 
-                return Ok();
+                if (id == null)
+                {
+                    Settings.SetProperty<ItemListSettings>(defaultItemListSettingsKey + "(" + prefix + ")", listSettings);
+                    return Ok();
+                }
+
+                IMetadataContext metadataContext = null;
+
+                if (prefix == "C")
+                    metadataContext = CategoryNavigationItem.GetFromID(id.Value);
+                else if (prefix == "B")
+                    metadataContext = BrandNavigationItem.GetFromID(id.Value);
+
+                if (metadataContext != null)
+                {
+                    metadataContext.SetProperty<ItemListSettings>(itemListSettingsKey, listSettings);
+                    return Ok();
+                }
+                else
+                    return NotFound();
             }
 
             return BadRequest(string.Format("Invalid path: Unknown prefix: '{0}'.", parts[0]));
