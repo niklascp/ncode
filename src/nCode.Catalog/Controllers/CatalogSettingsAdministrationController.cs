@@ -7,7 +7,7 @@ using nCode.Metadata;
 namespace nCode.Catalog.Controllers
 {
     /// <summary>
-    /// Api Controller from Catalog Settings Administration.
+    /// Api Controller for Catalog Settings Administration.
     /// </summary>
     [RoutePrefix("admin/catalog/settings")]
     public class CatalogSettingsAdministrationController : ApiController
@@ -58,6 +58,7 @@ namespace nCode.Catalog.Controllers
             return BadRequest(string.Format("Invalid path: Unknown prefix: '{0}'.", parts[0]));
         }
 
+        /// <summary>
         /// <Updates the item list settings for the given path.
         /// </summary>
         [Route("itemlistsettings")]
