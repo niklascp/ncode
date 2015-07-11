@@ -168,6 +168,7 @@
     <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\Campaign.cs" />
     <Compile Include="Models\MunicipalityPopulation.cs" />
+    <Compile Include="ViewModels\ItemListGroup.cs" />
     <Compile Include="UI\ItemListGroupByMode.cs" />
     <Compile Include="UI\ItemViewSettings.cs" />
     <Compile Include="UI\ItemListSettings.cs" />
@@ -230,6 +231,7 @@
     <Compile Include="ViewModels\ItemDetailView.cs" />
     <Compile Include="ViewModels\ItemListPriceView.cs" />
     <Compile Include="ViewModels\ItemListView.cs" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <Compile Include="SalesSettings.cs" />
     <Compile Include="SegmentsContentType.cs" />

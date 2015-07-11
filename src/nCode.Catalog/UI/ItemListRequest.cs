@@ -38,5 +38,41 @@ namespace nCode.Catalog.UI
         /// Gets a the item list requested.
         /// </summary>
         public abstract IEnumerable<ItemListView> GetItemList(ICatalogRepository catelogRepository);
+
+        public virtual IEnumerable<ItemListGroupView> GetItemGroupList(ICatalogRepository catalogRepository)
+        {
+            var items = GetItemList(catalogRepository);
+            IEnumerable<ItemListGroupView> itemGroups = null;
+
+            if (ListSettings.GroupByMode == ItemListGroupByMode.NoGrouping)
+            {
+                /* Add dummy group if no grouping. */
+                itemGroups = new ItemListGroupView[] { new ItemListGroupView() { 
+                    Items = items
+                }};
+            }
+            else if (ListSettings.GroupByMode == ItemListGroupByMode.GroupByCategory)
+            {
+                itemGroups = items
+                    .GroupBy(x => new { x.CategoryTitle })
+                    .OrderBy(x => x.Key.CategoryTitle).Select(x => new ItemListGroupView
+                    {
+                        Title = x.Key.CategoryTitle,
+                        Items = x.OrderBy(y => y.CategoryIndex)
+                    });
+            }
+            else if (ListSettings.GroupByMode == ItemListGroupByMode.GroupByBrand)
+            {
+                itemGroups = items
+                    .GroupBy(x => new { x.BrandName })
+                    .OrderBy(x => x.Key.BrandName).Select(x => new ItemListGroupView
+                    {
+                        Title = x.Key.BrandName,
+                        Items = x.OrderBy(y => y.BrandIndex)
+                    });
+            }
+
+            return itemGroups;
+        }
     }
 }

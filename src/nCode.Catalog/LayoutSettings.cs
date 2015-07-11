@@ -29,6 +29,24 @@ namespace nCode.Catalog
         }
 
         /// <summary>
+        /// Gets or sets the default settings for item list views filtered by category.
+        /// </summary>
+        public static ItemListSettings DefaultCategoryItemListSettings
+        {
+            get { return Settings.GetProperty<ItemListSettings>(defaultItemListSettingsKey + "(C)", null); }
+            set { Settings.SetProperty<ItemListSettings>(defaultItemListSettingsKey + "(C)", value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the default settings for item list views filtered by brand.
+        /// </summary>
+        public static ItemListSettings DefaultBrandItemListSettings
+        {
+            get { return Settings.GetProperty<ItemListSettings>(defaultItemListSettingsKey + "(B)", null); }
+            set { Settings.SetProperty<ItemListSettings>(defaultItemListSettingsKey + "(B)", value); }
+        }
+
+        /// <summary>
         /// Gets or sets the default settings for item detail views.
         /// </summary>
         public static ItemViewSettings DefaultItemViewSettings
@@ -43,7 +61,7 @@ namespace nCode.Catalog
         public static string NoImageImageFile
         {
             get { return Settings.GetProperty<string>(noImageImageFileKey, null); }
-            set { Settings.SetProperty<string>(noImageImageFileKey, value);  }
+            set { Settings.SetProperty<string>(noImageImageFileKey, value); }
         }
 
         /// <summary>

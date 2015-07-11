@@ -16,6 +16,17 @@ namespace nCode.Catalog.UI
     public class ItemListByCategoryRequest : ItemListRequest
     {
         /// <summary>
+        /// Gets item list settings for the request. 
+        /// </summary>
+        public override ItemListSettings ListSettings
+        {
+            get
+            {
+                return LayoutSettings.DefaultCategoryItemListSettings ?? base.ListSettings;
+            }
+        }
+
+        /// <summary>
         /// Gets the unique identifier of the category requested by this item list request.
         /// </summary>
         public Guid CategoryID { get; set; }
