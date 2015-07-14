@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using nCode.Catalog.Data;
-using nCode.Catalog.Models;
 using nCode.Catalog.ViewModels;
-using nCode.Data.Linq;
 using nCode.UI;
 
 namespace nCode.Catalog.UI
 {
+    /// <summary>
+    /// Represents information and helper methods for an Item List Request.
+    /// </summary>
     public abstract class ItemListRequest
     {
         /// <summary>
@@ -39,6 +38,9 @@ namespace nCode.Catalog.UI
         /// </summary>
         public abstract IEnumerable<ItemListView> GetItemList(ICatalogRepository catelogRepository);
 
+        /// <summary>
+        /// Gets a the item list requested, grouped according to the GroupByMode specified in the <see cref="ItemListSettings"/> for the request.
+        /// </summary>
         public virtual IEnumerable<ItemListGroupView> GetItemGroupList(ICatalogRepository catalogRepository)
         {
             var items = GetItemList(catalogRepository);

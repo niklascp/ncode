@@ -231,7 +231,6 @@
     <Compile Include="ViewModels\ItemDetailView.cs" />
     <Compile Include="ViewModels\ItemListPriceView.cs" />
     <Compile Include="ViewModels\ItemListView.cs" />
-    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <Compile Include="SalesSettings.cs" />
     <Compile Include="SegmentsContentType.cs" />

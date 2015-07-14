@@ -1,19 +1,15 @@
-﻿using nCode.Catalog.ViewModels;
-using nCode.Data.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using nCode.Catalog.UI;
-using nCode.UI;
+using nCode.Catalog.ViewModels;
+using nCode.Data.Linq;
 using nCode.Search;
 
 namespace nCode.Catalog.Data
 {
-    public class CatalogRepository : nCode.Catalog.Data.ICatalogRepository
+    public class CatalogRepository : ICatalogRepository
     {
         public static IOrderByExpression<Item> ItemCategoryOrder
         {
@@ -25,8 +21,8 @@ namespace nCode.Catalog.Data
             get { return new OrderByExpression<Item, int>(x => x.BrandIndex); }
         }
 
-        string priceGroup;
-        CatalogModel dbModel;
+        private string priceGroup;
+        private CatalogModel dbModel;
 
         public CatalogRepository()
         {
@@ -85,25 +81,34 @@ namespace nCode.Catalog.Data
             var defaultCurrencyCode = CurrencyController.DefaultCurrency != null ? CurrencyController.DefaultCurrency.Code : null;
 
             var data = (from i in items
+                        /* Item Localizations */                        
                         from l in i.Localizations.Where(x => x.Culture == CultureInfo.CurrentUICulture.Name).DefaultIfEmpty()
-                        from g in i.Localizations.Where(x => x.Culture == null)
+                        from g in i.Localizations.Where(x => x.Culture == null)                        
+                        /* Category and Catalogy Localizations */
+                        let cat = i.Category
+                        from cat_l in cat.Localizations.Where(x => x.Culture == CultureInfo.CurrentUICulture.Name).DefaultIfEmpty()
+                        from cat_g in cat.Localizations.Where(x => x.Culture == null).DefaultIfEmpty()
+                        /* List Prices */
                         from cs in i.ListPrices.Where(x => x.CurrencyCode == currentCurrencyCode && x.PriceGroupCode == priceGroup).DefaultIfEmpty()
-                        from ds in i.ListPrices.Where(x => x.CurrencyCode == defaultCurrencyCode && x.PriceGroupCode == priceGroup).DefaultIfEmpty()
+                        from ds in i.ListPrices.Where(x => x.CurrencyCode == defaultCurrencyCode && x.PriceGroupCode == priceGroup).DefaultIfEmpty()                        
                         from c in i.ListPrices.Where(x => x.CurrencyCode == currentCurrencyCode && x.PriceGroupCode == null).DefaultIfEmpty()
-                        from d in i.ListPrices.Where(x => x.CurrencyCode == defaultCurrencyCode && x.PriceGroupCode == null).DefaultIfEmpty()
+                        from d in i.ListPrices.Where(x => x.CurrencyCode == defaultCurrencyCode && x.PriceGroupCode == null).DefaultIfEmpty()                        
+                        let listPrice = ds != null ? (cs ?? ds) : (c ?? d)
+                        let defaultListPrice = (c ?? d)
+                        /* Map */          
                         select new
                         {
                             ID = i.ID,
                             ItemNo = i.ItemNo,
                             i.IsActive,
                             Title = (l ?? g).Title,
-                            ListPrice = ds != null ? (cs ?? ds) : (c ?? d),
-                            DefaultListPrice = (c ?? d),
+                            ListPrice = listPrice,
+                            DefaultListPrice = defaultListPrice,
                             OnSale = i.OnSale,
                             VariantMode = i.VariantMode,
 
                             CategoryID = i.CategoryID,
-                            //CategoryTitle = 
+                            CategoryTitle = (cat_l ?? cat_g).Title,
                             CategoryIndex = i.Index,
 
                             BrandID = i.BrandID,
@@ -145,7 +150,7 @@ namespace nCode.Catalog.Data
                 VariantMode = x.VariantMode,
 
                 CategoryID = x.CategoryID,
-                //CategoryTitle = x.CategoryTitle,
+                CategoryTitle = x.CategoryTitle,
                 CategoryIndex = x.CategoryIndex,
 
                 BrandID = x.BrandID,
