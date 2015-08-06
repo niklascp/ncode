@@ -394,6 +394,26 @@
             Background Job Parameters for Reindex Source Jobs.
             </summary>
         </member>
+        <member name="T:nCode.Search.SearchIndexEntry">
+            <summary>
+            Represents an entry in a search index.
+            </summary>
+        </member>
+        <member name="M:nCode.Search.SearchIndexEntry.#ctor">
+            <summary>
+            Constricts a new entry with system fields defined.
+            </summary>
+        </member>
+        <member name="P:nCode.Search.SearchIndexEntry.Id">
+            <summary>
+            Gets or sets the unique id for this entry.
+            </summary>
+        </member>
+        <member name="P:nCode.Search.SearchIndexEntry.Title">
+            <summary>
+            Gets or sets the title for this index entry.
+            </summary>
+        </member>
         <member name="T:nCode.SetupMiddleware">
             <summary>
             Middleware for System Setup.
@@ -678,20 +698,60 @@
             Commit the chagnes to the Search Index.
             </summary>
         </member>
+        <member name="T:nCode.Search.LuceneIndexUpdateContext">
+            <summary>
+            Update Context for Lucene Search Engine.
+            </summary>
+        </member>
+        <member name="M:nCode.Search.LuceneIndexUpdateContext.#ctor(nCode.Search.LuceneSearchEngine,nCode.Search.SearchSource)">
+            <summary>
+            Constructs a new Update Context for the given Lucene Search Engine and the given Search Source.
+            </summary>
+        </member>
         <member name="M:nCode.Search.LuceneIndexUpdateContext.FlushIndex">
             <summary>
             Deletes all enties in this index.
             </summary>
+        </member>
+        <member name="M:nCode.Search.LuceneIndexUpdateContext.DeleteEntry(System.Guid)">
+            <summary>
+            Deletes the entry with the given id in this index.
+            </summary>
             <param name="entryId"></param>
+        </member>
+        <member name="T:nCode.Search.SearchEngine">
+            <summary>
+            Represens a abstract search engine.
+            </summary>
+        </member>
+        <member name="M:nCode.Search.SearchEngine.Search(System.String,System.String[])">
+            <summary>
+            Searches the search engine for the given query string.
+            </summary>
         </member>
         <member name="M:nCode.Search.SearchEngine.GetEntryCount(nCode.Search.SearchSource)">
             <summary>
             Get entry count in the index for the given search source.
             </summary>
         </member>
+        <member name="M:nCode.Search.SearchEngine.GetUpdateContext(nCode.Search.SearchSource)">
+            <summary>
+            Gets an update context for this search engine and the given search source.
+            </summary>
+        </member>
+        <member name="M:nCode.Search.LuceneSearchEngine.#ctor">
+            <summary>
+            Initializes a new instance of the Lucene Search Engine.
+            </summary>
+        </member>
         <member name="M:nCode.Search.LuceneSearchEngine.GetEntryCount(nCode.Search.SearchSource)">
             <summary>
             Get entry count in the index for the given search source.
+            </summary>
+        </member>
+        <member name="M:nCode.Search.LuceneSearchEngine.Search(System.String,System.String[])">
+            <summary>
+            Searches the search engine for the given query string.
             </summary>
         </member>
         <member name="T:nCode.Search.SearchSource">
@@ -702,6 +762,11 @@
         <member name="M:nCode.Search.SearchSource.GetUpdateContext">
             <summary>
             Get a Index Update Context for this Search Source.
+            </summary>
+        </member>
+        <member name="M:nCode.Search.SearchSource.UpdateIndex">
+            <summary>
+            Updates the entire index for this Search Source.
             </summary>
         </member>
         <member name="P:nCode.Search.SearchSource.SourceGuid">

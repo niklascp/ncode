@@ -684,7 +684,7 @@
         </member>
         <member name="T:nCode.Catalog.Controllers.CatalogSettingsAdministrationController">
             <summary>
-            Api Controller from Catalog Settings Administration.
+            Api Controller for Catalog Settings Administration.
             </summary>
         </member>
         <member name="M:nCode.Catalog.Controllers.CatalogSettingsAdministrationController.GetListSettings(System.String)">
@@ -1021,6 +1021,21 @@
             <value>
             The name.
             </value>
+        </member>
+        <member name="T:nCode.Catalog.ViewModels.ItemListGroupView">
+            <summary>
+            Represents an entry in an item list grouping.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.ViewModels.ItemListGroupView.Title">
+            <summary>
+            Gets or sets the title of the group.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.ViewModels.ItemListGroupView.Items">
+            <summary>
+            Gets or sets the items in the group.
+            </summary>
         </member>
         <member name="T:nCode.Catalog.UI.ItemListGroupByMode">
             <summary>
@@ -1545,6 +1560,16 @@
             Gets or sets the default settings for item list views.
             </summary>
         </member>
+        <member name="P:nCode.Catalog.LayoutSettings.DefaultCategoryItemListSettings">
+            <summary>
+            Gets or sets the default settings for item list views filtered by category.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.LayoutSettings.DefaultBrandItemListSettings">
+            <summary>
+            Gets or sets the default settings for item list views filtered by brand.
+            </summary>
+        </member>
         <member name="P:nCode.Catalog.LayoutSettings.DefaultItemViewSettings">
             <summary>
             Gets or sets the default settings for item detail views.
@@ -1884,6 +1909,11 @@
             Represents a item list request filtered by brand.
             </summary>
         </member>
+        <member name="T:nCode.Catalog.UI.ItemListRequest">
+            <summary>
+            Represents information and helper methods for an Item List Request.
+            </summary>
+        </member>
         <member name="M:nCode.Catalog.UI.ItemListRequest.GetNavigationItem">
             <summary>
             Gets a contextual navigation item for the item list.
@@ -1897,6 +1927,11 @@
         <member name="M:nCode.Catalog.UI.ItemListRequest.GetItemList(nCode.Catalog.Data.ICatalogRepository)">
             <summary>
             Gets a the item list requested.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListRequest.GetItemGroupList(nCode.Catalog.Data.ICatalogRepository)">
+            <summary>
+            Gets a the item list requested, grouped according to the GroupByMode specified in the <see cref="T:nCode.Catalog.UI.ItemListSettings"/> for the request.
             </summary>
         </member>
         <member name="P:nCode.Catalog.UI.ItemListRequest.ListSettings">
@@ -1917,6 +1952,11 @@
         <member name="M:nCode.Catalog.UI.ItemListByBrandRequest.GetItemList(nCode.Catalog.Data.ICatalogRepository)">
             <summary>
             Gets a the item list requested.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListByBrandRequest.ListSettings">
+            <summary>
+            Gets item list settings for the request. 
             </summary>
         </member>
         <member name="P:nCode.Catalog.UI.ItemListByBrandRequest.BrandID">
@@ -1942,6 +1982,11 @@
         <member name="M:nCode.Catalog.UI.ItemListByCategoryRequest.GetItemList(nCode.Catalog.Data.ICatalogRepository)">
             <summary>
             Gets a the item list requested.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListByCategoryRequest.ListSettings">
+            <summary>
+            Gets item list settings for the request. 
             </summary>
         </member>
         <member name="P:nCode.Catalog.UI.ItemListByCategoryRequest.CategoryID">
