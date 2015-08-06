@@ -17,6 +17,7 @@ namespace nCode.Catalog.ViewModels
         public bool IsActive { get; set; }
 
         public string Title { get; set; }
+        public string VatGroupCode { get; set; }
         public ItemListPriceView ListPrice { get; set; }
         public ItemListPriceView DefaultListPrice { get; set; }
         public bool OnSale { get; set; }

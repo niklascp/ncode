@@ -13,13 +13,19 @@ using System.Web;
 
 namespace nCode.Search
 {
+    /// <summary>
+    /// Update Context for Lucene Search Engine.
+    /// </summary>
     public class LuceneIndexUpdateContext : IIndexUpdateContext
     {
-        LuceneSearchEngine searchEngine;
+        private LuceneSearchEngine searchEngine;
         private IndexWriter indexWriter;
         private IndexReader indexReader;
         private SearchSource searchSource;
 
+        /// <summary>
+        /// Constructs a new Update Context for the given Lucene Search Engine and the given Search Source.
+        /// </summary>
         public LuceneIndexUpdateContext(LuceneSearchEngine engine, SearchSource source)
         {
             searchEngine = engine;
@@ -32,7 +38,6 @@ namespace nCode.Search
         /// <summary>
         /// Deletes all enties in this index.
         /// </summary>
-        /// <param name="entryId"></param>
         public void FlushIndex()
         {
             var deleteQuery = new BooleanQuery();
@@ -40,6 +45,10 @@ namespace nCode.Search
             indexWriter.DeleteDocuments(deleteQuery);
         }
 
+        /// <summary>
+        /// Deletes the entry with the given id in this index.
+        /// </summary>
+        /// <param name="entryId"></param>
         public void DeleteEntry(Guid entryId)
         {
             var deleteQuery = new BooleanQuery();
@@ -50,14 +59,6 @@ namespace nCode.Search
 
         public void IndexEntry(SearchIndexEntry searchEntry)
         {
-            /*
-            var deleteQuery = new BooleanQuery();
-            deleteQuery.Add(new TermQuery(new Term("source", searchSource.SourceGuid.ToString())), Occur.MUST);
-            deleteQuery.Add(new TermQuery(new Term("id", searchEntry.Id.ToString())), Occur.MUST);
-            //deleteQuery.Add(new TermQuery(new Term("culture", searchEntry.Culture)), Occur.MUST);
-            indexWriter.DeleteDocuments(deleteQuery);
-            */
-
             Document document = new Document();
             document.Add(new Field("source", searchSource.GetType().FullName, Field.Store.YES, Field.Index.NOT_ANALYZED));
             document.Add(new Field("id", searchEntry.Id.ToString().ToLower(), Field.Store.YES, Field.Index.NOT_ANALYZED));
@@ -65,12 +66,6 @@ namespace nCode.Search
 
             if (searchEntry.Culture != null)
                 document.Add(new Field("culture", searchEntry.Culture.ToLower(), Field.Store.YES, Field.Index.NOT_ANALYZED));
-
-            if (searchEntry.Title != null)
-            {
-                document.Add(new Field("title_analyzed", searchEntry.Title.ToLower(), Field.Store.NO, Field.Index.ANALYZED));
-                document.Add(new Field("title_stored", searchEntry.Title, Field.Store.YES, Field.Index.NOT_ANALYZED));
-            }
 
             if (searchEntry.Description != null)
             {
@@ -87,6 +82,24 @@ namespace nCode.Search
             {
                 document.Add(new Field("keywords_analyzed", searchEntry.Keywords, Field.Store.NO, Field.Index.ANALYZED));
                 document.Add(new Field("keywords_stored", searchEntry.Keywords, Field.Store.YES, Field.Index.NOT_ANALYZED));
+            }
+
+            foreach (var field in searchEntry.Fields)
+            {
+                var fieldName = field.Key.ToLower();
+
+                /* Workaround: System fields are added manually above, but should just be added here. */
+                if (fieldName == "id")
+                    continue;
+
+                if (field.Value.Value != null)
+                {
+                    if (field.Value.Store)
+                        document.Add(new Field(fieldName + "_stored", field.Value.Value, Field.Store.YES, Field.Index.NOT_ANALYZED));
+
+                    if (field.Value.Analyse)
+                        document.Add(new Field(fieldName + "_analyzed", field.Value.Value, Field.Store.NO, Field.Index.ANALYZED));
+                }
             }
 
             indexWriter.AddDocument(document);

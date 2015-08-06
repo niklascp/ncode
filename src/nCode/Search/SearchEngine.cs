@@ -13,15 +13,24 @@ using System.Web;
 
 namespace nCode.Search
 {
+    /// <summary>
+    /// Represens a abstract search engine.
+    /// </summary>
     public abstract class SearchEngine
     {
-        public abstract IEnumerable<SearchResult> Search(string queryString);
+        /// <summary>
+        /// Searches the search engine for the given query string.
+        /// </summary>
+        public abstract IEnumerable<SearchResult> Search(string queryString, string[] includeFields = null);
 
         /// <summary>
         /// Get entry count in the index for the given search source.
         /// </summary>
         public abstract int GetEntryCount(SearchSource source);
 
+        /// <summary>
+        /// Gets an update context for this search engine and the given search source.
+        /// </summary>
         public abstract IIndexUpdateContext GetUpdateContext(SearchSource searchSource);
     }
 
@@ -43,23 +52,9 @@ namespace nCode.Search
             return SearchHandler.Engine.GetUpdateContext(this);
         }
 
+        /// <summary>
+        /// Updates the entire index for this Search Source.
+        /// </summary>
         public abstract void UpdateIndex();
-    }
-
-    public class SearchIndexEntry
-    {
-        public Guid Id { get; set; }
-
-        public string Title { get; set; }
-
-        public string Description { get; set; }
-
-        public string Content { get; set; }
-
-        public string Keywords { get; set; }
-
-        public string Url { get; set; }        
-
-        public string Culture { get; set; }
     }
 }

@@ -12,9 +12,9 @@ namespace nCode.Catalog.Data
 
         BrandView GetBrand(Guid brandId);
 
-        IEnumerable<ItemListView> GetItemList(IFilterExpression<CatalogModel, Item> filter, IOrderByExpression<Item> order = null, int skip = 0, int? take = null);
+        IEnumerable<ItemListView> GetItemList(IFilterExpression<CatalogModel, Item> filter, IOrderByExpression<Item> order = null, bool? includeVat = null, int skip = 0, int? take = null);
 
-        IEnumerable<ItemListView> SearchItems(string query, bool includeInActive = false, int skip = 0, int? take = null);
+        IEnumerable<ItemListView> SearchItems(string query, bool includeInActive = false, bool? includeVat = null, int skip = 0, int? take = null);
 
         ItemDetailView GetItem(string itemNo);
 

@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-using nCode.Data;
-using nCode.Data.Linq;
 using nCode.Catalog.Data;
 using nCode.Catalog.Models;
 using nCode.Catalog.ViewModels;
+using nCode.Data;
+using nCode.Data.Linq;
 using nCode.Imaging;
-using System.Net.Http;
 
 namespace nCode.Catalog.Controllers
 {
@@ -46,7 +46,7 @@ namespace nCode.Catalog.Controllers
                     filter = new FilterExpression<CatalogModel, Item>(x => categoryId != null ? x.CategoryID == categoryId : x.CategoryID == null);
                     order = new OrderByExpression<Item, int>(x => x.Index);
 
-                    data = catalogRepository.GetItemList(filter, order);
+                    data = catalogRepository.GetItemList(filter, order, includeVat: false);
                 }
                 else if (string.Equals(parts[0], "B"))
                 {
@@ -58,11 +58,11 @@ namespace nCode.Catalog.Controllers
                     filter = new FilterExpression<CatalogModel, Item>(x => brandId != null ? x.BrandID == brandId : x.BrandID == null);
                     order = new OrderByExpression<Item, int>(x => x.BrandIndex);
 
-                    data = catalogRepository.GetItemList(filter, order);
+                    data = catalogRepository.GetItemList(filter, order, includeVat: false);
                 }
                 else if (string.Equals(parts[0], "S"))
                 {
-                    data = catalogRepository.SearchItems(parts[1], includeInActive: true);
+                    data = catalogRepository.SearchItems(parts[1], includeInActive: true, includeVat: false);
                 }
                 else
                 {

@@ -207,6 +207,8 @@
       <DependentUpon>201409101753311_Metadata_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Search\ReindexJob.cs" />
+    <Compile Include="Search\SearchEntryField.cs" />
+    <Compile Include="Search\SearchIndexEntry.cs" />
     <Compile Include="SetupMiddleware.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="SystemDbConfiguration.cs" />

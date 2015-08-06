@@ -21,6 +21,9 @@ namespace nCode.Search
         public LS.Directory IndexDirectory { get; private set; }
         private IndexSearcher indexSearcher;
 
+        /// <summary>
+        /// Initializes a new instance of the Lucene Search Engine.
+        /// </summary>
         public LuceneSearchEngine()
         {
             IndexDirectory = LS.FSDirectory.Open(LuceneSearchSettings.LucenePath);
@@ -48,7 +51,10 @@ namespace nCode.Search
             return reader.DocFreq(new Term("source", searchSource.GetType().FullName));
         }
 
-        public override IEnumerable<SearchResult> Search(string queryString)
+        /// <summary>
+        /// Searches the search engine for the given query string.
+        /// </summary>
+        public override IEnumerable<SearchResult> Search(string queryString, string[] includeFields = null)
         {
             var results = new Dictionary<Guid, SearchResult>(100);
 
@@ -57,7 +63,17 @@ namespace nCode.Search
 
             var query = new BooleanQuery();
 
+            if (includeFields != null)
+            {
+                foreach (var field in includeFields) {
+                    var fieldQuery = new PrefixQuery(new Term(field + "_stored", queryString));
+                    query.Add(fieldQuery, Occur.SHOULD);
+                }
+            }
+
             var words = queryString.ToLower().Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+
+            var termQuery = new BooleanQuery();
 
             foreach (var w in words) {
 
@@ -89,8 +105,10 @@ namespace nCode.Search
                 var contentQuery = new Lucene.Net.Search.TermQuery(new Term("content_analyzed", w));
                 subquery.Add(contentQuery, Occur.SHOULD);
 
-                query.Add(subquery, Occur.MUST);
+                termQuery.Add(subquery, Occur.MUST);
             }
+
+            query.Add(termQuery, Occur.SHOULD);
 
             var hits = indexSearcher.Search(query, 100);            
 

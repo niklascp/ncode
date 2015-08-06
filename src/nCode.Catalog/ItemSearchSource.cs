@@ -1,12 +1,10 @@
-﻿using Common.Logging;
-using nCode.Search;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Web;
+using Common.Logging;
+
+using nCode.Search;
 
 namespace nCode.Catalog
 {
@@ -33,33 +31,48 @@ namespace nCode.Catalog
         /// </summary>
         public override void UpdateIndex()
         {
+            var log = LogManager.GetLogger<ItemSearchSource>();
+            log.Info("Updating Catalog Item Search Index...");
+
+            var count = 0;
+
             /* Initialize Search */
             using (var model = new CatalogModel())
             using (var index = GetUpdateContext())
             {
                 index.FlushIndex();
 
-                var searchEntries = (from i in model.Items
-                                     from l in i.Localizations
-                                     where i.IsActive
-                                     select new SearchIndexEntry()
-                                     {
-                                         Id = i.ID,
-                                         Title = l.Title,
-                                         Description = l.SeoDescription,
-                                         Content = l.Description,
-                                         Culture = l.Culture,
-                                         Keywords = i.ItemNo + " " + (i.Brand != null ? i.Brand.Name : "") + " " + l.SeoKeywords,
-                                         Url = (l.Culture != null ? "/" + l.Culture : "") + "/Catalog/Item-View?ID=" + i.ID.ToString()
-                                     }).ToList();
+                var entryData = (from i in model.Items
+                                 from l in i.Localizations
+                                 where i.IsActive
+                                 select new
+                                 {
+                                     i.ID,
+                                     i.ItemNo,
+                                     l.Culture,
+                                     l.Title,
+                                     l.SeoDescription,
+                                     Content = l.Description,
+                                     Keywords = (i.Brand != null ? i.Brand.Name : "") + " " + l.SeoKeywords
+                                 }).ToList();
 
                 var htmlRemovalRegex = new Regex("<.*?>", RegexOptions.Compiled);
 
-                foreach (var en in searchEntries)
+                foreach (var itemEntry in entryData)
                 {
-                    if (en.Content != null)
-                        en.Content = HttpUtility.HtmlDecode(htmlRemovalRegex.Replace(en.Content, Environment.NewLine));
+                    var en = new SearchIndexEntry() {
+                        Id = itemEntry.ID,                              
+                        Culture = itemEntry.Culture,
+                        Title = itemEntry.Title,
+                        Description =itemEntry.SeoDescription,
+                        Keywords = itemEntry.Keywords,
+                        Url = (itemEntry.Culture != null ? "/" + itemEntry.Culture : "") + "/Catalog/Item-View?ID=" + itemEntry.ID.ToString()
+                    };
 
+                    if (itemEntry.Content != null)
+                        en.Content = HttpUtility.HtmlDecode(htmlRemovalRegex.Replace(itemEntry.Content, Environment.NewLine));
+
+                    /* Get item variants */
                     var variants = (from ivt in model.ItemVariantTypes.Where(x => x.ItemID == en.Id)
                                     from iv in ivt.ItemVariants
                                     from g in iv.Variant.Localizations.Where(x => x.Culture == null)
@@ -69,17 +82,22 @@ namespace nCode.Catalog
                                         (l ?? g).DisplayName
                                     }).ToList();
 
+                    /* Add each variant display name as a keyword. */
                     foreach (var variant in variants)
                         en.Keywords += " " + variant.DisplayName;
 
+                    /* NCP: 2014-09-13: Add ItemNo to fields, allowing search by ItemNo. */
+                    en.AddCustomField("itemno", itemEntry.ItemNo, store: true);
+
                     index.IndexEntry(en);
+
+                    count++;
                 }
 
                 index.CommitChanges();
             }
 
-            ILog log = LogManager.GetCurrentClassLogger();
-            log.Info("Successfully updated Catalog Item search index.");
+            log.InfoFormat("Successfully updated Catalog Item Search Index: {0} entires was indexed.", count);
         }
 
         /// <summary>
@@ -100,34 +118,46 @@ namespace nCode.Catalog
         /// </summary>
         public void ReindexItem(Guid ItemID)
         {
+            var count = 0;
+
             /* Search */
             using (var model = new CatalogModel())
             using (var index = GetUpdateContext())
             {
                 index.DeleteEntry(ItemID);
 
-                var searchEntries = (from i in model.Items
-                                     from l in i.Localizations
-                                     where i.ID == ItemID && i.IsActive
-                                     select new SearchIndexEntry()
-                                     {
-                                         Id = i.ID,
-                                         Title = l.Title,
-                                         Description = l.SeoDescription,
-                                         Content = l.Description,
-                                         Culture = l.Culture,
-                                         /* NCP: 2014-09-13: Add ItemNo to Keyword, allowing search by ItemNo. */
-                                         Keywords = i.ItemNo + " " + (i.Brand != null ? i.Brand.Name : "") + " " + l.SeoKeywords,
-                                         Url = (l.Culture != null ? "/" + l.Culture : "") + "/Catalog/Item-View?ID=" + i.ID.ToString()
-                                     }).ToList();
+                var entryData = (from i in model.Items
+                                 from l in i.Localizations
+                                 where i.ID == ItemID && i.IsActive
+                                 select new
+                                 {
+                                     i.ID,
+                                     i.ItemNo,
+                                     l.Culture,
+                                     l.Title,
+                                     l.SeoDescription,
+                                     Content = l.Description,
+                                     Keywords = (i.Brand != null ? i.Brand.Name : "") + " " + l.SeoKeywords
+                                 }).ToList();
 
                 var htmlRemovalRegex = new Regex("<.*?>", RegexOptions.Compiled);
 
-                foreach (var en in searchEntries)
+                foreach (var itemEntry in entryData)
                 {
-                    if (en.Content != null)
-                        en.Content = HttpUtility.HtmlDecode(htmlRemovalRegex.Replace(en.Content, Environment.NewLine));
+                    var en = new SearchIndexEntry()
+                    {
+                        Id = itemEntry.ID,
+                        Culture = itemEntry.Culture,
+                        Title = itemEntry.Title,
+                        Description = itemEntry.SeoDescription,
+                        Keywords = itemEntry.Keywords,
+                        Url = (itemEntry.Culture != null ? "/" + itemEntry.Culture : "") + "/Catalog/Item-View?ID=" + itemEntry.ID.ToString()
+                    };
 
+                    if (itemEntry.Content != null)
+                        en.Content = HttpUtility.HtmlDecode(htmlRemovalRegex.Replace(itemEntry.Content, Environment.NewLine));
+
+                    /* Get item variants */
                     var variants = (from ivt in model.ItemVariantTypes.Where(x => x.ItemID == en.Id)
                                     from iv in ivt.ItemVariants
                                     from g in iv.Variant.Localizations.Where(x => x.Culture == null)
@@ -137,10 +167,16 @@ namespace nCode.Catalog
                                         (l ?? g).DisplayName
                                     }).ToList();
 
+                    /* Add each variant display name as a keyword. */
                     foreach (var variant in variants)
                         en.Keywords += " " + variant.DisplayName;
-                    
+
+                    /* NCP: 2014-09-13: Add ItemNo to fields, allowing search by ItemNo. */
+                    en.AddCustomField("itemno", itemEntry.ItemNo, store: true);
+
                     index.IndexEntry(en);
+
+                    count++;
                 }
 
                 index.CommitChanges();

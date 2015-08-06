@@ -67,7 +67,7 @@ namespace nCode.Catalog.Data
             return brandView;
         }
 
-        public IEnumerable<ItemListView> GetItemList(IFilterExpression<CatalogModel, Item> filter, IOrderByExpression<Item> order = null, int skip = 0, int? take = null)
+        public IEnumerable<ItemListView> GetItemList(IFilterExpression<CatalogModel, Item> filter, IOrderByExpression<Item> order = null, bool? includeVat = null, int skip = 0, int? take = null)
         {
             var items = dbModel.Items.AsQueryable();
 
@@ -76,6 +76,9 @@ namespace nCode.Catalog.Data
 
             if (order != null)
                 items = order.ApplyOrdering(items);
+
+            if (includeVat == null)
+                includeVat = BasketController.SalesChannel.ShowPricesIncludingVat;
 
             var currentCurrencyCode = CurrencyController.CurrentCurrency != null ? CurrencyController.CurrentCurrency.Code : null;
             var defaultCurrencyCode = CurrencyController.DefaultCurrency != null ? CurrencyController.DefaultCurrency.Code : null;
@@ -100,8 +103,9 @@ namespace nCode.Catalog.Data
                         {
                             ID = i.ID,
                             ItemNo = i.ItemNo,
-                            i.IsActive,
+                            IsActive = i.IsActive,
                             Title = (l ?? g).Title,
+                            VatGroupCode = i.VatGroupCode,
                             ListPrice = listPrice,
                             DefaultListPrice = defaultListPrice,
                             OnSale = i.OnSale,
@@ -125,54 +129,83 @@ namespace nCode.Catalog.Data
                         }).ToList();
 
             /* Map data to View Model */
-            var viewData = data.Select(x => new ItemListView
+            var viewData = new List<ItemListView>(data.Count());
+                       
+            foreach (var item in data)
             {
-                ID = x.ID,
-                ItemNo = x.ItemNo,
-                IsActive = x.IsActive,
+                var itemListView = new ItemListView {
+                    ID = item.ID,
+                    ItemNo = item.ItemNo,
+                    IsActive = item.IsActive,
 
-                Title = x.Title,
-                ListPrice = x.ListPrice != null ? new ItemListPriceView()
+                    Title = item.Title,
+
+                    OnSale = item.OnSale,
+                    VariantMode = item.VariantMode,
+
+                    CategoryID = item.CategoryID,
+                    CategoryTitle = item.CategoryTitle,
+                    CategoryIndex = item.CategoryIndex,
+
+                    BrandID = item.BrandID,
+                    BrandName = item.BrandName,
+                    BrandIndex = item.BrandIndex,
+
+                    ImageFile = item.ImageFile,
+
+                    /* Stock Management */
+                    StockQuantity = item.UseStockControl ? (int?)item.StockQuantity : null,
+                    ReservedQuantity = item.UseStockControl ? (int?)item.ReservedQuantity : null,
+                    IsAvailable = item.IsAvailable,
+                };
+
+                if (item.ListPrice != null)
                 {
-                    CurrencyCode = x.ListPrice.CurrencyCode,
-                    PriceGroupCode = x.ListPrice.PriceGroupCode,
-                    MultiplePrices = x.ListPrice.MultiplePrices,
-                    Price = x.ListPrice.Price
-                } : null,
-                DefaultListPrice = x.DefaultListPrice != x.ListPrice ? new ItemListPriceView()
+                    /* Correct the currency of the list price. */
+                    var price = CurrencyController.ConvertAmount(item.ListPrice.Price, item.ListPrice.CurrencyCode, currentCurrencyCode);
+
+                    /* Currect VAT, if needed. */
+                    price = VatUtilities.GetDisplayPrice(price, item.VatGroupCode, item.ListPrice.PriceGroupCode, includeVat.Value);
+
+                    /* 2013-08-13: Implementing advanced rounding options. */
+                    price = CurrencyController.ApplyRoundingRule(price, CurrencyController.CurrentCurrency);
+
+                    itemListView.ListPrice = new ItemListPriceView() 
+                    {
+                        Price = price,
+                        CurrencyCode = currentCurrencyCode
+                    };               
+                }
+
+                if (item.DefaultListPrice != null)
                 {
-                    CurrencyCode = x.DefaultListPrice.CurrencyCode,
-                    PriceGroupCode = x.DefaultListPrice.PriceGroupCode,
-                    MultiplePrices = x.DefaultListPrice.MultiplePrices,
-                    Price = x.DefaultListPrice.Price
-                } : null,
-                OnSale = x.OnSale,
-                VariantMode = x.VariantMode,
+                    /* Correct the currency of the list price. */
+                    var price = CurrencyController.ConvertAmount(item.DefaultListPrice.Price, item.ListPrice.CurrencyCode, currentCurrencyCode);
 
-                CategoryID = x.CategoryID,
-                CategoryTitle = x.CategoryTitle,
-                CategoryIndex = x.CategoryIndex,
+                    /* Currect VAT, if needed. */
+                    price = VatUtilities.GetDisplayPrice(price, item.VatGroupCode, item.ListPrice.PriceGroupCode, includeVat.Value);
 
-                BrandID = x.BrandID,
-                BrandName = x.BrandName,
-                BrandIndex = x.BrandIndex,
+                    /* 2013-08-13: Implementing advanced rounding options. */
+                    price = CurrencyController.ApplyRoundingRule(price, CurrencyController.CurrentCurrency);
 
-                ImageFile = x.ImageFile,
+                    itemListView.DefaultListPrice = new ItemListPriceView()
+                    {
+                        Price = price,
+                        CurrencyCode = currentCurrencyCode
+                    };        
+                }
 
-                /* Stock Management */
-                StockQuantity = x.UseStockControl ? (int?)x.StockQuantity : null,
-                ReservedQuantity = x.UseStockControl ? (int?)x.ReservedQuantity : null,
-                IsAvailable = x.IsAvailable,
-            });
+                viewData.Add(itemListView);
+            }
 
-            return viewData.ToList();
+            return viewData;
         }
 
-        public IEnumerable<ItemListView> SearchItems(string query, bool includeInActive = false, int skip = 0, int? take = null)
+        public IEnumerable<ItemListView> SearchItems(string query, bool includeInActive = false, bool? includeVat = null, int skip = 0, int? take = null)
         {
             using (CatalogModel model = new CatalogModel())
             {
-                var results = SearchHandler.Engine.Search(query);
+                var results = SearchHandler.Engine.Search(query, new string[] { "itemno" });
 
                 IEnumerable<Guid> resultIds = null;
 
@@ -188,7 +221,7 @@ namespace nCode.Catalog.Data
 
                 var resultIdsArray = resultIds.ToArray();
 
-                var viewData = GetItemList(new FilterExpression<CatalogModel, Item>(x => (includeInActive || x.IsActive) && resultIdsArray.Contains(x.ID)));
+                var viewData = GetItemList(new FilterExpression<CatalogModel, Item>(x => (includeInActive || x.IsActive) && resultIdsArray.Contains(x.ID)), includeVat: includeVat);
                 return viewData.OrderByDescending(x => results.Single(y => y.ID == x.ID).Score);
             }
         }
