@@ -14,6 +14,7 @@ namespace nCode.Catalog
     public static class VatUtilities
     {
         private const string vatGroupCacheKey = "nCode.Catalog.VatGroupSet";
+        private const string priceGroupCacheKey = "nCode.Catalog.PriceGroupSet";
         private const string vatGroupsRequestItem = "nCode.Catalog.VatUtilities.VatGroups";
 
         private static object lockObject = new object();
@@ -44,8 +45,8 @@ namespace nCode.Catalog
              * It is limited by O(c * p) where c is |Currency| and p is |PriceGroup|. */
             var prices = model.ItemPrices.Where(x => x.ItemNo == itemNo).ToList();
 
-            var price = (from cp in prices.Where(x => x.CurrencyCode == currency.Code && x.PriceGroupCode != null && x.PriceGroupCode == priceGroupCode).DefaultIfEmpty()
-                         from dp in prices.Where(x => x.CurrencyCode == defaultCurrency.Code && x.PriceGroupCode != null && x.PriceGroupCode == priceGroupCode).DefaultIfEmpty()
+            var price = (from cp in prices.Where(x => x.CurrencyCode == currency.Code && x.PriceGroupCode != null && string.Equals(x.PriceGroupCode, priceGroupCode, StringComparison.OrdinalIgnoreCase)).DefaultIfEmpty()
+                         from dp in prices.Where(x => x.CurrencyCode == defaultCurrency.Code && x.PriceGroupCode != null && string.Equals(x.PriceGroupCode, priceGroupCode, StringComparison.OrdinalIgnoreCase)).DefaultIfEmpty()
                          from c in prices.Where(x => x.CurrencyCode == currency.Code && x.PriceGroupCode == null).DefaultIfEmpty()
                          from d in prices.Where(x => x.CurrencyCode == defaultCurrency.Code && x.PriceGroupCode == null)
                          select
@@ -164,6 +165,48 @@ namespace nCode.Catalog
                 return vatGroupSet;
             }
         }
+
+        private static IDictionary<string, Models.PriceGroup> PriceGroupCache
+        {
+            get
+            {
+                IDictionary<string, Models.PriceGroup> priceGroupCache;
+
+                if (HttpContext.Current != null)
+                {
+                    priceGroupCache = HttpContext.Current.Cache[priceGroupCacheKey] as IDictionary<string, Models.PriceGroup>;
+                    
+                    if (priceGroupCache == null)
+                    {
+                        lock (lockObject)
+                        {
+                            if (HttpContext.Current.Cache[priceGroupCacheKey] == null)
+                            {
+                                using (var dbContext = new CatalogDbContext())
+                                {
+                                    priceGroupCache = dbContext.PriceGroups.ToDictionary(x => x.Code ?? string.Empty, StringComparer.OrdinalIgnoreCase);
+                                    HttpContext.Current.Cache.Add(priceGroupCacheKey, priceGroupCache, null, Cache.NoAbsoluteExpiration, new TimeSpan(0, 10, 0), CacheItemPriority.Normal, null);
+
+                                    Log.Info(string.Format("Cached {0} Price Groups to the Cache Key '{1}'.", priceGroupCache.Count, priceGroupCacheKey));
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    Log.Warn(string.Format("Could not cache Price Groups: No Current HttpContext. Performance might decrease."));
+
+                    using (var dbContext = new CatalogDbContext())
+                    {
+                        priceGroupCache = dbContext.PriceGroups.ToDictionary(x => x.Code ?? string.Empty, StringComparer.OrdinalIgnoreCase);
+                    }
+                }
+
+                return priceGroupCache;
+            }
+        }
+
 
         /// <summary>
         /// Gets available vat groups. Cached for each request.
@@ -323,33 +366,24 @@ namespace nCode.Catalog
             if (currencyCode == null)
                 return null;
 
-            var now = DateTime.Now;
-
-            try
+            using (var model = new CatalogModel())
             {
-                using (var model = new CatalogModel())
+                var currency = CurrencyController.Currencies.Single(c => c.Code == currencyCode);
+
+                var priceInfo = GetItemPriceInternal(model, itemNo, currency, priceGroupCode);
+
+                if (priceInfo != null)
                 {
-                    var currency = CurrencyController.Currencies.Single(c => c.Code == currencyCode);
+                    if (includeVat == null)
+                        includeVat = BasketController.SalesChannel.ShowPricesIncludingVat;
 
-                    var priceInfo = GetItemPriceInternal(model, itemNo, currency, priceGroupCode);
+                    var price = GetDisplayPrice(priceInfo.Price, priceInfo.VatGroupCode, priceInfo.PriceGroupCode, includeVat.Value);
 
-                    if (priceInfo != null)
-                    {
-                        if (includeVat == null)
-                            includeVat = BasketController.SalesChannel.ShowPricesIncludingVat;
-
-                        var price = GetDisplayPrice(priceInfo.Price, priceInfo.VatGroupCode, priceInfo.PriceGroupCode, includeVat.Value);
-
-                        /* 2013-08-13: Implementing advanced rounding options. */
-                        return CurrencyController.ApplyRoundingRule(price, currency);
-                    }
-
-                    return null;
+                    /* 2013-08-13: Implementing advanced rounding options. */
+                    return CurrencyController.ApplyRoundingRule(price, currency);
                 }
-            }
-            finally
-            {
-                //Log.Verbose(string.Format("Performance: Catalog.VatUtilities.GetItemPrice Leave: {0:n0}", (DateTime.Now - now).TotalMilliseconds));
+
+                return null;
             }
         }
 
@@ -596,10 +630,14 @@ namespace nCode.Catalog
         {
             using (var dbContext = new CatalogDbContext())
             {
+                Models.VatGroup vatGroup = null;
+                Models.PriceGroup priceGroup = null;
+
+                VatGroupCache.TryGetValue(vatGroupCode, out vatGroup);
+                PriceGroupCache.TryGetValue(priceGroupCode ?? string.Empty, out priceGroup);
+
                 /* TODO: Cache this for performance! */
-                var priceGroup = dbContext.PriceGroups.Where(x => x.Code == priceGroupCode).Single();
                 var salesChannel = dbContext.SalesChannels.Where(x => x.Code == salesChannelCode).SingleOrDefault();
-                var vatGroup = vatGroupCode != null ? VatGroupCache[vatGroupCode] : null;
 
                 return GetDisplayPrice(price, vatGroup, priceGroup, salesChannel);
             }
@@ -607,14 +645,13 @@ namespace nCode.Catalog
 
         public static decimal GetDisplayPrice(decimal price, string vatGroupCode, string priceGroupCode , bool includeVat)
         {
-            using (var dbContext = new CatalogDbContext())
-            {
-                /* TODO: Cache this for performance! */
-                var priceGroup = dbContext.PriceGroups.Where(x => x.Code == priceGroupCode).Single();
-                var vatGroup = vatGroupCode != null ? VatGroupCache[vatGroupCode] : null;
+            Models.VatGroup vatGroup = null;
+            Models.PriceGroup priceGroup = null;
 
-                return GetDisplayPrice(price, vatGroup, priceGroup, includeVat);
-            }
+            VatGroupCache.TryGetValue(vatGroupCode, out vatGroup);
+            PriceGroupCache.TryGetValue(priceGroupCode ?? string.Empty, out priceGroup);
+
+            return GetDisplayPrice(price, vatGroup, priceGroup, includeVat);
         }
 
         public static decimal GetDisplayPrice(decimal price, Models.VatGroup vatGroup, Models.PriceGroup priceGroup, SalesChannel salesChannel)
