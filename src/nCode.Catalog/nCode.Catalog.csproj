@@ -161,7 +161,7 @@
     <Compile Include="Delivery\Pdk\Services\PdkServicePointServiceClient.cs" />
     <Compile Include="Delivery\Unifaun\Models\ErpConnect.cs" />
     <Compile Include="Data\ICatalogRepository.cs" />
-    <Compile Include="ItemSearchSource.cs" />
+    <Compile Include="Search\ItemSearchSource.cs" />
     <Compile Include="CategoriesContentType.cs" />
     <Compile Include="BrandsContentType.cs" />
     <Compile Include="Models\BrandLocalization.cs" />

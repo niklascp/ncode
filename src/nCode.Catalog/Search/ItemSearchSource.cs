@@ -6,7 +6,7 @@ using Common.Logging;
 
 using nCode.Search;
 
-namespace nCode.Catalog
+namespace nCode.Catalog.Search
 {
     /// <summary>
     /// Represens a source of Catalog Items for the search engine. 
@@ -44,11 +44,11 @@ namespace nCode.Catalog
 
                 var entryData = (from i in model.Items
                                  from l in i.Localizations
-                                 where i.IsActive
                                  select new
                                  {
                                      i.ID,
                                      i.ItemNo,
+                                     i.IsActive,
                                      l.Culture,
                                      l.Title,
                                      l.SeoDescription,
@@ -88,6 +88,7 @@ namespace nCode.Catalog
 
                     /* NCP: 2014-09-13: Add ItemNo to fields, allowing search by ItemNo. */
                     en.AddCustomField("itemno", itemEntry.ItemNo, store: true);
+                    en.AddCustomField("isactive", itemEntry.IsActive ? "1" : "0", store: true);
 
                     index.IndexEntry(en);
 
@@ -128,11 +129,12 @@ namespace nCode.Catalog
 
                 var entryData = (from i in model.Items
                                  from l in i.Localizations
-                                 where i.ID == ItemID && i.IsActive
+                                 where i.ID == ItemID
                                  select new
                                  {
                                      i.ID,
                                      i.ItemNo,
+                                     i.IsActive,
                                      l.Culture,
                                      l.Title,
                                      l.SeoDescription,
@@ -173,6 +175,7 @@ namespace nCode.Catalog
 
                     /* NCP: 2014-09-13: Add ItemNo to fields, allowing search by ItemNo. */
                     en.AddCustomField("itemno", itemEntry.ItemNo, store: true);
+                    en.AddCustomField("isactive", itemEntry.IsActive ? "1" : "0", store: true);
 
                     index.IndexEntry(en);
 

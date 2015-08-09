@@ -68,7 +68,7 @@ namespace nCode.Catalog
             ContentRewriteControl.AddHandler(new ItemRewriteHandler());
 
             if (SearchHandler.IsInitialized)
-                SearchHandler.AddSource(new ItemSearchSource());
+                SearchHandler.AddSource(new Search.ItemSearchSource());
         }
 
         public override decimal Version
