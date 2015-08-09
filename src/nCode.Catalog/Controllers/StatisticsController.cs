@@ -244,12 +244,15 @@ order by
         }
 
         [Route("sale")]
-        public dynamic GetSale(DateTime fromDate, DateTime toDate, string step = null)
+        public dynamic GetSale(DateTime fromDate, DateTime toDate, string step = null, string parallelPeriod = null)
         {
             using (var conn = new SqlConnection(Settings.ConnectionString))
             {
-                DateTime parallelFromDate;
-                DateTime parallelToDate;
+                if (parallelPeriod == null)
+                    parallelPeriod = "auto";
+
+                DateTime? parallelFromDate = null;
+                DateTime? parallelToDate = null;
 
                 conn.Open();
 
@@ -261,20 +264,31 @@ order by
                     stepExp = x => x.AddDays(1);
                     stepFmt = "dd/MM";
 
-                    parallelFromDate = fromDate.AddMonths(-1);
-                    parallelToDate = toDate.AddMonths(-1);
+                    if (parallelPeriod.Equals("auto", StringComparison.OrdinalIgnoreCase))
+                    {
+                        parallelFromDate = fromDate.AddMonths(-1);
+                        parallelToDate = toDate.AddMonths(-1);
+                    }
                 }
                 else
                 {
                     stepExp = x => x.AddMonths(1);
                     stepFmt = "MMM yyyy";
 
-                    parallelFromDate = fromDate.AddYears(-1);
-                    parallelToDate = toDate.AddYears(-1);
+                    if (parallelPeriod.Equals("auto", StringComparison.OrdinalIgnoreCase))
+                    {
+                        parallelFromDate = fromDate.AddYears(-1);
+                        parallelToDate = toDate.AddYears(-1);
+                    }
                 }
 
-                var salePerDate = conn.Query<SalePerDate>(saleByInvoiceDate, new { fromDate = fromDate, toDate = toDate });
-                var parallelSalePerDate = conn.Query<SalePerDate>(saleByInvoiceDate, new { fromDate = parallelFromDate, toDate = parallelToDate });
+                IEnumerable<SalePerDate> salePerDate = conn.Query<SalePerDate>(saleByInvoiceDate, new { fromDate = fromDate, toDate = toDate });
+                IEnumerable<SalePerDate> parallelSalePerDate = null;
+
+                if (parallelPeriod != "none" && parallelFromDate != null && parallelToDate != null)
+                {
+                    parallelSalePerDate = conn.Query<SalePerDate>(saleByInvoiceDate, new { fromDate = parallelFromDate.Value, toDate = parallelToDate.Value });
+                }
 
                 var categories = new List<string>();
 
@@ -291,15 +305,17 @@ order by
                 {
                     /* Todo - */
                     var nextDate = stepExp(date);
-                    var nextParallelDate = stepExp(parallelDate);
+                    var nextParallelDate = parallelDate != null ? stepExp(parallelDate.Value) : (DateTime?)null;
 
                     categories.Add(date.ToString(stepFmt));
 
                     orderCount.Add(salePerDate.Where(x => date <= x.InvoiceDate && x.InvoiceDate < nextDate).Sum(x => x.OrderCount));
-                    parallelOrderCount.Add(parallelSalePerDate.Where(x => parallelDate <= x.InvoiceDate && x.InvoiceDate < nextParallelDate).Sum(x => x.OrderCount));
+                    if (parallelSalePerDate != null)
+                        parallelOrderCount.Add(parallelSalePerDate.Where(x => parallelDate <= x.InvoiceDate && x.InvoiceDate < nextParallelDate).Sum(x => x.OrderCount));
 
                     sale.Add(salePerDate.Where(x => date <= x.InvoiceDate && x.InvoiceDate < nextDate).Sum(x => x.Amount));
-                    parallelSale.Add(parallelSalePerDate.Where(x => parallelDate <= x.InvoiceDate && x.InvoiceDate < nextParallelDate).Sum(x => x.Amount));
+                    if (parallelSalePerDate != null)
+                        parallelSale.Add(parallelSalePerDate.Where(x => parallelDate <= x.InvoiceDate && x.InvoiceDate < nextParallelDate).Sum(x => x.Amount));
 
                     date = nextDate;
                     parallelDate = nextParallelDate;
@@ -334,17 +350,31 @@ order by
         }
 
         [Route("salebyhour")]
-        public dynamic GetSaleByHour(DateTime fromDate, DateTime toDate)
+        public dynamic GetSaleByHour(DateTime fromDate, DateTime toDate, string parallelPeriod = null)
         {
+            if (parallelPeriod == null)
+                parallelPeriod = "auto";
+
+            DateTime? parallelFromDate = null;
+            DateTime? parallelToDate = null;
+
             using (var conn = new SqlConnection(Settings.ConnectionString))
             {
+
                 conn.Open();
 
                 var saleByHour = conn.Query<SaleByHour>(saleByHourStatement, new { fromDate = fromDate, toDate = toDate });
 
-                var parallelFromDate = fromDate.AddYears(-1);
-                var parallelToDate = toDate.AddYears(-1);
-                var parallelSaleByHour = conn.Query<SaleByHour>(saleByHourStatement, new { fromDate = parallelFromDate, toDate = parallelToDate });
+                if (parallelPeriod.Equals("auto", StringComparison.OrdinalIgnoreCase))
+                {
+                    parallelFromDate = fromDate.AddYears(-1);
+                    parallelToDate = toDate.AddYears(-1);
+                }
+
+                IEnumerable<SaleByHour> parallelSaleByHour = null;
+
+                if (!parallelPeriod.Equals("none", StringComparison.OrdinalIgnoreCase) && parallelFromDate != null && parallelToDate != null)
+                    parallelSaleByHour = conn.Query<SaleByHour>(saleByHourStatement, new { fromDate = parallelFromDate.Value, toDate = parallelToDate.Value });
 
                 var categories = new List<string>();
 
@@ -358,11 +388,14 @@ order by
                 {
                     categories.Add(hour.ToString());
 
-                    orderCount.Add(saleByHour.Where(x => hour == x.Hour).Sum(x => x.OrderCount));
-                    parallelOrderCount.Add(parallelSaleByHour.Where(x => hour == x.Hour).Sum(x => x.OrderCount));
-
+                    orderCount.Add(saleByHour.Where(x => hour == x.Hour).Sum(x => x.OrderCount));                    
                     sale.Add(saleByHour.Where(x => hour == x.Hour).Sum(x => x.Amount));
-                    parallelSale.Add(parallelSaleByHour.Where(x => hour == x.Hour).Sum(x => x.Amount));
+
+                    if (parallelSaleByHour != null)
+                    {
+                        parallelOrderCount.Add(parallelSaleByHour.Where(x => hour == x.Hour).Sum(x => x.OrderCount));
+                        parallelSale.Add(parallelSaleByHour.Where(x => hour == x.Hour).Sum(x => x.Amount));
+                    }
                 }
 
                 return new
