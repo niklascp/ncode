@@ -918,27 +918,27 @@
         <member name="P:nCode.Catalog.Delivery.Unifaun.Models.PacsoftReceiver.ReceiverId">
             <remarks/>
         </member>
-        <member name="T:nCode.Catalog.ItemSearchSource">
+        <member name="T:nCode.Catalog.Search.ItemSearchSource">
             <summary>
             Represens a source of Catalog Items for the search engine. 
             </summary>
         </member>
-        <member name="M:nCode.Catalog.ItemSearchSource.UpdateIndex">
+        <member name="M:nCode.Catalog.Search.ItemSearchSource.UpdateIndex">
             <summary>
             Updates the index with all active items in the Catelog.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.ItemSearchSource.DeleteItem(System.Guid)">
+        <member name="M:nCode.Catalog.Search.ItemSearchSource.DeleteItem(System.Guid)">
             <summary>
             Deletes the Catelog Item, given by its ID, from the Search Index.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.ItemSearchSource.ReindexItem(System.Guid)">
+        <member name="M:nCode.Catalog.Search.ItemSearchSource.ReindexItem(System.Guid)">
             <summary>
             Reindexes the Catelog Item, given by its ID, from the Search Index.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.ItemSearchSource.SourceGuid">
+        <member name="P:nCode.Catalog.Search.ItemSearchSource.SourceGuid">
             <summary>
             Gets a Globally Unique Id that identifies this Search Source.
             </summary>

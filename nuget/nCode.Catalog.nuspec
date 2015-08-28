@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>nCode.Catalog</id>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <authors>nCode</authors>
     <owners>nCode</owners>
     <licenseUrl>http://ncode.dk/License</licenseUrl>
@@ -12,7 +12,7 @@
     <description>nCode Catalog</description>
     <tags />
     <dependencies>
-      <dependency id="nCode.Core" version="1.1.6" />
+      <dependency id="nCode.Core" version="1.1.7" />
       <!-- Project dependencies are added automatically by pack script. -->
       <dependency id="Common.Logging" version="3.1.0" />
       <dependency id="Common.Logging.Core" version="3.1.0" />
