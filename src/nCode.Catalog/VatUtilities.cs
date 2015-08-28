@@ -633,7 +633,11 @@ namespace nCode.Catalog
                 Models.VatGroup vatGroup = null;
                 Models.PriceGroup priceGroup = null;
 
-                VatGroupCache.TryGetValue(vatGroupCode, out vatGroup);
+                /* A null vat group code implies no vat group associated. */
+                if (vatGroupCode != null)
+                    VatGroupCache.TryGetValue(vatGroupCode, out vatGroup);
+
+                /* A null pricegroup code implies the default pricegroup code (cached with the empty string). */
                 PriceGroupCache.TryGetValue(priceGroupCode ?? string.Empty, out priceGroup);
 
                 /* TODO: Cache this for performance! */
@@ -648,7 +652,11 @@ namespace nCode.Catalog
             Models.VatGroup vatGroup = null;
             Models.PriceGroup priceGroup = null;
 
-            VatGroupCache.TryGetValue(vatGroupCode, out vatGroup);
+            /* A null vat group code implies no vat group associated. */
+            if (vatGroupCode != null)
+                VatGroupCache.TryGetValue(vatGroupCode, out vatGroup);
+
+            /* A null price group code implies the default pricegroup code (cached with the empty string). */
             PriceGroupCache.TryGetValue(priceGroupCode ?? string.Empty, out priceGroup);
 
             return GetDisplayPrice(price, vatGroup, priceGroup, includeVat);

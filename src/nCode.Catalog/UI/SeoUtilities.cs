@@ -48,7 +48,7 @@ namespace nCode.Catalog.UI
                     }
                 }
 
-                /* Category No an integer, or category was not found. */
+                /* Category No not an integer, or category was not found. */
             }
             /* Test for Brand Filter */
             else if (context.Request.QueryString["Brand"] != null)
