@@ -173,7 +173,9 @@ namespace nCode.Catalog.Data
                     itemListView.ListPrice = new ItemListPriceView() 
                     {
                         Price = price,
-                        CurrencyCode = currentCurrencyCode
+                        CurrencyCode = currentCurrencyCode,
+                        MultiplePrices = item.ListPrice.MultiplePrices,
+                        PriceGroupCode = item.ListPrice.PriceGroupCode
                     };               
                 }
 
@@ -191,7 +193,9 @@ namespace nCode.Catalog.Data
                     itemListView.DefaultListPrice = new ItemListPriceView()
                     {
                         Price = price,
-                        CurrencyCode = currentCurrencyCode
+                        CurrencyCode = currentCurrencyCode,
+                        MultiplePrices = item.ListPrice.MultiplePrices,
+                        PriceGroupCode = item.ListPrice.PriceGroupCode
                     };        
                 }
 
