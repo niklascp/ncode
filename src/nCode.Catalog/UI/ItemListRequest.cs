@@ -57,20 +57,20 @@ namespace nCode.Catalog.UI
             {
                 itemGroups = items
                     .GroupBy(x => new { x.CategoryTitle })
-                    .OrderBy(x => x.Key.CategoryTitle).Select(x => new ItemListGroupView
+                    .OrderBy(x => x.Min(y => y.BrandIndex)).Select(x => new ItemListGroupView
                     {
                         Title = x.Key.CategoryTitle,
-                        Items = x.OrderBy(y => y.CategoryIndex)
+                        Items = x.OrderBy(y => y.BrandIndex)
                     });
             }
             else if (ListSettings.GroupByMode == ItemListGroupByMode.GroupByBrand)
             {
                 itemGroups = items
                     .GroupBy(x => new { x.BrandName })
-                    .OrderBy(x => x.Key.BrandName).Select(x => new ItemListGroupView
+                    .OrderBy(x => x.Min(y => y.CategoryIndex) ).Select(x => new ItemListGroupView
                     {
                         Title = x.Key.BrandName,
-                        Items = x.OrderBy(y => y.BrandIndex)
+                        Items = x.OrderBy(y => y.CategoryIndex)
                     });
             }
 
