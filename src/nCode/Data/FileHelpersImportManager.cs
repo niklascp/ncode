@@ -11,7 +11,7 @@ namespace nCode.Data
     /// 
     /// </summary>
     /// <typeparam name="B">FileHelpers boddy-class.</typeparam>
-    public abstract class FileHelpersImportManager<B> : ImportManager, IFileImportManager
+    public abstract class FileHelpersImportManager<B> : ImportManager, IFileImportManager where B : class
     {
         public FileHelpersImportManager()
         {
