@@ -23,7 +23,7 @@ namespace nCode.Catalog.Controllers
 
 with 
 /* Calculates sales in the default currency. */
-sales AS (
+sales as (
     select
         [InvoiceDate] = cast(o.[InvoiceDate] as date),
         [VatIncluded] = o.[VatIncluded],
@@ -37,10 +37,10 @@ sales AS (
     from
         [Catalog_Order] o 
         join [Catalog_OrderItem] oi on oi.[OrderNo] = o.[OrderNo] 
-        join [Catalog_Currency] oc ON oc.[Code] = o.[CurrencyCode]
-        join [Catalog_Currency] dc ON dc.[IsDefault] = 1
+        join [Catalog_Currency] oc on oc.[Code] = o.[CurrencyCode]
+        join [Catalog_Currency] dc on dc.[IsDefault] = 1
     where
-        o.[Status] = 1 AND o.[InvoiceDate] between @fromDate and @toDate
+        o.[Status] = 1 and o.[InvoiceDate] between @fromDate and @toDate
     group by
         o.[InvoiceDate],
         o.[VatIncluded],
@@ -57,7 +57,7 @@ select
         end * s.[Price])
 from
     sales s
-    left join [Catalog_VatGroup] vg ON vg.[Code] = s.[VatGroupCode]
+    left join [Catalog_VatGroup] vg on vg.[Code] = s.[VatGroupCode]
 group by
     [InvoiceDate]
 order by
@@ -71,7 +71,7 @@ order by
 
 with 
 /* Calculates sales in the default currency. */
-sales AS (
+sales as (
     select
         [Hour] = datepart(hour, o.[Created]),
         [VatIncluded] = o.[VatIncluded],
@@ -85,10 +85,10 @@ sales AS (
     from
         [Catalog_Order] o 
         join [Catalog_OrderItem] oi on oi.[OrderNo] = o.[OrderNo] 
-        join [Catalog_Currency] oc ON oc.[Code] = o.[CurrencyCode]
-        join [Catalog_Currency] dc ON dc.[IsDefault] = 1
+        join [Catalog_Currency] oc on oc.[Code] = o.[CurrencyCode]
+        join [Catalog_Currency] dc on dc.[IsDefault] = 1
     where
-        o.[Status] = 1 AND o.[InvoiceDate] between @fromDate and @toDate
+        o.[Status] = 1 and o.[InvoiceDate] between @fromDate and @toDate
     group by
         datepart(hour, o.[Created]),
         o.[VatIncluded],
@@ -105,7 +105,7 @@ select
         end * s.[Price])
 from
     sales s
-    left join [Catalog_VatGroup] vg ON vg.[Code] = s.[VatGroupCode]
+    left join [Catalog_VatGroup] vg on vg.[Code] = s.[VatGroupCode]
 group by
     [Hour]
 order by
