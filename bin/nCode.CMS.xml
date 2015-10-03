@@ -30,14 +30,14 @@
             Creates a new ContentPageRewriteHandler.
             </summary>
         </member>
-        <member name="M:nCode.CMS.ContentPageRewriteHandler.RewritePreRenderMatch(System.Text.RegularExpressions.Match)">
-            <summary>
-            Rewrites match in content before rendering.
-            </summary>
-        </member>
         <member name="P:nCode.CMS.ContentPageRewriteHandler.Regex">
             <summary>
             Gets the Regex used to match this handler against content.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.ContentPageRewriteHandler.RewritePreRenderMatch(System.Text.RegularExpressions.Match)">
+            <summary>
+            Rewrites match in content before rendering.
             </summary>
         </member>
         <member name="T:nCode.CMS.ContentPageRouteContraint">
@@ -49,110 +49,6 @@
             <summary>
             Checkes the Culture and the StaticPath parameter, and returns true if a corresponding content page exists.
             </summary>
-        </member>
-        <member name="T:nCode.CMS.ContentType">
-            <summary>
-            Represents a abstract Content Type.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.ContentType.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:nCode.CMS.ContentType"/> class.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.ContentType.Initialize(System.Collections.Specialized.NameValueCollection,System.String)">
-            <summary>
-            Initializes the Content Type.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.ContentType.ContentPageCreated(nCode.CMS.ContentPage)">
-            <summary>
-            When overridden in derived classes, called upon content page creations.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.ContentType.GetContentPartControl(System.Web.UI.Page)">
-            <summary>
-            Gets a ContentControl that can be used to view Content Parts of this Content Type.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.ContentType.GetControl(System.Web.UI.Page)">
-            <summary>
-            Gets a ContentControl that can be used to view this Content Type.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.ContentType.GetEditControl(System.Web.UI.Page)">
-            <summary>
-            Gets a ContentEditControl that can be used to edit this Content Type.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.ContentType.PreTraverseChildren(nCode.CMS.ContentPageNode)">
-            <summary>
-            Called when building Content Page Tree, before travesing childrens.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.ContentType.PostTraverseChildren(nCode.CMS.ContentPageNode)">
-            <summary>
-            Called when building Content Page Tree, after childrens.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentType.ID">
-            <summary>
-            A unique ID identifies this Content Type.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentType.ModuleName">
-            <summary>
-            Gets the non-localized system name for the module that loaded this Content Type.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentType.Name">
-            <summary>
-            Gets the non-localized system name for this Content Type.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentType.Title">
-            <summary>
-            Gets a localized title for this Content Type.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentType.Description">
-            <summary>
-            Gets a localized description for this Content Type.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentType.Icon">
-            <summary>
-            Gets a icon for this Content Type.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentType.VirtualRoot">
-            <summary>
-            Gets a icon for this Content Type.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentType.SupportContentPartMode">
-            <summary>
-            True if this Content Type supports Content Part Mode, otherwise false.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentType.AllowChildren">
-            <summary>
-            When overridden in derived classes, returns a value that indicate wheater this content page type can have child pages.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.ContentPartContentType.GetControl(System.Web.UI.Page)">
-            <summary>
-            Gets a ContentControl that can be used to view this Content Type.
-            </summary>
-            <param name="page"></param>
-            <returns></returns>
-        </member>
-        <member name="M:nCode.CMS.ContentPartContentType.GetEditControl(System.Web.UI.Page)">
-            <summary>
-            Gets a ContentEditControl that can be used to edit this Content Type.
-            </summary>
-            <param name="page"></param>
-            <returns></returns>
         </member>
         <member name="P:nCode.CMS.ContentPartContentType.ID">
             <summary>
@@ -174,6 +70,20 @@
             Gets a localized description for this Content Type.
             </summary>
         </member>
+        <member name="M:nCode.CMS.ContentPartContentType.GetControl(System.Web.UI.Page)">
+            <summary>
+            Gets a ContentControl that can be used to view this Content Type.
+            </summary>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="M:nCode.CMS.ContentPartContentType.GetEditControl(System.Web.UI.Page)">
+            <summary>
+            Gets a ContentEditControl that can be used to edit this Content Type.
+            </summary>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
         <member name="T:nCode.CMS.ContentTypeGroup">
             <summary>
             Represents a Group of Content Types (e.g. Content Types for Intranet)
@@ -182,167 +92,6 @@
         <member name="T:nCode.CMS.ContentPageNode">
             <summary>
             Represents a Content Item.
-            </summary>
-        </member>
-        <member name="T:nCode.CMS.ContentPage">
-            <summary>
-            Represents a Content Item.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.ContentPage.GetParent">
-            <summary>
-            Returns the parent ContentPage, or null, if this is the root of the menu.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.ContentPage.GetProperty``1(System.String,``0)">
-            <summary>
-            Gets a property of type T with the given key. Returns the default value if the property does no exists.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.ContentPage.SetProperty``1(System.String,``0)">
-            <summary>
-            Sets a property of type T with the given key to the given value.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.ContentPage.Update">
-            <summary>
-            Updates this Content Object in the Database.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.ContentPage.Equals(System.Object)">
-            <summary>
-            Returns true, iff. the Content Pages reffers to the same record, i.e. has equal IDs.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.ContentPage.GetHashCode">
-            <summary>
-            Serves as a hash function for a particular type.
-            </summary>        
-        </member>
-        <member name="P:nCode.CMS.ContentPage.Current">
-            <summary>
-            Gets the current ContentPage for this request, or null if this is not
-            a content page request.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.CurrentPath">
-            <summary>
-            Gets the current Path of content pages for this requist, or null if this os 
-            not a content page request.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.ParentId">
-            <summary>
-            Gets the index of this content.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.DisplayIndex">
-            <summary>
-            Gets the index of this content.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.StaticPath">
-            <summary>
-            Gets or sets the static path which is used to indentify the page
-            on url requests.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.IsProtected">
-            <summary>
-            Gets or sets weather Priviliges shuld be evaluated upon access.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.ShowInMenu">
-            <summary>
-            Gets or sets weather this page should be listed in its menu.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.ValidFrom">
-            <summary>
-            Gets or sets when this page is valid from.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.ValidTo">
-            <summary>
-            Gets or sets when this page is valid to.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.Title">
-            <summary>
-            Gets or sets the Title.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.TitleMode">
-            <summary>
-            Gets or sets the Title Mode.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.MasterPageFile">
-            <summary>
-            Gets or sets the path to the Master Page File. If null, the default Master Page File will be used.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.Image1">
-            <summary>
-            Gets or sets the Image1 Url.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.Image2">
-            <summary>
-            Gets or sets the Image1 Url.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.Image3">
-            <summary>
-            Gets or sets the Image1 Url.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.LinkUrl">
-            <summary>
-            Gets or sets the Link Url.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.LinkMode">
-            <summary>
-            Gets or sets how the Link Url is handled.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.IsVisible">
-            <summary>
-            Returns true if:
-              - The Page i shown in menu
-              - Page is Valid (From - To)
-              - Page is unprotected or user has the View Privilege
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.Permalink">
-            <summary>
-            Returns a Permanent Url string for this page that can be used whithin the current domain.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.Url">
-            <summary>
-            Returns a Url string for this page that can be used whithin the current domain.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.FullUrl">
-            <summary>
-            Returns a fully qualified Url string for this page that can be used accross domains.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.IsActive">
-            <summary>
-            Returns true if this page, or any child of this page is the active page.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.IsCurrent">
-            <summary>
-            Returns true if this page, or any child of this page is the active page.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPage.IsEditable">
-            <summary>
-            Gets or sets a value if this contentpage is editable.
             </summary>
         </member>
         <member name="P:nCode.CMS.ContentPageNode.HasChildren">
@@ -360,6 +109,11 @@
             Represens a source of Catalog Items for the search engine. 
             </summary>
         </member>
+        <member name="P:nCode.CMS.ContentPageSearchSource.SourceGuid">
+            <summary>
+            Gets a Globally Unique Id that identifies this Search Source.
+            </summary>
+        </member>
         <member name="M:nCode.CMS.ContentPageSearchSource.UpdateIndex">
             <summary>
             Updates the index with all Content Pages.
@@ -373,11 +127,6 @@
         <member name="M:nCode.CMS.ContentPageSearchSource.ReindexPage(System.Guid)">
             <summary>
             Reindexes the Content Page, given by its ID, in the Search Index.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.ContentPageSearchSource.SourceGuid">
-            <summary>
-            Gets a Globally Unique Id that identifies this Search Source.
             </summary>
         </member>
         <member name="M:nCode.CMS.Metadata.ContentBlockReference.op_Implicit(System.String)~nCode.CMS.Metadata.ContentBlockReference">
@@ -717,6 +466,29 @@
             Represents a CMS Content Part.
             </summary>
         </member>
+        <member name="P:nCode.CMS.Models.ContentPart.ID">
+            <summary>
+            Gets or sets the unique identifier.
+            </summary>
+            <value>
+            The unique identifier.
+            </value>
+        </member>
+        <member name="P:nCode.CMS.Models.ContentPart.ContentTypeID">
+            <summary>
+            Gets or sets the Content Type ID for this Content Part.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.Models.ContentPart.ContentType">
+            <summary>
+            Gets the Content Type for this Content Part.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.Models.ContentPart.Properties">
+            <summary>
+            Gets or sets the properties.
+            </summary>
+        </member>
         <member name="M:nCode.CMS.Models.ContentPart.GetProperty``1(System.String,``0)">
             <summary>
             Gets the property.
@@ -740,29 +512,6 @@
             <typeparam name="T"></typeparam>
             <param name="key">The key.</param>
             <param name="value">The value.</param>
-        </member>
-        <member name="P:nCode.CMS.Models.ContentPart.ID">
-            <summary>
-            Gets or sets the unique identifier.
-            </summary>
-            <value>
-            The unique identifier.
-            </value>
-        </member>
-        <member name="P:nCode.CMS.Models.ContentPart.ContentTypeID">
-            <summary>
-            Gets or sets the Content Type ID for this Content Part.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.Models.ContentPart.ContentType">
-            <summary>
-            Gets the Content Type for this Content Part.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.Models.ContentPart.Properties">
-            <summary>
-            Gets or sets the properties.
-            </summary>
         </member>
         <member name="T:nCode.CMS.Models.ContentPartProperty">
             <summary>
@@ -830,16 +579,6 @@
             </summary>
             <param name="e">The <see cref="T:System.EventArgs" /> object that contains the event data.</param>
         </member>
-        <member name="M:nCode.CMS.UI.ContentPartControl.LoadContent">
-            <summary>
-            Loads the Content from the Database.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.UI.ContentPartControl.SaveContent">
-            <summary>
-            Saves the Content to the Database.
-            </summary>
-        </member>
         <member name="P:nCode.CMS.UI.ContentPartControl.ContentPartInstance">
             <summary>
             Gets or sets a reference to the Content Page.
@@ -858,6 +597,16 @@
         <member name="P:nCode.CMS.UI.ContentPartControl.IsEditing">
             <summary>
             Gets or sets a value indicating whether the Content Part is currently in Edit Mode.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.UI.ContentPartControl.LoadContent">
+            <summary>
+            Loads the Content from the Database.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.UI.ContentPartControl.SaveContent">
+            <summary>
+            Saves the Content to the Database.
             </summary>
         </member>
         <member name="M:nCode.CMS.UI.NavigationUtilities.GetSubmenu(nCode.CMS.ContentPage,System.Int32,System.Func{nCode.CMS.ContentPageNode,System.Boolean},System.Func{nCode.CMS.ContentPageNode,System.Boolean})">
@@ -880,84 +629,6 @@
             Gets a list of Content Pages denoting the given content page's path.
             </summary>
         </member>
-        <member name="T:nCode.CMS.LinkMode">
-            <summary>
-            Defines how a link is handled.
-            </summary>
-        </member>
-        <member name="F:nCode.CMS.LinkMode.Normal">
-            <summary>
-            Redirects to the link by sending the link to the requesting client's browser.
-            </summary>
-        </member>
-        <member name="F:nCode.CMS.LinkMode.UrlRewrite">
-            <summary>
-            Redirects to the link by rewriting the standard cms url to the link.
-            </summary>
-        </member>
-        <member name="T:nCode.CMS.ContentPageFactory">
-            <summary>
-            Implements ways for converting content data records to objects.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.ContentPageFactory.CreateContentPage(System.Data.IDataRecord)">
-            <summary>
-            Converts an Content data record to a <see cref="!:nCode.CMS.Content">Content</see> object.
-            </summary>
-            <param name="rec">The content data record.</param>
-            <returns>The content object.</returns>
-        </member>
-        <member name="P:nCode.CMS.CmsSettings.ContentTypes">
-            <summary>
-            Gets a collection of supported Content Types.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.CmsSettings.ShowActualDefaultMasterPageName">
-            <summary>
-            Gets or sets wheather the actual name of the default master page (/CMS/MasterPages/Default.master or /MasterPages/Default.master) shuld be shown in UI, or 
-            wheather it is simply denoted "(Standard)". Default is false.
-            </summary>
-        </member>
-        <member name="T:nCode.CMS.StaticContent">
-            <summary>
-            Content Type for Static Content.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.StaticContent.GetControl(System.Web.UI.Page)">
-            <summary>
-            Gets a ContentControl that can be used to view the Static Content Type.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.StaticContent.GetEditControl(System.Web.UI.Page)">
-            <summary>
-            Gets a ContentEditControl that can be used to edit the Static Content Type.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.StaticContent.ID">
-            <summary>
-            Gets a unique ID that identifies the Static Content Type.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.StaticContent.Title">
-            <summary>
-            Gets a localized title for the Static Content Type.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.StaticContent.Name">
-            <summary>
-            Gets the non-localized system name for this Content Type.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.StaticContent.Description">
-            <summary>
-            Gets a localized description for the Static Content Type.
-            </summary>
-        </member>
-        <member name="P:nCode.CMS.StaticContent.SupportContentPartMode">
-            <summary>
-            True if this Content Type supports Content Part Mode, otherwise false.
-            </summary>
-        </member>
         <member name="T:nCode.CMS.UI.ContentControl">
             <summary>
             Provides a abstract class for Content Type Controls.
@@ -973,6 +644,11 @@
             Represents an abstract class for Content Types Editing Controls.
             </summary>
         </member>
+        <member name="P:nCode.CMS.UI.ContentEditControl.ContentPage">
+            <summary>
+            Gets the Content that are currently being edited.
+            </summary>
+        </member>
         <member name="M:nCode.CMS.UI.ContentEditControl.LoadContent(System.Boolean)">
             <summary>
             Loads the Content from the Database.
@@ -983,19 +659,9 @@
             Saves the Content to the Database.
             </summary>
         </member>
-        <member name="P:nCode.CMS.UI.ContentEditControl.ContentPage">
-            <summary>
-            Gets the Content that are currently being edited.
-            </summary>
-        </member>
         <member name="T:nCode.CMS.UI.ContentPageNavigationItem">
             <summary>
             Represents an Brand in the Navigation Framework.
-            </summary>
-        </member>
-        <member name="M:nCode.CMS.UI.ContentPageNavigationItem.GetProperty``1(System.String,``0)">
-            <summary>
-            Get the property with the given key.
             </summary>
         </member>
         <member name="P:nCode.CMS.UI.ContentPageNavigationItem.ShowInMenu">
@@ -1036,9 +702,343 @@
             Returns a Url string for this page that can be used whithin the current domain.
             </summary>
         </member>
+        <member name="M:nCode.CMS.UI.ContentPageNavigationItem.GetProperty``1(System.String,``0)">
+            <summary>
+            Get the property with the given key.
+            </summary>
+        </member>
         <member name="T:nCode.CMS.UI.ContentPageNavigationTree">
             <summary>
             Represents a the Content Page Tree in the Navigation Framework.
+            </summary>
+        </member>
+        <member name="T:nCode.CMS.ContentPage">
+            <summary>
+            Represents a Content Item.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.Current">
+            <summary>
+            Gets the current ContentPage for this request, or null if this is not
+            a content page request.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.CurrentPath">
+            <summary>
+            Gets the current Path of content pages for this requist, or null if this os 
+            not a content page request.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.ParentId">
+            <summary>
+            Gets the index of this content.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.DisplayIndex">
+            <summary>
+            Gets the index of this content.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.StaticPath">
+            <summary>
+            Gets or sets the static path which is used to indentify the page
+            on url requests.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.IsProtected">
+            <summary>
+            Gets or sets weather Priviliges shuld be evaluated upon access.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.ShowInMenu">
+            <summary>
+            Gets or sets weather this page should be listed in its menu.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.ValidFrom">
+            <summary>
+            Gets or sets when this page is valid from.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.ValidTo">
+            <summary>
+            Gets or sets when this page is valid to.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.Title">
+            <summary>
+            Gets or sets the Title.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.TitleMode">
+            <summary>
+            Gets or sets the Title Mode.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.MasterPageFile">
+            <summary>
+            Gets or sets the path to the Master Page File. If null, the default Master Page File will be used.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.Image1">
+            <summary>
+            Gets or sets the Image1 Url.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.Image2">
+            <summary>
+            Gets or sets the Image1 Url.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.Image3">
+            <summary>
+            Gets or sets the Image1 Url.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.LinkUrl">
+            <summary>
+            Gets or sets the Link Url.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.LinkMode">
+            <summary>
+            Gets or sets how the Link Url is handled.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.IsVisible">
+            <summary>
+            Returns true if:
+              - The Page i shown in menu
+              - Page is Valid (From - To)
+              - Page is unprotected or user has the View Privilege
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.Permalink">
+            <summary>
+            Returns a Permanent Url string for this page that can be used whithin the current domain.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.Url">
+            <summary>
+            Returns a Url string for this page that can be used whithin the current domain.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.FullUrl">
+            <summary>
+            Returns a fully qualified Url string for this page that can be used accross domains.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.IsActive">
+            <summary>
+            Returns true if this page, or any child of this page is the active page.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.IsCurrent">
+            <summary>
+            Returns true if this page, or any child of this page is the active page.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentPage.IsEditable">
+            <summary>
+            Gets or sets a value if this contentpage is editable.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.ContentPage.GetParent">
+            <summary>
+            Returns the parent ContentPage, or null, if this is the root of the menu.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.ContentPage.GetProperty``1(System.String,``0)">
+            <summary>
+            Gets a property of type T with the given key. Returns the default value if the property does no exists.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.ContentPage.SetProperty``1(System.String,``0)">
+            <summary>
+            Sets a property of type T with the given key to the given value.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.ContentPage.Update">
+            <summary>
+            Updates this Content Object in the Database.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.ContentPage.Equals(System.Object)">
+            <summary>
+            Returns true, iff. the Content Pages reffers to the same record, i.e. has equal IDs.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.ContentPage.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type.
+            </summary>        
+        </member>
+        <member name="T:nCode.CMS.LinkMode">
+            <summary>
+            Defines how a link is handled.
+            </summary>
+        </member>
+        <member name="F:nCode.CMS.LinkMode.Normal">
+            <summary>
+            Redirects to the link by sending the link to the requesting client's browser.
+            </summary>
+        </member>
+        <member name="F:nCode.CMS.LinkMode.UrlRewrite">
+            <summary>
+            Redirects to the link by rewriting the standard cms url to the link.
+            </summary>
+        </member>
+        <member name="T:nCode.CMS.ContentPageFactory">
+            <summary>
+            Implements ways for converting content data records to objects.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.ContentPageFactory.CreateContentPage(System.Data.IDataRecord)">
+            <summary>
+            Converts an Content data record to a <see cref="!:nCode.CMS.Content">Content</see> object.
+            </summary>
+            <param name="rec">The content data record.</param>
+            <returns>The content object.</returns>
+        </member>
+        <member name="T:nCode.CMS.ContentType">
+            <summary>
+            Represents a abstract Content Type.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.ContentType.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:nCode.CMS.ContentType"/> class.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentType.ID">
+            <summary>
+            A unique ID identifies this Content Type.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentType.ModuleName">
+            <summary>
+            Gets the non-localized system name for the module that loaded this Content Type.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentType.Name">
+            <summary>
+            Gets the non-localized system name for this Content Type.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentType.Title">
+            <summary>
+            Gets a localized title for this Content Type.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentType.Description">
+            <summary>
+            Gets a localized description for this Content Type.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentType.Icon">
+            <summary>
+            Gets a icon for this Content Type.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentType.VirtualRoot">
+            <summary>
+            Gets a icon for this Content Type.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.ContentType.Initialize(System.Collections.Specialized.NameValueCollection,System.String)">
+            <summary>
+            Initializes the Content Type.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.ContentType.ContentPageCreated(nCode.CMS.ContentPage)">
+            <summary>
+            When overridden in derived classes, called upon content page creations.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentType.SupportContentPartMode">
+            <summary>
+            True if this Content Type supports Content Part Mode, otherwise false.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.ContentType.GetContentPartControl(System.Web.UI.Page)">
+            <summary>
+            Gets a ContentControl that can be used to view Content Parts of this Content Type.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.ContentType.GetControl(System.Web.UI.Page)">
+            <summary>
+            Gets a ContentControl that can be used to view this Content Type.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.ContentType.GetEditControl(System.Web.UI.Page)">
+            <summary>
+            Gets a ContentEditControl that can be used to edit this Content Type.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.ContentType.PreTraverseChildren(nCode.CMS.ContentPageNode)">
+            <summary>
+            Called when building Content Page Tree, before travesing childrens.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.ContentType.PostTraverseChildren(nCode.CMS.ContentPageNode)">
+            <summary>
+            Called when building Content Page Tree, after childrens.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.ContentType.AllowChildren">
+            <summary>
+            When overridden in derived classes, returns a value that indicate wheater this content page type can have child pages.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.CmsSettings.ContentTypes">
+            <summary>
+            Gets a collection of supported Content Types.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.CmsSettings.ShowActualDefaultMasterPageName">
+            <summary>
+            Gets or sets wheather the actual name of the default master page (/CMS/MasterPages/Default.master or /MasterPages/Default.master) shuld be shown in UI, or 
+            wheather it is simply denoted "(Standard)". Default is false.
+            </summary>
+        </member>
+        <member name="T:nCode.CMS.StaticContent">
+            <summary>
+            Content Type for Static Content.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.StaticContent.ID">
+            <summary>
+            Gets a unique ID that identifies the Static Content Type.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.StaticContent.Title">
+            <summary>
+            Gets a localized title for the Static Content Type.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.StaticContent.Name">
+            <summary>
+            Gets the non-localized system name for this Content Type.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.StaticContent.Description">
+            <summary>
+            Gets a localized description for the Static Content Type.
+            </summary>
+        </member>
+        <member name="P:nCode.CMS.StaticContent.SupportContentPartMode">
+            <summary>
+            True if this Content Type supports Content Part Mode, otherwise false.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.StaticContent.GetControl(System.Web.UI.Page)">
+            <summary>
+            Gets a ContentControl that can be used to view the Static Content Type.
+            </summary>
+        </member>
+        <member name="M:nCode.CMS.StaticContent.GetEditControl(System.Web.UI.Page)">
+            <summary>
+            Gets a ContentEditControl that can be used to edit the Static Content Type.
             </summary>
         </member>
         <member name="M:nCode.CMS.Utilities.GetContentExists(System.String,System.String)">
