@@ -13,7 +13,7 @@ namespace nCode.JobScheduling.Hangfire
     /// This filter is used for the Integration between the nCode Job Scheduling Framework,
     /// and the Hangfire JobEngine implementation (<see cref="nCode.JobScheduling.Hangfire.HangfireJobEngine"/>).
     /// 
-    /// The filter is automatically added to the Global Filters collection <see cref="Hangfire.GlobalJobFilters"/>
+    /// The filter is automatically added to the Global Filters collection <see cref="global::Hangfire.GlobalJobFilters"/>
     /// when the Hangfire Job Engine is initialized.
     /// </summary>
     public class JobSchedulingIntegrationAttribute : JobFilterAttribute, IClientFilter

@@ -8,7 +8,6 @@ namespace nCode
         /// <summary>
         /// Creates a new FeatureGroup.
         /// </summary>
-        /// <param name="nodeModule"></param>
         internal FeatureGroup(Module module, string name)
         {
             Module = module;
