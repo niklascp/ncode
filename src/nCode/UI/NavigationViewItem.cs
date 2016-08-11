@@ -21,7 +21,7 @@ namespace nCode.UI
         /// </summary>
         private void EnsureChildren()
         {
-            if (children == null)
+            if (children == null && graph != null)
             {
                 children = new NavigationView(graph.Expand(item), graph, this);
             }

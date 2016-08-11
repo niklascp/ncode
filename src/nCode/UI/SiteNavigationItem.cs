@@ -14,6 +14,13 @@ namespace nCode.UI
 
         public string Url {get; set; }
 
+        public bool IsActive { get; set; }
+
+        /// <summary>
+        /// Gets or set a value indicating if this node has child nodes.
+        /// </summary>
+        public bool HasChildren { get; set; }
+
         public INavigationItem GetParent() { return null; }
 
         public IEnumerable<INavigationItem> GetChildren() { return null; }

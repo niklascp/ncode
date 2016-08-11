@@ -42,7 +42,8 @@ namespace nCode.Catalog.UI
                         {
                             return new ItemListByCategoryRequest
                             {
-                                CategoryID = categoryId
+                                CategoryID = categoryId,
+                                IncludeDescendantCategories = context.Request.QueryString["IncludeDescendantCategories"] == "1"
                             };
                         }
                     }

@@ -51,6 +51,11 @@ namespace nCode.UI
             return list.GetEnumerator();
         }
 
+        public void AddChild(NavigationViewItem child)
+        {
+            list.Add(child);
+        }
+
         public int Count { get { return list.Count; } }
     }
 }

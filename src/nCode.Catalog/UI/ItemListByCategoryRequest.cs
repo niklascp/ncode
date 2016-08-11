@@ -31,6 +31,8 @@ namespace nCode.Catalog.UI
         /// </summary>
         public Guid CategoryID { get; set; }
 
+        public bool IncludeDescendantCategories { get; set; }
+
         /// <summary>
         /// Gets a contextual navigation item for the item list.
         /// </summary>
@@ -52,9 +54,9 @@ namespace nCode.Catalog.UI
         /// </summary>
         public override IEnumerable<ItemListView> GetItemList(ICatalogRepository catelogRepository)
         {
-            return catelogRepository.GetItemList(
-                    filter: new FilterExpression<CatalogModel, Item>(x => x.IsActive && x.CategoryID == CategoryID),
-                    order: CatalogRepository.ItemCategoryOrder
+            return catelogRepository.ListItemByCategory(
+                    categoryId: CategoryID,
+                    includeDescendantCategories: IncludeDescendantCategories
                 );
         }
     }
