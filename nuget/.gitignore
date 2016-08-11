@@ -1,1 +1,4 @@
 */
+*.nupkg
+*.nuspec
+nuget.exe

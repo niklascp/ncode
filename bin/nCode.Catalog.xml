@@ -25,49 +25,6 @@
             Updates the sums.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.Basket.AddItem(nCode.Catalog.BasketItem)">
-            <summary>
-            Adds the given item to the basket and updates basket sums.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Basket.InsertItem(nCode.Catalog.BasketItem,System.Int32)">
-            <summary>
-            Adds the given item to the basket at the given position (zero-based), and updates basket sums.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Basket.RemoveItem(nCode.Catalog.BasketItem)">
-            <summary>
-            Removes the given item from the basket and updates basket sums.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Basket.ClearItems">
-            <summary>
-            Removes all items from the basket and updates basket sums.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Basket.GetProperty``1(System.String,``0)">
-            <summary>
-            Gets the Metadata Property identified by the given key.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="key">The key.</param>
-            <param name="defaultValue">The default value.</param>
-            <returns></returns>
-        </member>
-        <member name="M:nCode.Catalog.Basket.SetProperty``1(System.String,``0)">
-            <summary>
-            Sets the Metadata Property identified by the given key.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="key">The key.</param>
-            <param name="value">The value.</param>
-            <returns></returns>
-        </member>
-        <member name="M:nCode.Catalog.Basket.PlaceAsOrder(System.Boolean)">
-            <summary>
-            Places the Basket as an Order.
-            </summary>
-        </member>
         <member name="P:nCode.Catalog.Basket.OrderNo">
             <summary>
             Gets or sets the Order No.
@@ -203,6 +160,26 @@
             Gets a list of Items in the Basket.
             </summary>
         </member>
+        <member name="M:nCode.Catalog.Basket.AddItem(nCode.Catalog.BasketItem)">
+            <summary>
+            Adds the given item to the basket and updates basket sums.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Basket.InsertItem(nCode.Catalog.BasketItem,System.Int32)">
+            <summary>
+            Adds the given item to the basket at the given position (zero-based), and updates basket sums.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Basket.RemoveItem(nCode.Catalog.BasketItem)">
+            <summary>
+            Removes the given item from the basket and updates basket sums.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Basket.ClearItems">
+            <summary>
+            Removes all items from the basket and updates basket sums.
+            </summary>
+        </member>
         <member name="P:nCode.Catalog.Basket.ItemsNetTotal">
             <summary>
             Gets the items net total.
@@ -288,6 +265,29 @@
             Gets a value indicating if this order should include vat, depending on the delivery country.
             </summary>
         </member>
+        <member name="M:nCode.Catalog.Basket.GetProperty``1(System.String,``0)">
+            <summary>
+            Gets the Metadata Property identified by the given key.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="key">The key.</param>
+            <param name="defaultValue">The default value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:nCode.Catalog.Basket.SetProperty``1(System.String,``0)">
+            <summary>
+            Sets the Metadata Property identified by the given key.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:nCode.Catalog.Basket.PlaceAsOrder(System.Boolean)">
+            <summary>
+            Places the Basket as an Order.
+            </summary>
+        </member>
         <member name="T:nCode.Catalog.BasketItem">
             <summary>
             Represents a Basket Item
@@ -297,23 +297,6 @@
             <summary>
             Initializes a new instance of the <see cref="T:nCode.Catalog.BasketItem"/> class.
             </summary>
-        </member>
-        <member name="M:nCode.Catalog.BasketItem.GetProperty``1(System.String,``0)">
-            <summary>
-            Gets the Metadata Property identified by the given key.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="key">The key.</param>
-            <param name="defaultValue">The default value.</param>
-            <returns></returns>
-        </member>
-        <member name="M:nCode.Catalog.BasketItem.SetProperty``1(System.String,``0)">
-            <summary>
-            Sets the Metadata Property identified by the given key.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="key">The key.</param>
-            <param name="value">The value.</param>
         </member>
         <member name="P:nCode.Catalog.BasketItem.ID">
             <summary>
@@ -386,6 +369,23 @@
             Gets or sets the Vat Group Code.
             </summary>
         </member>
+        <member name="M:nCode.Catalog.BasketItem.GetProperty``1(System.String,``0)">
+            <summary>
+            Gets the Metadata Property identified by the given key.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="key">The key.</param>
+            <param name="defaultValue">The default value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:nCode.Catalog.BasketItem.SetProperty``1(System.String,``0)">
+            <summary>
+            Sets the Metadata Property identified by the given key.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+        </member>
         <member name="T:nCode.Catalog.BasketController">
             <summary>
             Controls access to baskets.
@@ -420,6 +420,14 @@
             Represents a Category.
             </summary>
         </member>
+        <member name="P:nCode.Catalog.Category.ObjectTypeId">
+            <summary>
+            Gets the object type unique identifier.
+            </summary>
+            <value>
+            The object type unique identifier.
+            </value>
+        </member>
         <member name="M:nCode.Catalog.Category.GetProperty``1(System.String,``0)">
             <summary>
             Gets the Metadata Property given by the given key, or a default value if the Property is not defined.
@@ -436,18 +444,18 @@
             <param name="key">The key.</param>
             <param name="value">The value.</param>
         </member>
-        <member name="P:nCode.Catalog.Category.ObjectTypeId">
+        <member name="T:nCode.Catalog.Brand">
+            <summary>
+            Represents a Brand.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.Brand.ObjectTypeId">
             <summary>
             Gets the object type unique identifier.
             </summary>
             <value>
             The object type unique identifier.
             </value>
-        </member>
-        <member name="T:nCode.Catalog.Brand">
-            <summary>
-            Represents a Brand.
-            </summary>
         </member>
         <member name="M:nCode.Catalog.Brand.GetProperty``1(System.String,``0)">
             <summary>
@@ -465,18 +473,18 @@
             <param name="key">The key.</param>
             <param name="value">The value.</param>
         </member>
-        <member name="P:nCode.Catalog.Brand.ObjectTypeId">
+        <member name="T:nCode.Catalog.Item">
+            <summary>
+            Represents an Item.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.Item.ObjectTypeId">
             <summary>
             Gets the object type unique identifier.
             </summary>
             <value>
             The object type unique identifier.
             </value>
-        </member>
-        <member name="T:nCode.Catalog.Item">
-            <summary>
-            Represents an Item.
-            </summary>
         </member>
         <member name="M:nCode.Catalog.Item.UpdateAvailability(nCode.Catalog.CatalogModel)">
             <summary>
@@ -507,14 +515,6 @@
             <typeparam name="T">The type of the property.</typeparam>
             <param name="key">The key.</param>
             <param name="value">The value.</param>
-        </member>
-        <member name="P:nCode.Catalog.Item.ObjectTypeId">
-            <summary>
-            Gets the object type unique identifier.
-            </summary>
-            <value>
-            The object type unique identifier.
-            </value>
         </member>
         <member name="T:nCode.Catalog.ItemPrice">
             <summary>
@@ -574,6 +574,14 @@
             <summary>
             Represents an Order. 
             </summary>
+        </member>
+        <member name="P:nCode.Catalog.Order.ObjectTypeId">
+            <summary>
+            Gets the object type unique identifier.
+            </summary>
+            <value>
+            The object type unique identifier.
+            </value>
         </member>
         <member name="M:nCode.Catalog.Order.UpdateTotals">
             <summary>
@@ -636,14 +644,6 @@
             Updates/creates GIS location entries for this order.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.Order.ObjectTypeId">
-            <summary>
-            Gets the object type unique identifier.
-            </summary>
-            <value>
-            The object type unique identifier.
-            </value>
-        </member>
         <member name="P:nCode.Catalog.Order.PaymentConfirmed">
             <summary>
             Gets or sets a value indicating whether payment is confirmed.
@@ -693,11 +693,6 @@
             </summary>
         </member>
         <!-- Badly formed XML comment ignored for member "M:nCode.Catalog.Controllers.CatalogSettingsAdministrationController.PostListSettings(System.String,nCode.Catalog.UI.ItemListSettings)" -->
-        <member name="P:nCode.Catalog.CatalogSettings.AutoAssignItemNo">
-            <summary>
-            Gets or sets a value indicating wheather Brands can be nested. Default value is false.
-            </summary>
-        </member>
         <member name="T:nCode.Catalog.Controllers.ItemAdministrationController">
             <summary>
             Api Controller from Item Administration.
@@ -713,100 +708,9 @@
             Updates the related items of the given item id with the given list of related item ids.
             </summary>
         </member>
-        <member name="T:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider">
+        <member name="P:nCode.Catalog.CatalogSettings.AutoAssignItemNo">
             <summary>
-            Represents Delivery Provider, that calculates Freight Amount based on the Weight of the Items.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.DeliveryProvider.GetDeliveryTypeSetupControl">
-            <summary>
-            Gets a IDeliveryTypeSetupControl used to configure types provided by this Delivery Provider.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.DeliveryProvider.GetDeliveryTypeCheckoutControl">
-            <summary>
-            Gets a IDeliveryTypeCheckoutControl used to collect additional information on delivery types provided by this provider doing Checkout.
-            Returns null if no additional information is to be collected.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.DeliveryProvider.IsAvailable(nCode.Catalog.CatalogModel,nCode.Catalog.Basket,nCode.Catalog.DeliveryType)">
-            <summary>
-            Determines whether the specified Delivery Type (provided by this provider) is available.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.DeliveryProvider.GetFreightVatGroupCode(nCode.Catalog.CatalogModel,nCode.Catalog.Basket,nCode.Catalog.DeliveryType)">
-            <summary>
-            Gets the Code of the Vat Group used for the Freight Amount.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.DeliveryProvider.GetFreightAmount(nCode.Catalog.CatalogModel,nCode.Catalog.Basket,nCode.Catalog.DeliveryType)">
-            <summary>
-            Gets the Freight Amount.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.DeliveryProvider.GetDisplayString(nCode.Catalog.CatalogModel,nCode.Catalog.DeliveryType)">
-            <summary>
-            Gets a describing text string used when selectiong Delivery Type doing Checkout.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.DeliveryProvider.GetSummeryString(nCode.Catalog.CatalogModel,nCode.Catalog.Basket,nCode.Catalog.DeliveryType)">
-            <summary>
-            Gets a describing text string used on Checkout Summery.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.DeliveryProvider.GetOrderString(nCode.Catalog.CatalogModel,nCode.Catalog.Order,nCode.Catalog.DeliveryType)">
-            <summary>
-            Gets a describing text string used on Orders.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.GetFreightVatGroupCode(nCode.Catalog.CatalogModel,nCode.Catalog.Basket,nCode.Catalog.DeliveryType)">
-            <summary>
-            Gets the Code of the Vat Group used for the Freight Amount.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.GetFreightAmount(nCode.Catalog.CatalogModel,nCode.Catalog.Basket,nCode.Catalog.DeliveryType)">
-            <summary>
-            Gets the Freight Amount.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.IsAvailable(nCode.Catalog.CatalogModel,nCode.Catalog.Basket,nCode.Catalog.DeliveryType)">
-            <summary>
-            Determines whether the specified Delivery Type (provided by this provider) is available.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.GetDeliveryTypeSetupControl">
-            <summary>
-            Gets a IDeliveryTypeSetupControl to configure types provided by this Delivery Provider.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.GetVatGroupCode(nCode.Catalog.CatalogModel,nCode.Catalog.DeliveryType)">
-            <summary>
-            Gets the Code of the Vat Group used for the given Delivery Type.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.SetVatGroupCode(nCode.Catalog.CatalogModel,nCode.Catalog.DeliveryType,System.String)">
-            <summary>
-            Sets the Code of the Vat Group used for the given Delivery Type.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.GetSupportedCountryCodes(nCode.Catalog.CatalogModel,nCode.Catalog.DeliveryType)">
-            <summary>
-            Gets the list of Supported Country Codes for the given Delivery Type.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.SetSupportedCountryCodes(nCode.Catalog.CatalogModel,nCode.Catalog.DeliveryType,System.Collections.Generic.IEnumerable{System.String})">
-            <summary>
-            Sets the list of Supported Country Codes for the given Delivery Type.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.GetWeightIntervals(nCode.Catalog.CatalogModel,nCode.Catalog.DeliveryType)">
-            <summary>
-            Gets the list of Weight Intervals for the given Delivery Type.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.SetWeightIntervals(nCode.Catalog.CatalogModel,nCode.Catalog.DeliveryType,System.Collections.Generic.IEnumerable{nCode.Catalog.Delivery.Weight.WeightInterval})">
-            <summary>
-            Sets the list of Weight Intervals for the given Delivery Type.
+            Gets or sets a value indicating wheather Brands can be nested. Default value is false.
             </summary>
         </member>
         <member name="M:nCode.Catalog.Delivery.Gls.GlsParcelShopDeliveryProvider.GetDeliveryTypeSetupControl">
@@ -918,9 +822,175 @@
         <member name="P:nCode.Catalog.Delivery.Unifaun.Models.PacsoftReceiver.ReceiverId">
             <remarks/>
         </member>
+        <member name="M:nCode.Catalog.Delivery.DeliveryProvider.GetDeliveryTypeSetupControl">
+            <summary>
+            Gets a IDeliveryTypeSetupControl used to configure types provided by this Delivery Provider.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.DeliveryProvider.GetDeliveryTypeCheckoutControl">
+            <summary>
+            Gets a IDeliveryTypeCheckoutControl used to collect additional information on delivery types provided by this provider doing Checkout.
+            Returns null if no additional information is to be collected.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.DeliveryProvider.IsAvailable(nCode.Catalog.CatalogModel,nCode.Catalog.Basket,nCode.Catalog.DeliveryType)">
+            <summary>
+            Determines whether the specified Delivery Type (provided by this provider) is available.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.DeliveryProvider.GetFreightVatGroupCode(nCode.Catalog.CatalogModel,nCode.Catalog.Basket,nCode.Catalog.DeliveryType)">
+            <summary>
+            Gets the Code of the Vat Group used for the Freight Amount.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.DeliveryProvider.GetFreightAmount(nCode.Catalog.CatalogModel,nCode.Catalog.Basket,nCode.Catalog.DeliveryType)">
+            <summary>
+            Gets the Freight Amount.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.DeliveryProvider.GetDisplayString(nCode.Catalog.CatalogModel,nCode.Catalog.DeliveryType)">
+            <summary>
+            Gets a describing text string used when selectiong Delivery Type doing Checkout.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.DeliveryProvider.GetSummeryString(nCode.Catalog.CatalogModel,nCode.Catalog.Basket,nCode.Catalog.DeliveryType)">
+            <summary>
+            Gets a describing text string used on Checkout Summery.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.DeliveryProvider.GetOrderString(nCode.Catalog.CatalogModel,nCode.Catalog.Order,nCode.Catalog.DeliveryType)">
+            <summary>
+            Gets a describing text string used on Orders.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.Delivery.DeliveryProviderCollection">
+            <summary>
+            Defines a collection of Payment Providers for use in the nCode Catalog Module.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.Delivery.IDeliveryTypeSetupControl">
+            <summary>
+            Interface for Delivery Type Setup Controls
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.IDeliveryTypeSetupControl.Initialize(nCode.Catalog.CatalogModel)">
+            <summary>
+            Initializes the control with the specified model.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.IDeliveryTypeSetupControl.LoadDeliveryType(nCode.Catalog.CatalogModel,nCode.Catalog.DeliveryType)">
+            <summary>
+            Called when the control needs to load the given Delivery Type.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.IDeliveryTypeSetupControl.SaveDeliveryType(nCode.Catalog.CatalogModel,nCode.Catalog.DeliveryType)">
+            <summary>
+            Called when the control needs to save the given Delivery Type.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider">
+            <summary>
+            Represents Delivery Provider, that calculates Freight Amount based on the Weight of the Items.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.GetFreightVatGroupCode(nCode.Catalog.CatalogModel,nCode.Catalog.Basket,nCode.Catalog.DeliveryType)">
+            <summary>
+            Gets the Code of the Vat Group used for the Freight Amount.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.GetFreightAmount(nCode.Catalog.CatalogModel,nCode.Catalog.Basket,nCode.Catalog.DeliveryType)">
+            <summary>
+            Gets the Freight Amount.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.IsAvailable(nCode.Catalog.CatalogModel,nCode.Catalog.Basket,nCode.Catalog.DeliveryType)">
+            <summary>
+            Determines whether the specified Delivery Type (provided by this provider) is available.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.GetDeliveryTypeSetupControl">
+            <summary>
+            Gets a IDeliveryTypeSetupControl to configure types provided by this Delivery Provider.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.GetVatGroupCode(nCode.Catalog.CatalogModel,nCode.Catalog.DeliveryType)">
+            <summary>
+            Gets the Code of the Vat Group used for the given Delivery Type.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.SetVatGroupCode(nCode.Catalog.CatalogModel,nCode.Catalog.DeliveryType,System.String)">
+            <summary>
+            Sets the Code of the Vat Group used for the given Delivery Type.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.GetSupportedCountryCodes(nCode.Catalog.CatalogModel,nCode.Catalog.DeliveryType)">
+            <summary>
+            Gets the list of Supported Country Codes for the given Delivery Type.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.SetSupportedCountryCodes(nCode.Catalog.CatalogModel,nCode.Catalog.DeliveryType,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Sets the list of Supported Country Codes for the given Delivery Type.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.GetWeightIntervals(nCode.Catalog.CatalogModel,nCode.Catalog.DeliveryType)">
+            <summary>
+            Gets the list of Weight Intervals for the given Delivery Type.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.Weight.WeightDeliveryProvider.SetWeightIntervals(nCode.Catalog.CatalogModel,nCode.Catalog.DeliveryType,System.Collections.Generic.IEnumerable{nCode.Catalog.Delivery.Weight.WeightInterval})">
+            <summary>
+            Sets the list of Weight Intervals for the given Delivery Type.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.Delivery.Weight.WeightInterval">
+            <summary>
+            Represents a Weight Interval
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Delivery.Weight.WeightInterval.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:nCode.Catalog.Delivery.Weight.WeightInterval"/> class.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.Delivery.Weight.WeightInterval.FromWeight">
+            <summary>
+            Gets or sets from weight (inclusive).
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.Delivery.Weight.WeightInterval.ToWeight">
+            <summary>
+            Gets or sets the to weight (exclusive).
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.Delivery.Weight.WeightInterval.Prices">
+            <summary>
+            Gets or sets the prices.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.Delivery.Weight.WeightIntervalPrice">
+            <summary>
+            Represents a Price of a Weight Interval
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.Delivery.Weight.WeightIntervalPrice.CurrencyCode">
+            <summary>
+            Gets or sets the Currency Code.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.Delivery.Weight.WeightIntervalPrice.Price">
+            <summary>
+            Gets or sets the Price.
+            </summary>
+        </member>
         <member name="T:nCode.Catalog.Search.ItemSearchSource">
             <summary>
             Represens a source of Catalog Items for the search engine. 
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.Search.ItemSearchSource.SourceGuid">
+            <summary>
+            Gets a Globally Unique Id that identifies this Search Source.
             </summary>
         </member>
         <member name="M:nCode.Catalog.Search.ItemSearchSource.UpdateIndex">
@@ -938,31 +1008,10 @@
             Reindexes the Catelog Item, given by its ID, from the Search Index.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.Search.ItemSearchSource.SourceGuid">
-            <summary>
-            Gets a Globally Unique Id that identifies this Search Source.
-            </summary>
-        </member>
         <member name="P:nCode.Catalog.Models.BrandLocalization.ID">
             <summary>
             Gets or sets the unique identifier.
             </summary>
-        </member>
-        <member name="M:nCode.Catalog.Models.Brand.GetProperty``1(System.String,``0)">
-            <summary>
-            Gets the Metadata Property given by the given key, or a default value if the Property is not defined.
-            </summary>
-            <typeparam name="T">The type of the property.</typeparam>
-            <param name="key">The key.</param>
-            <param name="defaultValue">The default value.</param>
-        </member>
-        <member name="M:nCode.Catalog.Models.Brand.SetProperty``1(System.String,``0)">
-            <summary>
-            Sets the Metadata Property given by the given key to the given value.
-            </summary>
-            <typeparam name="T">The type of the property.</typeparam>
-            <param name="key">The key.</param>
-            <param name="value">The value.</param>
         </member>
         <member name="P:nCode.Catalog.Models.Brand.ObjectTypeId">
             <summary>
@@ -1009,6 +1058,22 @@
             The Image.
             </value>
         </member>
+        <member name="M:nCode.Catalog.Models.Brand.GetProperty``1(System.String,``0)">
+            <summary>
+            Gets the Metadata Property given by the given key, or a default value if the Property is not defined.
+            </summary>
+            <typeparam name="T">The type of the property.</typeparam>
+            <param name="key">The key.</param>
+            <param name="defaultValue">The default value.</param>
+        </member>
+        <member name="M:nCode.Catalog.Models.Brand.SetProperty``1(System.String,``0)">
+            <summary>
+            Sets the Metadata Property given by the given key to the given value.
+            </summary>
+            <typeparam name="T">The type of the property.</typeparam>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+        </member>
         <member name="P:nCode.Catalog.Models.Campaign.ID">
             <summary>
             Gets or sets the unique identifier.
@@ -1021,86 +1086,6 @@
             <value>
             The name.
             </value>
-        </member>
-        <member name="T:nCode.Catalog.ViewModels.ItemListGroupView">
-            <summary>
-            Represents an entry in an item list grouping.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.ViewModels.ItemListGroupView.Title">
-            <summary>
-            Gets or sets the title of the group.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.ViewModels.ItemListGroupView.Items">
-            <summary>
-            Gets or sets the items in the group.
-            </summary>
-        </member>
-        <member name="T:nCode.Catalog.UI.ItemListGroupByMode">
-            <summary>
-            Represents group by modes for an item list view.
-            </summary>
-        </member>
-        <member name="T:nCode.Catalog.UI.ItemViewSettings">
-            <summary>
-            Represents settings for an item detail view.
-            </summary>
-        </member>
-        <member name="T:nCode.Catalog.UI.ItemListSettings">
-            <summary>
-            Represents settings for an item list view.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.UI.ItemListSettings.#ctor">
-            <summary>
-            Initializes a new instance of settings for an item list view. 
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowBreadcrumb">
-            <summary>
-            Gets or sets whether an breadcrumb element in the top of the list view.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.ItemListSettings.NoImageImageFile">
-            <summary>
-            Gets or sets the image file that should be used in no item image is available.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowTitle">
-            <summary>
-            Gets or sets whether the item title should be shown in the list view.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowItemNo">
-            <summary>
-            Gets or sets whether the item no. should be shown in the list view.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowBrandName">
-            <summary>
-            Gets or sets whether the brand name should be shown in the list view.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowPrice">
-            <summary>
-            Gets or sets whether the price should be shown in the list view.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowDefaultPrice">
-            <summary>
-            Gets or sets whether the default price should be shown in the list view, if the item is on sale to a lower price.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowBuyButton">
-            <summary>
-            Gets or sets whether a buy button should be shown in the list view.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.ItemListSettings.GroupByMode">
-            <summary>
-            Gets or sets the group by modes for the item list view.
-            </summary>
         </member>
         <member name="T:nCode.Catalog.Models.VatGroup">
             <summary>
@@ -1232,359 +1217,6 @@
             The name of the invoice template.
             </value>
         </member>
-        <member name="T:nCode.Catalog.UI.BrandNavigationItem">
-            <summary>
-            Represents an Brand in the Navigation Framework.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.UI.BrandNavigationItem.GetProperty``1(System.String,``0)">
-            <summary>
-            Gets the Metadata Property given by the given key, or a default value if the Property is not defined.
-            </summary>
-            <typeparam name="T">The type of the property.</typeparam>
-            <param name="key">The key.</param>
-            <param name="defaultValue">The default value.</param>
-        </member>
-        <member name="M:nCode.Catalog.UI.BrandNavigationItem.SetProperty``1(System.String,``0)">
-            <summary>
-            Sets the Metadata Property given by the given key to the given value.
-            </summary>
-            <typeparam name="T">The type of the property.</typeparam>
-            <param name="key">The key.</param>
-            <param name="value">The value.</param>
-        </member>
-        <member name="T:nCode.Catalog.ItemRewriteHandler">
-            <summary>
-            Rewites links in content to SEO-friendly style.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.ItemRewriteHandler.#ctor">
-            <summary>
-            Creates a new ContentPageRewriteHandler.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.ItemRewriteHandler.RewritePreRenderMatch(System.Text.RegularExpressions.Match)">
-            <summary>
-            Rewrites match in content before rendering.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.ItemRewriteHandler.Regex">
-            <summary>
-            Gets the Regex used to match this handler against content.
-            </summary>
-        </member>
-        <member name="T:nCode.Catalog.CompanyInformation">
-            <summary>
-            Represents information about the company that legally sells through the Catalog.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.CompanyInformation.GetTermsUrl(System.String)">
-            <summary>
-            Gets an Url for the Sales and Delivery Terms for the given Culture.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.CompanyInformation.SetTermsUrl(System.String,System.String)">
-            <summary>
-            Sets the Url for the Sales and Delivery Terms for a given Culture.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.CompanyInformation.AsXElement">
-            <summary>
-            Returns an Xmm representation of the Company Information.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:nCode.Catalog.CompanyInformation.Name">
-            <summary>
-            Gets or sets the name.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.CompanyInformation.Address1">
-            <summary>
-            Gets or sets the address1.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.CompanyInformation.Address2">
-            <summary>
-            Gets or sets the address2.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.CompanyInformation.PostalCode">
-            <summary>
-            Gets or sets the postal code.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.CompanyInformation.City">
-            <summary>
-            Gets or sets the city.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.CompanyInformation.Phone">
-            <summary>
-            Gets or sets the phone.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.CompanyInformation.Email">
-            <summary>
-            Gets or sets the email.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.CompanyInformation.VatNo">
-            <summary>
-            Gets or sets the vat no.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.CompanyInformation.LogoUrl">
-            <summary>
-            Gets or sets the logo URL.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.CompanyInformation.LogoWidth">
-            <summary>
-            Gets or sets the width of the logo.
-            </summary>
-        </member>
-        <member name="T:nCode.Catalog.Configuration.DeliverySection">
-            <summary>
-            Represents the Delivery Configuration Section.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.Configuration.DeliverySection.Current">
-            <summary>
-            Gets the Current Configuration.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.Configuration.DeliverySection.Providers">
-            <summary>
-            Gets a list of Confiugred Delivery Providers.
-            </summary>
-        </member>
-        <member name="T:nCode.Catalog.Delivery.DeliveryProviderCollection">
-            <summary>
-            Defines a collection of Payment Providers for use in the nCode Catalog Module.
-            </summary>
-        </member>
-        <member name="T:nCode.Catalog.Delivery.IDeliveryTypeSetupControl">
-            <summary>
-            Interface for Delivery Type Setup Controls
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.IDeliveryTypeSetupControl.Initialize(nCode.Catalog.CatalogModel)">
-            <summary>
-            Initializes the control with the specified model.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.IDeliveryTypeSetupControl.LoadDeliveryType(nCode.Catalog.CatalogModel,nCode.Catalog.DeliveryType)">
-            <summary>
-            Called when the control needs to load the given Delivery Type.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.IDeliveryTypeSetupControl.SaveDeliveryType(nCode.Catalog.CatalogModel,nCode.Catalog.DeliveryType)">
-            <summary>
-            Called when the control needs to save the given Delivery Type.
-            </summary>
-        </member>
-        <member name="T:nCode.Catalog.Delivery.Weight.WeightInterval">
-            <summary>
-            Represents a Weight Interval
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.Delivery.Weight.WeightInterval.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:nCode.Catalog.Delivery.Weight.WeightInterval"/> class.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.Delivery.Weight.WeightInterval.FromWeight">
-            <summary>
-            Gets or sets from weight (inclusive).
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.Delivery.Weight.WeightInterval.ToWeight">
-            <summary>
-            Gets or sets the to weight (exclusive).
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.Delivery.Weight.WeightInterval.Prices">
-            <summary>
-            Gets or sets the prices.
-            </summary>
-        </member>
-        <member name="T:nCode.Catalog.Delivery.Weight.WeightIntervalPrice">
-            <summary>
-            Represents a Price of a Weight Interval
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.Delivery.Weight.WeightIntervalPrice.CurrencyCode">
-            <summary>
-            Gets or sets the Currency Code.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.Delivery.Weight.WeightIntervalPrice.Price">
-            <summary>
-            Gets or sets the Price.
-            </summary>
-        </member>
-        <member name="T:nCode.Catalog.DiscountType">
-            <summary>
-            Represents the type of a Discount.
-            </summary>
-        </member>
-        <member name="F:nCode.Catalog.DiscountType.FixedAmount">
-            <summary>
-            The discount is a Fixed Amount.
-            </summary>
-        </member>
-        <member name="F:nCode.Catalog.DiscountType.Procentage">
-            <summary>
-            The discount is a Percentage of the Items Total.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.CurrencyController.ConvertAmount(System.Decimal,System.String)">
-            <summary>
-            Converts the amount given amount from one currency to the current currency, without applying rounding rules.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.CurrencyController.ConvertAmount(System.Decimal,nCode.Catalog.Currency)">
-            <summary>
-            Converts the amount given amount from one currency to the current currency, without applying rounding rules.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.CurrencyController.ConvertAmount(System.Decimal,System.String,System.String)">
-            <summary>
-            Converts the amount given amount from one currency to other, without applying rounding rules.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.CurrencyController.ConvertAmount(System.Decimal,nCode.Catalog.Currency,nCode.Catalog.Currency)">
-            <summary>
-            Converts the amount given amount from one currency to other, without applying rounding rules.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.CurrencyController.SetCurrency(System.String)">
-            <summary>
-            Sets the currency.
-            </summary>
-            <param name="code">The code.</param>
-        </member>
-        <member name="M:nCode.Catalog.CurrencyController.ApplyRoundingRule(System.Decimal)">
-            <summary>
-            Rounds the given price by the rules specified by the current currency.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.CurrencyController.ApplyRoundingRule(System.Decimal,nCode.Catalog.Currency)">
-            <summary>
-            Rounds the given price by the rules specified by the given currency.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.CurrencyController.CurrentCurrency">
-            <summary>
-            Returns the current currency, or the default currency, or null if no default currentcy is set.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.CurrencyController.DefaultCurrency">
-            <summary>
-            Returns the current currency, or the default currency, or null if no default currentcy is set.
-            </summary>
-        </member>
-        <member name="T:nCode.Catalog.ItemBasketItem">
-            <summary>
-            Represents an Item in a Basket.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.ItemBasketItem.ItemID">
-            <summary>
-            Gets or sets the item unique identifier.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.ItemBasketItem.ItemNo">
-            <summary>
-            Gets or sets the item no.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.ItemBasketItem.ItemVariantID">
-            <summary>
-            Gets or sets the item variant unique identifier.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.ItemBasketItem.PriceGroup">
-            <summary>
-            Gets or sets the price group.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.ItemBasketItem.Qty">
-            <summary>
-            Gets or sets the qty.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.ItemBasketItem.ImageFile">
-            <summary>
-            Gets or sets the image file.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.ItemBasketItem.Title">
-            <summary>
-            Gets or sets the title.
-            </summary>
-            <exception cref="T:System.InvalidOperationException">Setting Title of ItemBasketItem is not allowed.</exception>
-        </member>
-        <member name="P:nCode.Catalog.ItemBasketItem.UnitWeight">
-            <summary>
-            Gets or sets the unit weight.
-            </summary>
-            <exception cref="T:System.InvalidOperationException">Setting UnitWeight of ItemBasketItem is not allowed.</exception>
-        </member>
-        <member name="P:nCode.Catalog.ItemBasketItem.NetUnitPrice">
-            <summary>
-            Gets or sets the net unit price.
-            </summary>
-            <exception cref="T:System.InvalidOperationException">Setting NetUnitPrice of ItemBasketItem is not allowed.</exception>
-        </member>
-        <member name="P:nCode.Catalog.ItemBasketItem.UnitPrice">
-            <summary>
-            Gets or sets the unit price.
-            </summary>
-            <exception cref="T:System.InvalidOperationException">Setting UnitPrice of ItemBasketItem is not allowed.</exception>
-        </member>
-        <member name="P:nCode.Catalog.ItemBasketItem.VatGroupCode">
-            <summary>
-            Gets or sets the Vat Group Code.
-            </summary>
-            <exception cref="T:System.InvalidOperationException">Setting VatGroupCode of ItemBasketItem is not allowed.</exception>
-        </member>
-        <member name="T:nCode.Catalog.LayoutSettings">
-            <summary>
-            Contains Settings for Catalog Layout.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.LayoutSettings.DefaultItemListSettings">
-            <summary>
-            Gets or sets the default settings for item list views.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.LayoutSettings.DefaultCategoryItemListSettings">
-            <summary>
-            Gets or sets the default settings for item list views filtered by category.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.LayoutSettings.DefaultBrandItemListSettings">
-            <summary>
-            Gets or sets the default settings for item list views filtered by brand.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.LayoutSettings.DefaultItemViewSettings">
-            <summary>
-            Gets or sets the default settings for item detail views.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.LayoutSettings.NoImageImageFile">
-            <summary>
-            Gets or sets the no image image file.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.LayoutSettings.ShowOrderItemImage">
-            <summary>
-            Gets or sets a value indicating whether to item images in basket and orders.
-            </summary>
-        </member>
         <member name="T:nCode.Catalog.Models.CatalogDbContext">
             <summary>
             Entity Framework DbContext for the Catalog module.
@@ -1688,84 +1320,383 @@
             Represents a Item Localization.
             </summary>
         </member>
-        <member name="T:nCode.Catalog.NoSerieNumber">
+        <member name="T:nCode.Catalog.ViewModels.ItemListGroupView">
             <summary>
-            Represents a Number of a Number Serie.
+            Represents an entry in an item list grouping.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.NoSerieNumber.GetNext(System.String)">
+        <member name="P:nCode.Catalog.ViewModels.ItemListGroupView.Title">
             <summary>
-            Gets the next number given by the Code of the Number Serie.
+            Gets or sets the title of the group.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.NoSerieNumber.Peek(System.String)">
+        <member name="P:nCode.Catalog.ViewModels.ItemListGroupView.Items">
             <summary>
-            Peeks at the next number given by the Code of the Number Serie.
+            Gets or sets the items in the group.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.NoSerieNumber.#ctor(System.Int32,System.String,System.String)">
+        <member name="T:nCode.Catalog.UI.ItemListGroupByMode">
             <summary>
-            Initializes a new instance of the <see cref="T:nCode.Catalog.NoSerieNumber"/> class.
+            Represents group by modes for an item list view.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.NoSerieNumber.ToString">
+        <member name="T:nCode.Catalog.UI.ItemViewSettings">
             <summary>
-            Returns a <see cref="T:System.String"/> that represents this instance.
+            Represents settings for an item detail view.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.NoSerieNumber.No">
+        <member name="T:nCode.Catalog.UI.ItemListSettings">
             <summary>
-            Gets the No.
+            Represents settings for an item list view.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.NoSerieNumber.Prefix">
+        <member name="M:nCode.Catalog.UI.ItemListSettings.#ctor">
             <summary>
-            Gets the Prefix.
+            Initializes a new instance of settings for an item list view. 
             </summary>
         </member>
-        <member name="P:nCode.Catalog.NoSerieNumber.Suffix">
+        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowBreadcrumb">
             <summary>
-            Gets the Suffix.
+            Gets or sets whether an breadcrumb element in the top of the list view.
             </summary>
         </member>
-        <member name="T:nCode.Catalog.OrderStatus">
+        <member name="P:nCode.Catalog.UI.ItemListSettings.NoImageImageFile">
             <summary>
-            Represents the status of a Order.
+            Gets or sets the image file that should be used in no item image is available.
             </summary>
         </member>
-        <member name="F:nCode.Catalog.OrderStatus.Order">
+        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowTitle">
             <summary>
-            Order
+            Gets or sets whether the item title should be shown in the list view.
             </summary>
         </member>
-        <member name="F:nCode.Catalog.OrderStatus.Invoice">
+        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowItemNo">
             <summary>
-            Invoice
+            Gets or sets whether the item no. should be shown in the list view.
             </summary>
         </member>
-        <member name="F:nCode.Catalog.OrderStatus.Deleted">
+        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowBrandName">
             <summary>
-            Deleted Order
+            Gets or sets whether the brand name should be shown in the list view.
             </summary>
         </member>
-        <member name="T:nCode.Catalog.PaymentStatus">
+        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowPrice">
             <summary>
-            Represents the Payment Status of a Order.
+            Gets or sets whether the price should be shown in the list view.
             </summary>
         </member>
-        <member name="F:nCode.Catalog.PaymentStatus.Unconfirmed">
+        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowDefaultPrice">
             <summary>
-            Unconfirmed.
+            Gets or sets whether the default price should be shown in the list view, if the item is on sale to a lower price.
             </summary>
         </member>
-        <member name="F:nCode.Catalog.PaymentStatus.Confirmed">
+        <member name="P:nCode.Catalog.UI.ItemListSettings.ShowBuyButton">
             <summary>
-            Confirmed.
+            Gets or sets whether a buy button should be shown in the list view.
             </summary>
         </member>
-        <member name="F:nCode.Catalog.PaymentStatus.Completed">
+        <member name="P:nCode.Catalog.UI.ItemListSettings.GroupByMode">
             <summary>
-            Completed.
+            Gets or sets the group by modes for the item list view.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.UI.BrandNavigationItem">
+            <summary>
+            Represents an Brand in the Navigation Framework.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.BrandNavigationItem.GetProperty``1(System.String,``0)">
+            <summary>
+            Gets the Metadata Property given by the given key, or a default value if the Property is not defined.
+            </summary>
+            <typeparam name="T">The type of the property.</typeparam>
+            <param name="key">The key.</param>
+            <param name="defaultValue">The default value.</param>
+        </member>
+        <member name="M:nCode.Catalog.UI.BrandNavigationItem.SetProperty``1(System.String,``0)">
+            <summary>
+            Sets the Metadata Property given by the given key to the given value.
+            </summary>
+            <typeparam name="T">The type of the property.</typeparam>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="T:nCode.Catalog.UI.ItemListByBrandRequest">
+            <summary>
+            Represents a item list request filtered by brand.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListByBrandRequest.ListSettings">
+            <summary>
+            Gets item list settings for the request. 
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListByBrandRequest.BrandID">
+            <summary>
+            Gets the unique identifier of the brand requested by this item list request.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListByBrandRequest.GetNavigationItem">
+            <summary>
+            Gets a contextual navigation item for the item list.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListByBrandRequest.GetContextView(nCode.Catalog.Data.ICatalogRepository)">
+            <summary>
+            Gets a contextual view about the item list which provide information to the end user.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListByBrandRequest.GetItemList(nCode.Catalog.Data.ICatalogRepository)">
+            <summary>
+            Gets a the item list requested.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.UI.ItemListByCategoryRequest">
+            <summary>
+            Represents a item list request filtered by category.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListByCategoryRequest.ListSettings">
+            <summary>
+            Gets item list settings for the request. 
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListByCategoryRequest.CategoryID">
+            <summary>
+            Gets the unique identifier of the category requested by this item list request.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListByCategoryRequest.GetNavigationItem">
+            <summary>
+            Gets a contextual navigation item for the item list.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListByCategoryRequest.GetContextView(nCode.Catalog.Data.ICatalogRepository)">
+            <summary>
+            Gets a contextual view about the item list which provide information to the end user.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListByCategoryRequest.GetItemList(nCode.Catalog.Data.ICatalogRepository)">
+            <summary>
+            Gets a the item list requested.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.UI.ItemListRequest">
+            <summary>
+            Represents information and helper methods for an Item List Request.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemListRequest.ListSettings">
+            <summary>
+            Gets item list settings for the request. 
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListRequest.GetNavigationItem">
+            <summary>
+            Gets a contextual navigation item for the item list.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListRequest.GetContextView(nCode.Catalog.Data.ICatalogRepository)">
+            <summary>
+            Gets a contextual view about the item list which provide information to the end user.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListRequest.GetItemList(nCode.Catalog.Data.ICatalogRepository)">
+            <summary>
+            Gets a the item list requested.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemListRequest.GetItemGroupList(nCode.Catalog.Data.ICatalogRepository)">
+            <summary>
+            Gets a the item list requested, grouped according to the GroupByMode specified in the <see cref="T:nCode.Catalog.UI.ItemListSettings"/> for the request.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemViewRequest.ViewSettings">
+            <summary>
+            Gets item list settings for the request. 
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.UI.CategoryNavigationItem">
+            <summary>
+            Represents an Category in the Navigation Framework.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.CategoryNavigationItem.GetParent">
+            <summary>
+            Gets a possibly context-specific logical Parent of this Navigation Item in the Navigation Graph. This is used to automatically calculate the breadcrumb path available in <see cref="P:nCode.UI.Navigation.CurrentPath" />.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:nCode.Catalog.UI.CategoryNavigationItem.GetProperty``1(System.String,``0)">
+            <summary>
+            Gets the Metadata Property given by the given key, or a default value if the Property is not defined.
+            </summary>
+            <typeparam name="T">The type of the property.</typeparam>
+            <param name="key">The key.</param>
+            <param name="defaultValue">The default value.</param>
+        </member>
+        <member name="M:nCode.Catalog.UI.CategoryNavigationItem.SetProperty``1(System.String,``0)">
+            <summary>
+            Sets the Metadata Property given by the given key to the given value.
+            </summary>
+            <typeparam name="T">The type of the property.</typeparam>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="T:nCode.Catalog.UI.BrandNavigationTree">
+            <summary>
+            Represents a the Brand Tree in the Navigation Framework.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.BrandNavigationTree.#ctor(System.Linq.Expressions.Expression{System.Func{nCode.Catalog.Models.Brand,System.Boolean}},System.Func{nCode.Catalog.UI.BrandNavigationItem,System.Boolean},System.Func{nCode.Catalog.UI.BrandNavigationItem,System.Boolean},nCode.Catalog.UI.BrandNavigationItem)">
+            <summary>
+            Initializes a new instance of the <see cref="T:nCode.Catalog.UI.BrandNavigationTree"/> class.
+            </summary>
+            <param name="sourceFilter">The source filter.</param>
+            <param name="viewFilter">The view filter.</param>
+            <param name="traverseFilter">The traverse filter.</param>
+            <param name="root">The root.</param>
+        </member>
+        <member name="T:nCode.Catalog.UI.CategoryNavigationTree">
+            <summary>
+            Represents a the Category Tree in the Navigation Framework.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.CategoryNavigationTree.#ctor(System.Linq.Expressions.Expression{System.Func{nCode.Catalog.Category,System.Boolean}},System.Func{nCode.Catalog.UI.CategoryNavigationItem,System.Boolean},System.Func{nCode.Catalog.UI.CategoryNavigationItem,System.Boolean},nCode.Catalog.UI.CategoryNavigationItem)">
+            <summary>
+            Initializes a new instance of the <see cref="T:nCode.Catalog.UI.CategoryNavigationTree"/> class.
+            </summary>
+            <param name="sourceFilter">The source filter.</param>
+            <param name="viewFilter">The view filter.</param>
+            <param name="traverseFilter">The traverse filter.</param>
+            <param name="root">The root.</param>
+        </member>
+        <member name="T:nCode.Catalog.UI.CampaignNavigationList">
+            <summary>
+            Represents a the Campaings List in the Navigation Framework.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.UI.CampaignNavigationItem">
+            <summary>
+            Represents an Campaign in the Navigation Framework.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.CampaignNavigationItem.Title">
+            <summary>
+            Gets or sets the Title for this Navigation Item.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.UI.SegmentNavigationItem">
+            <summary>
+            Represents an Brand in the Navigation Framework.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.UI.SegmentNavigationTree">
+            <summary>
+            Represents a the Brand Tree in the Navigation Framework.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.UI.ItemNavigationItem">
+            <summary>
+            Represents an Item in the Navigation Framework.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemNavigationItem.ID">
+            <summary>
+            Gets or sets the Item ID for this Item Navigation Item.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemNavigationItem.ItemNo">
+            <summary>
+            Gets or sets the ItemNo for this Item Navigation Item.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemNavigationItem.Title">
+            <summary>
+            Gets or sets the Title for this Navigation Item.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemNavigationItem.Permalink">
+            <summary>
+            Gets an Permanent Url that allow access to this resource.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemNavigationItem.Url">
+            <summary>
+            Gets an Frindly Url that allow access to this resource.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemNavigationItem.IsActive">
+            <summary>
+            Gets a value indicating whether this Item is active.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.UI.ItemNavigationItem.Parent">
+            <summary>
+            Gets or sets the primery parent Navigation Item.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemNavigationItem.GetParent">
+            <summary>
+            Gets the primery parent Navigation Item.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemNavigationItem.GetProperty``1(System.String,``0)">
+            <summary>
+            Gets the Metadata Property given by the given key, or a default value if the Property is not defined.
+            </summary>
+            <typeparam name="T">The type of the property.</typeparam>
+            <param name="key">The key.</param>
+            <param name="defaultValue">The default value.</param>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemNavigationItem.SetProperty``1(System.String,``0)">
+            <summary>
+            Sets the Metadata Property given by the given key to the given value.
+            </summary>
+            <typeparam name="T">The type of the property.</typeparam>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="T:nCode.Catalog.UI.ItemUtilities">
+            <summary>
+            Utility class for Items
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.UI.ItemUtilities.GetItemTitle(System.Guid,System.Nullable{System.Guid},System.String)">
+            <summary>
+            Gets the item title.
+            </summary>
+            <param name="itemId">The item unique identifier.</param>
+            <param name="itemVariantId">The item variant unique identifier.</param>
+            <param name="culture">The culture.</param>
+            <returns></returns>
+        </member>
+        <member name="T:nCode.Catalog.Payment.Curanet.TransactionStatus">
+            <remarks/>
+        </member>
+        <member name="P:nCode.Catalog.Payment.Curanet.CuranetPaymentProvider.ShopId">
+            <summary>
+            Gets the Shop ID for this Curanet Payment Provider.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.Payment.Curanet.CuranetPaymentProvider.Username">
+            <summary>
+            Gets the Username for this Curanet Payment Provider. For instance used to interact with the Curanet API.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.Payment.Curanet.CuranetPaymentProvider.Password">
+            <summary>
+            Gets the Password for this Curanet Payment Provider. For instance used to interact with the Curanet API.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.Payment.Curanet.CuranetPaymentProvider.ApiUrl">
+            <summary>
+            Gets the Api Url for this Curanet Payment Provider. Used as Endpoint Url for the Curanet API.
+            </summary>        
+        </member>
+        <member name="P:nCode.Catalog.Payment.Curanet.CuranetPaymentProvider.ProxyUrlPrefix">
+            <summary>
+            Gets the Proxy Url Prefix for this Curanet Payment Provider. Used as a Prefix Url to provide SSL-secured data collection.
             </summary>
         </member>
         <member name="T:nCode.Catalog.Payment.Curanet.ICuranetApi">
@@ -1813,39 +1744,6 @@
             <param name="transactnum">The transactnum.</param>
             <returns></returns>
         </member>
-        <member name="T:nCode.Catalog.Payment.Curanet.TransactionStatus">
-            <remarks/>
-        </member>
-        <member name="M:nCode.Catalog.Payment.PaymentProvider.IsAvailable(nCode.Catalog.CatalogModel,nCode.Catalog.Basket,nCode.Catalog.PaymentType)">
-            <summary>
-            Determines whether the specified Delivery Type (provided by this provider) is available.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.Payment.Curanet.CuranetPaymentProvider.ShopId">
-            <summary>
-            Gets the Shop ID for this Curanet Payment Provider.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.Payment.Curanet.CuranetPaymentProvider.Username">
-            <summary>
-            Gets the Username for this Curanet Payment Provider. For instance used to interact with the Curanet API.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.Payment.Curanet.CuranetPaymentProvider.Password">
-            <summary>
-            Gets the Password for this Curanet Payment Provider. For instance used to interact with the Curanet API.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.Payment.Curanet.CuranetPaymentProvider.ApiUrl">
-            <summary>
-            Gets the Api Url for this Curanet Payment Provider. Used as Endpoint Url for the Curanet API.
-            </summary>        
-        </member>
-        <member name="P:nCode.Catalog.Payment.Curanet.CuranetPaymentProvider.ProxyUrlPrefix">
-            <summary>
-            Gets the Proxy Url Prefix for this Curanet Payment Provider. Used as a Prefix Url to provide SSL-secured data collection.
-            </summary>
-        </member>
         <member name="T:nCode.Catalog.Payment.IPaymentEditControl">
             <summary>
             Inteface for interacting with Payment Provider for a given Payment.
@@ -1854,6 +1752,11 @@
         <member name="T:nCode.Catalog.Payment.IPaymentTypeSetupControl">
             <summary>
             Inteface for setting Payment Provider specific data for a given Payment Type.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.Payment.PaymentProvider.IsAvailable(nCode.Catalog.CatalogModel,nCode.Catalog.Basket,nCode.Catalog.PaymentType)">
+            <summary>
+            Determines whether the specified Delivery Type (provided by this provider) is available.
             </summary>
         </member>
         <member name="T:nCode.Catalog.Payment.PaymentProviderCollection">
@@ -1904,99 +1807,351 @@
             </summary>
             <param name="nvpstring"></param>
         </member>
-        <member name="T:nCode.Catalog.UI.ItemListByBrandRequest">
+        <member name="T:nCode.Catalog.ItemRewriteHandler">
             <summary>
-            Represents a item list request filtered by brand.
+            Rewites links in content to SEO-friendly style.
             </summary>
         </member>
-        <member name="T:nCode.Catalog.UI.ItemListRequest">
+        <member name="M:nCode.Catalog.ItemRewriteHandler.#ctor">
             <summary>
-            Represents information and helper methods for an Item List Request.
+            Creates a new ContentPageRewriteHandler.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.UI.ItemListRequest.GetNavigationItem">
+        <member name="P:nCode.Catalog.ItemRewriteHandler.Regex">
             <summary>
-            Gets a contextual navigation item for the item list.
+            Gets the Regex used to match this handler against content.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.UI.ItemListRequest.GetContextView(nCode.Catalog.Data.ICatalogRepository)">
+        <member name="M:nCode.Catalog.ItemRewriteHandler.RewritePreRenderMatch(System.Text.RegularExpressions.Match)">
             <summary>
-            Gets a contextual view about the item list which provide information to the end user.
+            Rewrites match in content before rendering.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.UI.ItemListRequest.GetItemList(nCode.Catalog.Data.ICatalogRepository)">
+        <member name="T:nCode.Catalog.CompanyInformation">
             <summary>
-            Gets a the item list requested.
+            Represents information about the company that legally sells through the Catalog.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.UI.ItemListRequest.GetItemGroupList(nCode.Catalog.Data.ICatalogRepository)">
+        <member name="P:nCode.Catalog.CompanyInformation.Name">
             <summary>
-            Gets a the item list requested, grouped according to the GroupByMode specified in the <see cref="T:nCode.Catalog.UI.ItemListSettings"/> for the request.
+            Gets or sets the name.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.UI.ItemListRequest.ListSettings">
+        <member name="P:nCode.Catalog.CompanyInformation.Address1">
             <summary>
-            Gets item list settings for the request. 
+            Gets or sets the address1.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.UI.ItemListByBrandRequest.GetNavigationItem">
+        <member name="P:nCode.Catalog.CompanyInformation.Address2">
             <summary>
-            Gets a contextual navigation item for the item list.
+            Gets or sets the address2.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.UI.ItemListByBrandRequest.GetContextView(nCode.Catalog.Data.ICatalogRepository)">
+        <member name="P:nCode.Catalog.CompanyInformation.PostalCode">
             <summary>
-            Gets a contextual view about the item list which provide information to the end user.
+            Gets or sets the postal code.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.UI.ItemListByBrandRequest.GetItemList(nCode.Catalog.Data.ICatalogRepository)">
+        <member name="P:nCode.Catalog.CompanyInformation.City">
             <summary>
-            Gets a the item list requested.
+            Gets or sets the city.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.UI.ItemListByBrandRequest.ListSettings">
+        <member name="P:nCode.Catalog.CompanyInformation.Phone">
             <summary>
-            Gets item list settings for the request. 
+            Gets or sets the phone.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.UI.ItemListByBrandRequest.BrandID">
+        <member name="P:nCode.Catalog.CompanyInformation.Email">
             <summary>
-            Gets the unique identifier of the brand requested by this item list request.
+            Gets or sets the email.
             </summary>
         </member>
-        <member name="T:nCode.Catalog.UI.ItemListByCategoryRequest">
+        <member name="P:nCode.Catalog.CompanyInformation.VatNo">
             <summary>
-            Represents a item list request filtered by category.
+            Gets or sets the vat no.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.UI.ItemListByCategoryRequest.GetNavigationItem">
+        <member name="P:nCode.Catalog.CompanyInformation.LogoUrl">
             <summary>
-            Gets a contextual navigation item for the item list.
+            Gets or sets the logo URL.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.UI.ItemListByCategoryRequest.GetContextView(nCode.Catalog.Data.ICatalogRepository)">
+        <member name="P:nCode.Catalog.CompanyInformation.LogoWidth">
             <summary>
-            Gets a contextual view about the item list which provide information to the end user.
+            Gets or sets the width of the logo.
             </summary>
         </member>
-        <member name="M:nCode.Catalog.UI.ItemListByCategoryRequest.GetItemList(nCode.Catalog.Data.ICatalogRepository)">
+        <member name="M:nCode.Catalog.CompanyInformation.GetTermsUrl(System.String)">
             <summary>
-            Gets a the item list requested.
+            Gets an Url for the Sales and Delivery Terms for the given Culture.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.UI.ItemListByCategoryRequest.ListSettings">
+        <member name="M:nCode.Catalog.CompanyInformation.SetTermsUrl(System.String,System.String)">
             <summary>
-            Gets item list settings for the request. 
+            Sets the Url for the Sales and Delivery Terms for a given Culture.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.UI.ItemListByCategoryRequest.CategoryID">
+        <member name="M:nCode.Catalog.CompanyInformation.AsXElement">
             <summary>
-            Gets the unique identifier of the category requested by this item list request.
+            Returns an Xmm representation of the Company Information.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:nCode.Catalog.Configuration.DeliverySection">
+            <summary>
+            Represents the Delivery Configuration Section.
             </summary>
         </member>
-        <member name="P:nCode.Catalog.UI.ItemViewRequest.ViewSettings">
+        <member name="P:nCode.Catalog.Configuration.DeliverySection.Current">
             <summary>
-            Gets item list settings for the request. 
+            Gets the Current Configuration.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.Configuration.DeliverySection.Providers">
+            <summary>
+            Gets a list of Confiugred Delivery Providers.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.DiscountType">
+            <summary>
+            Represents the type of a Discount.
+            </summary>
+        </member>
+        <member name="F:nCode.Catalog.DiscountType.FixedAmount">
+            <summary>
+            The discount is a Fixed Amount.
+            </summary>
+        </member>
+        <member name="F:nCode.Catalog.DiscountType.Procentage">
+            <summary>
+            The discount is a Percentage of the Items Total.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.CurrencyController.CurrentCurrency">
+            <summary>
+            Returns the current currency, or the default currency, or null if no default currentcy is set.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.CurrencyController.DefaultCurrency">
+            <summary>
+            Returns the current currency, or the default currency, or null if no default currentcy is set.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.CurrencyController.ConvertAmount(System.Decimal,System.String)">
+            <summary>
+            Converts the amount given amount from one currency to the current currency, without applying rounding rules.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.CurrencyController.ConvertAmount(System.Decimal,nCode.Catalog.Currency)">
+            <summary>
+            Converts the amount given amount from one currency to the current currency, without applying rounding rules.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.CurrencyController.ConvertAmount(System.Decimal,System.String,System.String)">
+            <summary>
+            Converts the amount given amount from one currency to other, without applying rounding rules.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.CurrencyController.ConvertAmount(System.Decimal,nCode.Catalog.Currency,nCode.Catalog.Currency)">
+            <summary>
+            Converts the amount given amount from one currency to other, without applying rounding rules.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.CurrencyController.SetCurrency(System.String)">
+            <summary>
+            Sets the currency.
+            </summary>
+            <param name="code">The code.</param>
+        </member>
+        <member name="M:nCode.Catalog.CurrencyController.ApplyRoundingRule(System.Decimal)">
+            <summary>
+            Rounds the given price by the rules specified by the current currency.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.CurrencyController.ApplyRoundingRule(System.Decimal,nCode.Catalog.Currency)">
+            <summary>
+            Rounds the given price by the rules specified by the given currency.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.ItemBasketItem">
+            <summary>
+            Represents an Item in a Basket.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.ItemBasketItem.ItemID">
+            <summary>
+            Gets or sets the item unique identifier.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.ItemBasketItem.ItemNo">
+            <summary>
+            Gets or sets the item no.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.ItemBasketItem.ItemVariantID">
+            <summary>
+            Gets or sets the item variant unique identifier.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.ItemBasketItem.PriceGroup">
+            <summary>
+            Gets or sets the price group.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.ItemBasketItem.Qty">
+            <summary>
+            Gets or sets the qty.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.ItemBasketItem.ImageFile">
+            <summary>
+            Gets or sets the image file.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.ItemBasketItem.Title">
+            <summary>
+            Gets or sets the title.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Setting Title of ItemBasketItem is not allowed.</exception>
+        </member>
+        <member name="P:nCode.Catalog.ItemBasketItem.UnitWeight">
+            <summary>
+            Gets or sets the unit weight.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Setting UnitWeight of ItemBasketItem is not allowed.</exception>
+        </member>
+        <member name="P:nCode.Catalog.ItemBasketItem.NetUnitPrice">
+            <summary>
+            Gets or sets the net unit price.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Setting NetUnitPrice of ItemBasketItem is not allowed.</exception>
+        </member>
+        <member name="P:nCode.Catalog.ItemBasketItem.UnitPrice">
+            <summary>
+            Gets or sets the unit price.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Setting UnitPrice of ItemBasketItem is not allowed.</exception>
+        </member>
+        <member name="P:nCode.Catalog.ItemBasketItem.VatGroupCode">
+            <summary>
+            Gets or sets the Vat Group Code.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Setting VatGroupCode of ItemBasketItem is not allowed.</exception>
+        </member>
+        <member name="T:nCode.Catalog.LayoutSettings">
+            <summary>
+            Contains Settings for Catalog Layout.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.LayoutSettings.DefaultItemListSettings">
+            <summary>
+            Gets or sets the default settings for item list views.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.LayoutSettings.DefaultCategoryItemListSettings">
+            <summary>
+            Gets or sets the default settings for item list views filtered by category.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.LayoutSettings.DefaultBrandItemListSettings">
+            <summary>
+            Gets or sets the default settings for item list views filtered by brand.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.LayoutSettings.DefaultItemViewSettings">
+            <summary>
+            Gets or sets the default settings for item detail views.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.LayoutSettings.NoImageImageFile">
+            <summary>
+            Gets or sets the no image image file.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.LayoutSettings.ShowOrderItemImage">
+            <summary>
+            Gets or sets a value indicating whether to item images in basket and orders.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.NoSerieNumber">
+            <summary>
+            Represents a Number of a Number Serie.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.NoSerieNumber.GetNext(System.String)">
+            <summary>
+            Gets the next number given by the Code of the Number Serie.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.NoSerieNumber.Peek(System.String)">
+            <summary>
+            Peeks at the next number given by the Code of the Number Serie.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.NoSerieNumber.#ctor(System.Int32,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:nCode.Catalog.NoSerieNumber"/> class.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.NoSerieNumber.No">
+            <summary>
+            Gets the No.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.NoSerieNumber.Prefix">
+            <summary>
+            Gets the Prefix.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.NoSerieNumber.Suffix">
+            <summary>
+            Gets the Suffix.
+            </summary>
+        </member>
+        <member name="M:nCode.Catalog.NoSerieNumber.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.OrderStatus">
+            <summary>
+            Represents the status of a Order.
+            </summary>
+        </member>
+        <member name="F:nCode.Catalog.OrderStatus.Order">
+            <summary>
+            Order
+            </summary>
+        </member>
+        <member name="F:nCode.Catalog.OrderStatus.Invoice">
+            <summary>
+            Invoice
+            </summary>
+        </member>
+        <member name="F:nCode.Catalog.OrderStatus.Deleted">
+            <summary>
+            Deleted Order
+            </summary>
+        </member>
+        <member name="T:nCode.Catalog.PaymentStatus">
+            <summary>
+            Represents the Payment Status of a Order.
+            </summary>
+        </member>
+        <member name="F:nCode.Catalog.PaymentStatus.Unconfirmed">
+            <summary>
+            Unconfirmed.
+            </summary>
+        </member>
+        <member name="F:nCode.Catalog.PaymentStatus.Confirmed">
+            <summary>
+            Confirmed.
+            </summary>
+        </member>
+        <member name="F:nCode.Catalog.PaymentStatus.Completed">
+            <summary>
+            Completed.
             </summary>
         </member>
         <member name="T:nCode.Catalog.SalesSettings">
@@ -2120,161 +2275,6 @@
             Summary description for TreeService
             </summary>
         </member>
-        <member name="T:nCode.Catalog.UI.CategoryNavigationItem">
-            <summary>
-            Represents an Category in the Navigation Framework.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.UI.CategoryNavigationItem.GetParent">
-            <summary>
-            Gets a possibly context-specific logical Parent of this Navigation Item in the Navigation Graph. This is used to automatically calculate the breadcrumb path available in <see cref="P:nCode.UI.Navigation.CurrentPath"/>.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:nCode.Catalog.UI.CategoryNavigationItem.GetProperty``1(System.String,``0)">
-            <summary>
-            Gets the Metadata Property given by the given key, or a default value if the Property is not defined.
-            </summary>
-            <typeparam name="T">The type of the property.</typeparam>
-            <param name="key">The key.</param>
-            <param name="defaultValue">The default value.</param>
-        </member>
-        <member name="M:nCode.Catalog.UI.CategoryNavigationItem.SetProperty``1(System.String,``0)">
-            <summary>
-            Sets the Metadata Property given by the given key to the given value.
-            </summary>
-            <typeparam name="T">The type of the property.</typeparam>
-            <param name="key">The key.</param>
-            <param name="value">The value.</param>
-        </member>
-        <member name="T:nCode.Catalog.UI.BrandNavigationTree">
-            <summary>
-            Represents a the Brand Tree in the Navigation Framework.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.UI.BrandNavigationTree.#ctor(System.Linq.Expressions.Expression{System.Func{nCode.Catalog.Models.Brand,System.Boolean}},System.Func{nCode.Catalog.UI.BrandNavigationItem,System.Boolean},System.Func{nCode.Catalog.UI.BrandNavigationItem,System.Boolean},nCode.Catalog.UI.BrandNavigationItem)">
-            <summary>
-            Initializes a new instance of the <see cref="T:nCode.Catalog.UI.BrandNavigationTree"/> class.
-            </summary>
-            <param name="sourceFilter">The source filter.</param>
-            <param name="viewFilter">The view filter.</param>
-            <param name="traverseFilter">The traverse filter.</param>
-            <param name="root">The root.</param>
-        </member>
-        <member name="T:nCode.Catalog.UI.CategoryNavigationTree">
-            <summary>
-            Represents a the Category Tree in the Navigation Framework.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.UI.CategoryNavigationTree.#ctor(System.Linq.Expressions.Expression{System.Func{nCode.Catalog.Category,System.Boolean}},System.Func{nCode.Catalog.UI.CategoryNavigationItem,System.Boolean},System.Func{nCode.Catalog.UI.CategoryNavigationItem,System.Boolean},nCode.Catalog.UI.CategoryNavigationItem)">
-            <summary>
-            Initializes a new instance of the <see cref="T:nCode.Catalog.UI.CategoryNavigationTree"/> class.
-            </summary>
-            <param name="sourceFilter">The source filter.</param>
-            <param name="viewFilter">The view filter.</param>
-            <param name="traverseFilter">The traverse filter.</param>
-            <param name="root">The root.</param>
-        </member>
-        <member name="T:nCode.Catalog.UI.CampaignNavigationList">
-            <summary>
-            Represents a the Campaings List in the Navigation Framework.
-            </summary>
-        </member>
-        <member name="T:nCode.Catalog.UI.CampaignNavigationItem">
-            <summary>
-            Represents an Campaign in the Navigation Framework.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.CampaignNavigationItem.Title">
-            <summary>
-            Gets or sets the Title for this Navigation Item.
-            </summary>
-        </member>
-        <member name="T:nCode.Catalog.UI.SegmentNavigationItem">
-            <summary>
-            Represents an Brand in the Navigation Framework.
-            </summary>
-        </member>
-        <member name="T:nCode.Catalog.UI.SegmentNavigationTree">
-            <summary>
-            Represents a the Brand Tree in the Navigation Framework.
-            </summary>
-        </member>
-        <member name="T:nCode.Catalog.UI.ItemNavigationItem">
-            <summary>
-            Represents an Item in the Navigation Framework.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.UI.ItemNavigationItem.GetParent">
-            <summary>
-            Gets the primery parent Navigation Item.
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.UI.ItemNavigationItem.GetProperty``1(System.String,``0)">
-            <summary>
-            Gets the Metadata Property given by the given key, or a default value if the Property is not defined.
-            </summary>
-            <typeparam name="T">The type of the property.</typeparam>
-            <param name="key">The key.</param>
-            <param name="defaultValue">The default value.</param>
-        </member>
-        <member name="M:nCode.Catalog.UI.ItemNavigationItem.SetProperty``1(System.String,``0)">
-            <summary>
-            Sets the Metadata Property given by the given key to the given value.
-            </summary>
-            <typeparam name="T">The type of the property.</typeparam>
-            <param name="key">The key.</param>
-            <param name="value">The value.</param>
-        </member>
-        <member name="P:nCode.Catalog.UI.ItemNavigationItem.ID">
-            <summary>
-            Gets or sets the Item ID for this Item Navigation Item.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.ItemNavigationItem.ItemNo">
-            <summary>
-            Gets or sets the ItemNo for this Item Navigation Item.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.ItemNavigationItem.Title">
-            <summary>
-            Gets or sets the Title for this Navigation Item.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.ItemNavigationItem.Permalink">
-            <summary>
-            Gets an Permanent Url that allow access to this resource.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.ItemNavigationItem.Url">
-            <summary>
-            Gets an Frindly Url that allow access to this resource.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.ItemNavigationItem.IsActive">
-            <summary>
-            Gets a value indicating whether this Item is active.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.UI.ItemNavigationItem.Parent">
-            <summary>
-            Gets or sets the primery parent Navigation Item.
-            </summary>
-        </member>
-        <member name="T:nCode.Catalog.UI.ItemUtilities">
-            <summary>
-            Utility class for Items
-            </summary>
-        </member>
-        <member name="M:nCode.Catalog.UI.ItemUtilities.GetItemTitle(System.Guid,System.Nullable{System.Guid},System.String)">
-            <summary>
-            Gets the item title.
-            </summary>
-            <param name="itemId">The item unique identifier.</param>
-            <param name="itemVariantId">The item variant unique identifier.</param>
-            <param name="culture">The culture.</param>
-            <returns></returns>
-        </member>
         <member name="T:nCode.Catalog.VatUtilities">
             <summary>
             Utilities for accesing Item Prices, and ajusting them currectly according to Vat Settings.
@@ -2288,6 +2288,16 @@
         <member name="M:nCode.Catalog.VatUtilities.GetItemVariantPriceInternal(nCode.Catalog.CatalogModel,System.String,System.Guid,nCode.Catalog.Currency,System.String)">
             <summary>
             Return the raw price given a itemNo and itemVariantID. Vat is not considered.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.VatUtilities.VatGroups">
+            <summary>
+            Gets available vat groups. Cached for each request.
+            </summary>
+        </member>
+        <member name="P:nCode.Catalog.VatUtilities.DefaultVatGroup">
+            <summary>
+            Gets the default vat group.
             </summary>
         </member>
         <member name="M:nCode.Catalog.VatUtilities.UpdateListPrice(nCode.Catalog.CatalogModel,nCode.Catalog.Item)">
@@ -2366,16 +2376,6 @@
         <member name="M:nCode.Catalog.VatUtilities.GetNetPrice(System.Decimal,nCode.Catalog.VatGroup)">
             <summary>
             Gets the price excl. vat, depending on whether prices includes vat, and the given vat group.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.VatUtilities.VatGroups">
-            <summary>
-            Gets available vat groups. Cached for each request.
-            </summary>
-        </member>
-        <member name="P:nCode.Catalog.VatUtilities.DefaultVatGroup">
-            <summary>
-            Gets the default vat group.
             </summary>
         </member>
     </members>

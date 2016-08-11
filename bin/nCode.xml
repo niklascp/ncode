@@ -302,7 +302,7 @@
             This filter is used for the Integration between the nCode Job Scheduling Framework,
             and the Hangfire JobEngine implementation (<see cref="T:nCode.JobScheduling.Hangfire.HangfireJobEngine"/>).
             
-            The filter is automatically added to the Global Filters collection <see cref="!:Hangfire.GlobalJobFilters"/>
+            The filter is automatically added to the Global Filters collection <see cref="T:Hangfire.GlobalJobFilters"/>
             when the Hangfire Job Engine is initialized.
             </summary>
         </member>
@@ -1476,6 +1476,11 @@
             Represents a interface for providing data for Search Engine Optimizations.
             </summary>
         </member>
+        <member name="P:nCode.UI.SiteNavigationItem.HasChildren">
+            <summary>
+            Gets or set a value indicating if this node has child nodes.
+            </summary>
+        </member>
         <member name="T:nCode.UI.TreeNavigationItem">
             <summary>
             Represents a Navigation Item in a Navigation Tree.
@@ -1887,7 +1892,6 @@
             <summary>
             Creates a new FeatureGroup.
             </summary>
-            <param name="nodeModule"></param>
         </member>
         <member name="P:nCode.FeatureGroup.Module">
             <summary>
