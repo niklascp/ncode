@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
     <configSections xdt:Transform="InsertIfMissing">
-        <section name="log4net" xdt:Locator="Match(name)" xdt:Transform="Remove" />
-        <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" xdt:Locator="Match(name)" xdt:Transform="InsertIfMissing" />
         <sectionGroup name="nCode" xdt:Locator="Match(name)" xdt:Transform="InsertIfMissing" >
             <section name="adminInterface" type="nCode.Configuration.AdminInterfaceSection, nCode" xdt:Locator="Match(name)" xdt:Transform="InsertIfMissing" />
             <section name="globalization" type="nCode.Configuration.GlobalizationSection, nCode" xdt:Locator="Match(name)" xdt:Transform="InsertIfMissing" />
@@ -22,9 +20,6 @@
     <connectionStrings xdt:Transform="InsertIfMissing">        
         <add name="Web" connectionString="" providerName="System.Data.SqlClient" xdt:Locator="Match(name)" xdt:Transform="InsertIfMissing" />
     </connectionStrings>
-
-    <!-- log4net Configuration -->
-    <log4net configSource="Config\Log.config" xdt:Transform="InsertIfMissing" />
 
     <!-- nCode Configuration -->
     <nCode xdt:Transform="InsertIfMissing">

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Xml.Linq;
+using Common.Logging;
 using nCode.Catalog.Delivery;
 using nCode.Catalog.Models;
 using nCode.Catalog.Payment;
@@ -15,6 +16,7 @@ namespace nCode.Catalog
     /// </summary>
     public class Basket
     {
+        private ILog log;
         private string currencyCode;                        /* Holds the currency code for this basket. */
         private string discountCode;                        /* Holds the discount code for this basket. */
         private List<BasketItem> items;                     /* Holds items currently in this basket. */
@@ -25,6 +27,8 @@ namespace nCode.Catalog
         /// </summary>
         public Basket()
         {
+            log = LogManager.GetLogger<Basket>();
+
             if (CurrencyController.CurrentCurrency != null)
                 currencyCode = CurrencyController.CurrentCurrency.Code;
 
@@ -44,7 +48,7 @@ namespace nCode.Catalog
 
         private void UpdateDiscountAmount()
         {
-            using (CatalogModel model = new CatalogModel(SqlUtilities.ConnectionString))
+            using (CatalogModel model = new CatalogModel())
             {
                 if (!string.IsNullOrEmpty(discountCode))
                 {
@@ -580,7 +584,7 @@ namespace nCode.Catalog
         /// </summary>
         public Order PlaceAsOrder(bool clearExistingItems = true)
         {
-            Log.Info(string.Format("Placing Basket as Order (Order No.: {0}).", OrderNo ?? "none"));
+            log.Info(string.Format("Placing Basket as Order (Order No.: {0}).", OrderNo ?? "none"));
 
             using (var context = new CatalogDbContext())
             using (var model = new CatalogModel())
@@ -599,7 +603,7 @@ namespace nCode.Catalog
                     if (OrderNo == null)
                     {
                         OrderNo = NoSerieNumber.GetNext("Order").ToString();
-                        Log.Info(string.Format("Assigned Order No.: {0}.", OrderNo));
+                        log.Info(string.Format("Assigned Order No.: {0}.", OrderNo));
                     }
 
                     order.OrderNo = OrderNo;
@@ -700,7 +704,7 @@ namespace nCode.Catalog
                 order.UpdateTotals();
                 model.SubmitChanges();
 
-                Log.Info(string.Format("Order No.: {0} successfully placed.", OrderNo));
+                log.Info($"Order No.: {OrderNo} successfully placed with {Items.Count} items.");
 
                 return order;
             }
@@ -710,6 +714,8 @@ namespace nCode.Catalog
         {
             if (clearExistingItems)
             {
+                log.Trace("Clearing existing items.");
+
                 /* Correct Qtyties */
                 foreach (OrderItem orderItem in order.Items)
                 {
@@ -721,12 +727,19 @@ namespace nCode.Catalog
                     if (item == null || !item.UseStockControl)
                         continue;
 
+                    var itemIsAvailablePre = item.IsAvailable;               
+                    var itemReservedQuantityPre = item.ReservedQuantity;
                     item.ReservedQuantity -= orderItem.Qty;
+                    log.Trace($"Changing (Stock/Reserved/Avalable/IsAvailable) on item '{item.ItemNo}' from ({item.StockQuantity}/{itemReservedQuantityPre}/{item.Available}/{itemIsAvailablePre}) to ({item.StockQuantity}/{item.ReservedQuantity}/{item.Available}/{item.IsAvailable}).");
 
                     if (orderItem.ItemVariantID != null)
                     {
                         var itemVariant = model.ItemVariants.Single(x => x.ID == orderItem.ItemVariantID);
+
+                        var variantIsAvailablePre = itemVariant.IsAvailable;
+                        var variantReservedQuantityPre = itemVariant.ReservedQuantity;
                         itemVariant.ReservedQuantity -= orderItem.Qty;
+                        log.Trace($"Changing (Stock/Reserved/Avalable/IsAvailable) on item variant '{itemVariant.VariantID}' (on item '{item.ItemNo}') from ({itemVariant.StockQuantity}/{variantReservedQuantityPre}/{itemVariant.Available}/{variantIsAvailablePre}) to ({itemVariant.StockQuantity}/{itemVariant.ReservedQuantity}/{itemVariant.Available}/{itemVariant.IsAvailable}).");
                     }
 
                     model.SubmitChanges();
@@ -765,8 +778,15 @@ namespace nCode.Catalog
 
                         if (item.UseStockControl)
                         {
+                            var itemIsAvailablePre = item.IsAvailable;
+                            var itemReservedQuantityPre = item.ReservedQuantity;
                             item.ReservedQuantity += basketItem.Qty;
+                            log.Trace($"Changing (Stock/Reserved/Avalable/IsAvailable) on item '{item.ItemNo}' from ({item.StockQuantity}/{itemReservedQuantityPre}/{item.Available}/{itemIsAvailablePre}) to ({item.StockQuantity}/{item.ReservedQuantity}/{item.Available}/{item.IsAvailable}).");
+
+                            var variantIsAvailablePre = itemVariant.IsAvailable;
+                            var variantReservedQuantityPre = itemVariant.ReservedQuantity;
                             itemVariant.ReservedQuantity += basketItem.Qty;
+                            log.Trace($"Changing (Stock/Reserved/Avalable/IsAvailable) on item variant '{itemVariant.VariantID}' (on item '{item.ItemNo}') from ({itemVariant.StockQuantity}/{variantReservedQuantityPre}/{itemVariant.Available}/{variantIsAvailablePre}) to ({itemVariant.StockQuantity}/{itemVariant.ReservedQuantity}/{itemVariant.Available}/{itemVariant.IsAvailable}).");
                         }
                     }
                     else
@@ -774,7 +794,12 @@ namespace nCode.Catalog
                         orderItem.UnitCostPrice = !string.IsNullOrEmpty(item.CostCurrencyCode) ? CurrencyController.ConvertAmount(item.CostPrice, item.CostCurrencyCode, CurrencyCode) : 0m;
 
                         if (item.UseStockControl)
+                        {
+                            var itemIsAvailablePre = item.IsAvailable;
+                            var itemReservedQuantityPre = item.ReservedQuantity;
                             item.ReservedQuantity += basketItem.Qty;
+                            log.Trace($"Changing (Stock/Reserved/Avalable/IsAvailable) on item '{item.ItemNo}' from ({item.StockQuantity}/{itemReservedQuantityPre}/{item.Available}/{itemIsAvailablePre}) to ({item.StockQuantity}/{item.ReservedQuantity}/{item.Available}/{item.IsAvailable}).");
+                        }
                     }
                 }
 

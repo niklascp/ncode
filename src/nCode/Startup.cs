@@ -3,7 +3,6 @@ using System.Web.Http;
 using Common.Logging;
 using nCode.JobScheduling;
 using nCode.JobScheduling.Hangfire;
-using nCode.Logging.Log4Net;
 using nCode.Search;
 using Owin;
 
@@ -16,11 +15,6 @@ namespace nCode
     {
         public void Configuration(IAppBuilder app)
         {
-            /* TODO: Make these Service Registrations configurable, 
-             * and use OWIN extension method design pattern (e.g. UseLog4Net() etc.) 
-             */
-            Log.Initialize(new Log4NetLoggingEngine());
-
             var log = LogManager.GetLogger<Startup>();
             log.Info("Application is starting on OWIN ...");
 

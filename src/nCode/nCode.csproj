@@ -91,10 +91,6 @@
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="log4net, Version=1.2.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.4\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Lucene.Net">
       <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
       <Private>False</Private>
@@ -188,10 +184,6 @@
     <Compile Include="JobScheduling\JobHandler.cs" />
     <Compile Include="JobScheduling\JobExecution.cs" />
     <Compile Include="JobScheduling\ScheduledJob.cs" />
-    <Compile Include="Logging\Log4Net\Log4NetCleanupJob.cs" />
-    <Compile Include="Logging\Log4Net\Log4NetLoggerFactoryAdapter.cs" />
-    <Compile Include="Logging\Log4Net\Log4NetLogger.cs" />
-    <Compile Include="Logging\Log4Net\CommonLoggingAppender.cs" />
     <Compile Include="Metadata\FileTextLinkList.cs" />
     <Compile Include="Migrations\201409101753311_Metadata_Initial.cs" />
     <Compile Include="Migrations\201409101753311_Metadata_Initial.Designer.cs">
@@ -222,8 +214,6 @@
     <Compile Include="Imaging\RotateImageExtension.cs" />
     <Compile Include="Imaging\RoundCornersExtention.cs" />
     <Compile Include="IO\FileSizeFormatProvider.cs" />
-    <Compile Include="Logging\Log4Net\Log4NetLoggingEngine.cs" />
-    <Compile Include="Logging\LoggingEngine.cs" />
     <Compile Include="Metadata\FileLinkList.cs" />
     <Compile Include="Metadata\FileList.cs" />
     <Compile Include="Metadata\EditControlAttribute.cs" />

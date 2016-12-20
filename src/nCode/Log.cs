@@ -1,16 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using System.Data.SqlClient;
-using nCode.Logging;
+using System.Runtime.CompilerServices;
+using Common.Logging;
 
 namespace nCode
 {
-
     /// <summary>
     /// Classify a Log entry.
     /// </summary>
+    [Obsolete]
     public enum EntryType
     {
         Information,
@@ -20,41 +17,33 @@ namespace nCode
         FailureAudit
     }
 
+    /// <summary>
+    /// Obsolete logging methods. Please use the Common.Logging Framework.
+    /// </summary>
+    [Obsolete]
     public static class Log
     {
-        private const string notInitializedExceptionMessage = "Logging is not initialized.";
+        private const string obespleteMessage = "Please use the Common.Logging Framework.";
 
-        private static LoggingEngine log;
+        private static ILog log;
 
         /// <summary>
-        /// Initializes Logging.
+        /// Initializes Logging. This is a no-op since migration to Common Logging.
         /// </summary>
+        [Obsolete(obespleteMessage)]
         public static void Initialize()
         {
-            Initialize(new nCode.Logging.Log4Net.Log4NetLoggingEngine());
-        }
-
-        /// <summary>
-        /// Initializes Logging.
-        /// </summary>
-        public static void Initialize(LoggingEngine loggingEngine)
-        {
-            if (loggingEngine == null)
-                throw new ArgumentNullException("loggingEngine");
-
-            log = loggingEngine;
-
-            Info(string.Format("Initialized Logging Engine: {0}.", loggingEngine.GetType().FullName));
+            /* No-Op */
         }
 
         /// <summary>
         /// Writes a Infomation Log Message.
         /// </summary>
+        [Obsolete(obespleteMessage)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Info(string message, Exception ex = null)
         {
-            if (log == null)
-                throw new InvalidOperationException(notInitializedExceptionMessage);
-
+            var log = LogManager.GetCurrentClassLogger();
             log.Info(message, ex);
         }
 
@@ -62,11 +51,11 @@ namespace nCode
         /// <summary>
         /// Writes a Warning Log Message.
         /// </summary>
+        [Obsolete(obespleteMessage)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Warn(string message, Exception ex = null)
         {
-            if (log == null)
-                throw new InvalidOperationException(notInitializedExceptionMessage);
-
+            var log = LogManager.GetCurrentClassLogger();
             log.Warn(message, ex);
         }
 
@@ -74,30 +63,24 @@ namespace nCode
         /// <summary>
         /// Writes a Error Log Message.
         /// </summary>
+        [Obsolete(obespleteMessage)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Error(string message, Exception ex = null)
         {
-            if (log == null)
-                throw new InvalidOperationException(notInitializedExceptionMessage);
-
+            var log = LogManager.GetCurrentClassLogger();
             log.Error(message, ex);
         }
 
         /// <summary>
-        /// Writes a Error Log Message.
+        /// Writes a Trace Log Message.
         /// </summary>
+        [Obsolete(obespleteMessage)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Verbose(string message, Exception ex = null)
         {
-            if (log == null)
-                throw new InvalidOperationException(notInitializedExceptionMessage);
-
-            log.Verbose(message, ex);
+            var log = LogManager.GetCurrentClassLogger();
+            log.Trace(message, ex);
         }
-
-
-
-        /* 
-         *  OBSOLETE METHODS: 
-         */
 
         /// <summary>
         /// Writes a entry to the Log.
@@ -106,7 +89,7 @@ namespace nCode
         /// <param name="action">The action tried to preform.</param>
         /// <param name="message">A messege descriping the entry.</param>
         /// <param name="type">A EntryType classifying the entry.</param>
-        [Obsolete]
+        [Obsolete(obespleteMessage)]
         public static void WriteEntry(string module, string action, string message, EntryType type)
         {
             WriteEntry(module, action, message, type, null);
@@ -119,7 +102,7 @@ namespace nCode
         /// <param name="action">The action tried to preform.</param>
         /// <param name="type">>A EntryType classifying the entry.</param>
         /// <param name="ex">The exception occurred.</param>
-        [Obsolete]
+        [Obsolete(obespleteMessage)]
         public static void WriteEntry(string module, string action, EntryType type, Exception ex)
         {
             WriteEntry(module, action, null, type, ex);
@@ -133,7 +116,7 @@ namespace nCode
         /// <param name="message">A messege descriping the entry.</param>
         /// <param name="type">>A EntryType classifying the entry.</param>
         /// <param name="ex">The exception occurred.</param>
-        [Obsolete]
+        [Obsolete(obespleteMessage)]
         public static void WriteEntry(string module, string action, string message, EntryType type, Exception ex)
         {
             WriteEntry(type, module, action, message, ex);
@@ -147,7 +130,7 @@ namespace nCode
         /// <param name="action">The action tried to preform.</param>
         /// <param name="message">A messege descriping the entry.</param>
         /// <param name="exception">The exception occurred.</param>
-        [Obsolete]
+        [Obsolete(obespleteMessage)]
         public static void WriteEntry(EntryType type, string module, string action, string message = null, Exception exception = null)
         {
             if (type == EntryType.Error)
