@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Web.Compilation;
 using System.Web;
 using System.Web.UI;
@@ -14,17 +12,8 @@ namespace nCode.Catalog.Payment.Curanet
     public sealed class CuranetPaymentProvider : PaymentProvider
     {
         const string defaultApiUrl = "https://betaling.curanet.dk/api/customerAPI.php";
-        const string defaultProxyUrlPrefix = "https://betaling.curanet.dk/secureproxy/proxy.php/";
+        const string defaultPaymentWindowUrl = "https://betaling.curanet.dk/paymentwindow/";
         const string appSettingsFormat = "nCode.Catalog.Payment.Curanet.{0}";
-        const string basketAppKeyFormat = "nCode.Catalog.Payment.Curanet.Basket({0})";
-
-        /* Redirect Url Format for Curanet Proxy 
-                 * {0} Curanet Proxy Url Prefix
-                 * {1} Current Hostname
-                 * {2} Culture Code
-                 * {3} Order No                             */
-        const string proxyUrlFormat = "{0}http://{1}/{2}/catalog/checkout/curanet/Payment?OrderNo={3}";
-
 
         /// <summary>
         /// Gets the Shop ID for this Curanet Payment Provider.
@@ -47,9 +36,9 @@ namespace nCode.Catalog.Payment.Curanet
         public string ApiUrl { get; private set; }
 
         /// <summary>
-        /// Gets the Proxy Url Prefix for this Curanet Payment Provider. Used as a Prefix Url to provide SSL-secured data collection.
+        /// Gets the Payment Window Url for this Curanet Payment Provider.
         /// </summary>
-        public string ProxyUrlPrefix { get; private set; }
+        public string PaymentWindowUrl { get; private set; }
 
         public override void Initialize(string name, System.Collections.Specialized.NameValueCollection config)
         {
@@ -78,13 +67,10 @@ namespace nCode.Catalog.Payment.Curanet
             else
                 ApiUrl = defaultApiUrl;
 
-            if (config["proxyUrlPrefix"] != null)
-                ProxyUrlPrefix = config["proxyUrlPrefix"];
-            /* Legacy load from AppSettings. */
-            else if (ConfigurationManager.AppSettings[string.Format(appSettingsFormat, "ProxyUrl")] != null)
-                ProxyUrlPrefix = ConfigurationManager.AppSettings[string.Format(appSettingsFormat, "ProxyUrl")];
+            if (config["paymentWindowUrl"] != null)
+                PaymentWindowUrl = config["paymentWindowUrl"];
             else
-                ProxyUrlPrefix = defaultProxyUrlPrefix;
+                PaymentWindowUrl = defaultPaymentWindowUrl;
         }
 
         public override IPaymentTypeSetupControl GetPaymentTypeSetupControl()
@@ -175,17 +161,7 @@ namespace nCode.Catalog.Payment.Curanet
             int orderNo;
             if (int.TryParse(order.OrderNo, out orderNo))
             {
-                /* Store the Current Basket in the Application Store, so that it can be retrived through the proxy. */
-                httpContext.Application[string.Format(basketAppKeyFormat, order.OrderNo)] = BasketController.CurrentBasket;
-
-                /* Redirect to proxy */
-                var url = string.Format(proxyUrlFormat,
-                    ProxyUrlPrefix,
-                    httpContext.Request.Url.Host,
-                    CultureInfo.CurrentUICulture.Name.ToLower(),
-                    orderNo.ToString());
-
-                httpContext.Response.Redirect(url);
+                httpContext.Response.Redirect($"/{order.Culture.ToLower()}/catalog/checkout/curanet/Payment?OrderNo={orderNo}");
             }
             else
             {
@@ -213,22 +189,15 @@ namespace nCode.Catalog.Payment.Curanet
             }
 
             /* Confirmation are handled by Callback-method. */
-
-            /* Remove the Current Basket from the Application Store. */
-            httpContext.Application.Remove(string.Format(basketAppKeyFormat, order.OrderNo));
         }
 
         public void OnPaymentPageLoad(HttpContext httpContext, Order order)
         {
-            /* Restore the Current Basket from the Application Store. */
-            BasketController.CurrentBasket = httpContext.Application[string.Format(basketAppKeyFormat, order.OrderNo)] as Basket;
+            // No-Op
         }
 
         public void OnPaymentCallback(HttpContext httpContext, Order order)
         {
-            /* Remove the Current Basket from the Application Store. */
-            httpContext.Application.Remove(string.Format(basketAppKeyFormat, order.OrderNo));
-
             using (var model = new CatalogModel())
             {
                 var _order = model.Orders.Single(x => x.OrderNo == order.OrderNo);

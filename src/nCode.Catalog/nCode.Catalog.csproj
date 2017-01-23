@@ -158,6 +158,8 @@
     <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\Campaign.cs" />
     <Compile Include="Models\MunicipalityPopulation.cs" />
+    <Compile Include="UI\ItemListBySegmentRequest.cs" />
+    <Compile Include="ViewModels\SegmentView.cs" />
     <Compile Include="ViewModels\ItemListGroup.cs" />
     <Compile Include="UI\ItemListGroupByMode.cs" />
     <Compile Include="UI\ItemViewSettings.cs" />

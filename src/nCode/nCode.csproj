@@ -176,6 +176,7 @@
     <Compile Include="Data\Linq\IOrderByExpression.cs" />
     <Compile Include="Data\Linq\FilterExpression.cs" />
     <Compile Include="Data\Linq\OrderByExpression.cs" />
+    <Compile Include="Data\SqlBuilder.cs" />
     <Compile Include="Models\HostMapping.cs" />
     <Compile Include="JobScheduling\Hangfire\HangfireJobEngine.cs" />
     <Compile Include="JobScheduling\Hangfire\JobSchedulingIntegrationAttribute.cs" />

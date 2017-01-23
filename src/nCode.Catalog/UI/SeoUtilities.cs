@@ -64,6 +64,19 @@ namespace nCode.Catalog.UI
                     };
                 }
             }
+            /* Test for Brand Filter */
+            else if (context.Request.QueryString["Segment"] != null)
+            {
+                Guid segmentId;
+
+                if (Guid.TryParse(context.Request.QueryString["Segment"], out segmentId))
+                {
+                    return new ItemListBySegmentRequest
+                    {
+                        SegmentID = segmentId
+                    };
+                }
+            }
 
             throw new HttpException(404, "Could not resolve item list.");
         }

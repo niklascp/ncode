@@ -10,15 +10,15 @@ using nCode.Data.Linq;
 using nCode.Search;
 
 using Dapper;
+using nCode.Data;
 
 namespace nCode.Catalog.Data
 {
     public class CatalogRepository : ICatalogRepository
     {
-        #region Queries
+        #region SQL Segments
 
-        private const string listItemByCategoryQuery = @"
-with
+        private const string categoryFilterCte = @"
 [CategoryFilter] ([CategoryID])
 as
 (
@@ -29,6 +29,10 @@ as
 		[Catalog_Category] c
 		join [CategoryFilter] f on f.[CategoryID] = c.[Parent] and @includeDescendantCategories = 1
 )
+";
+
+        private const string listItemTemplate = @"
+/**with**/
 select 
 	i.[ID],
 	i.[ItemNo],
@@ -76,8 +80,6 @@ select
 		else p_d.[Price]
 	end,
 	[DefaultListPriceMultiplePrices] = case
-		when pg_c.[ID] is not null then pg_c.[MultiplePrices]
-		when pg_d.[ID] is not null then pg_d.[MultiplePrices]
 		when p_c.[ID] is not null then p_c.[MultiplePrices]
 		else p_d.[MultiplePrices]
 	end,
@@ -108,15 +110,12 @@ from
 	left join [Catalog_ItemListPrice] pg_d on pg_d.[ItemNo] = i.[ItemNo] and pg_d.[CurrencyCode] = @defaultCurrencyCode and pg_d.[PriceGroupCode] = @priceGroupCode
 	-- Price (Default Price Group)
 	left join [Catalog_ItemListPrice] p_c on p_c.[ItemNo] = i.[ItemNo] and p_c.[CurrencyCode] = @currentCurrencyCode and p_c.[PriceGroupCode] is null
-	left join [Catalog_ItemListPrice] p_d on p_d.[ItemNo] = i.[ItemNo] and p_d.[CurrencyCode] = @defaultCurrencyCode and p_c.[PriceGroupCode] is null
+	left join [Catalog_ItemListPrice] p_d on p_d.[ItemNo] = i.[ItemNo] and p_d.[CurrencyCode] = @defaultCurrencyCode and p_d.[PriceGroupCode] is null
 
 	left join [Catalog_Brand] brand on brand.[ID] = i.[Brand]
-
-	join [CategoryFilter] filter_cat on filter_cat.[CategoryID] = i.[Category]
-where
-	i.[IsActive] = 1 or @includeInactive = 1
-order by
-    i.[Index];
+/**innerjoin**/
+/**where**/
+/**orderby**/
 ";
 
         #endregion
@@ -177,27 +176,45 @@ order by
             return brandView;
         }
 
-        public IEnumerable<ItemListView> ListItemByCategory(Guid categoryId, bool includeDescendantCategories = false, bool includeInactive = false, bool? includeVat = null, int skip = 0, int? take = null)
+        public SegmentView GetSegment(Guid segmentId)
+        {
+            var segmentView = (from b in dbModel.Segments
+                             from l in b.Localizations.Where(x => x.Culture == CultureInfo.CurrentUICulture.Name).DefaultIfEmpty()
+                             from g in b.Localizations.Where(x => x.Culture == null)
+                             where b.ID == segmentId
+                             select new SegmentView
+                             {
+                                 ID = b.ID,
+                                 Title = (l ?? g).Title,
+                                 Description = (l ?? g).Description,
+                                 //SeoDescription = (l ?? g).SeoDescription,
+                                 //SeoKeywords = (l ?? g).SeoKeywords,
+                             }).SingleOrDefault();
+
+            return segmentView;
+        }
+
+        private IEnumerable<ItemListView> ListItemByQuery(SqlBuilder sqlBuilder, bool includeInactive = false, bool? includeVat = null, int skip = 0, int? take = null)
         {
             bool _includeVat = includeVat ?? BasketController.SalesChannel.ShowPricesIncludingVat;
 
             var currentCurrencyCode = CurrencyController.CurrentCurrency?.Code;
             var defaultCurrencyCode = CurrencyController.DefaultCurrency?.Code;
 
-            var data = dbModel.Connection.Query<ItemListDto>(listItemByCategoryQuery, new
+            if (!includeInactive)
+                sqlBuilder = sqlBuilder.Where("i.[IsActive] = 1");
+
+            var template = sqlBuilder.AddTemplate(listItemTemplate, new
             {
                 cultureCode = CultureInfo.CurrentUICulture.Name,
+                priceGroupCode = priceGroup,
                 currentCurrencyCode = currentCurrencyCode,
                 defaultCurrencyCode = defaultCurrencyCode,
-                priceGroupCode = priceGroup,
-                categoryId = categoryId,
-                includeDescendantCategories = includeDescendantCategories,
-                includeInactive = includeInactive,
             });
 
-            /* Map data to View Model */
-            var viewData = new List<ItemListView>(data.Count());
+            var data = dbModel.Connection.Query<ItemListDto>(template.RawSql, template.Parameters);
 
+            /* Map data to View Model */
             foreach (var item in data)
             {
                 var itemListView = new ItemListView
@@ -267,10 +284,38 @@ order by
                     };
                 }
 
-                viewData.Add(itemListView);
+                yield return itemListView;
             }
+        }
 
-            return viewData;
+        public IEnumerable<ItemListView> ListItemBySegment(Guid segmentId, bool includeInactive = false, bool? includeVat = null, int skip = 0, int? take = null)
+        {
+            var sqlBuilder = new SqlBuilder()
+                .InnerJoin("[Catalog_SegmentItem] si on si.[ItemID] = i.[ID] and si.[SegmentID] = @segmentId", new { segmentId = segmentId })
+                .OrderBy("si.[DisplayIndex]");
+
+            return ListItemByQuery(sqlBuilder, includeInactive, includeVat, skip, take);
+        }
+
+        public IEnumerable<ItemListView> ListItemByCategory(Guid categoryId, bool includeDescendantCategories = false, bool includeInactive = false, bool? includeVat = null, int skip = 0, int? take = null)
+        {
+            var sqlBuilder = new SqlBuilder()
+                .With(categoryFilterCte, new { categoryId = categoryId, includeDescendantCategories = includeDescendantCategories })
+                .InnerJoin("[CategoryFilter] filter_cat on filter_cat.[CategoryID] = i.[Category]")
+                .OrderBy("i.[Index]");
+
+            return ListItemByQuery(sqlBuilder, includeInactive, includeVat, skip, take);
+        }
+
+        public IEnumerable<ItemListView> ListItemByCampaign(string campaignCode, bool? includeVat = null)
+        {
+            var sqlBuilder = new SqlBuilder()
+                .InnerJoin("[Catalog_CampaignItem] campaign_item on campaign_item.[ItemID] = i.[ID]")
+                .InnerJoin("[Catalog_Campaign] campaign on campaign.[ID] = campaign_item.[CampaignID]")
+                .Where("campaign.[Code] = @campaignCode", new { campaignCode = campaignCode })
+                .OrderBy("campaign_item.[DisplayIndex]");
+
+            return ListItemByQuery(sqlBuilder, includeVat: includeVat);
         }
 
         public IEnumerable<ItemListView> GetItemList(IFilterExpression<CatalogModel, Item> filter, IOrderByExpression<Item> order = null, bool? includeVat = null, int skip = 0, int? take = null)
@@ -290,21 +335,21 @@ order by
             var defaultCurrencyCode = CurrencyController.DefaultCurrency != null ? CurrencyController.DefaultCurrency.Code : null;
 
             var data = (from i in items
-                        /* Item Localizations */                        
+                            /* Item Localizations */
                         from l in i.Localizations.Where(x => x.Culture == CultureInfo.CurrentUICulture.Name).DefaultIfEmpty()
-                        from g in i.Localizations.Where(x => x.Culture == null)                        
-                        /* Category and Catalogy Localizations */
+                        from g in i.Localizations.Where(x => x.Culture == null)
+                            /* Category and Catalogy Localizations */
                         let cat = i.Category
                         from cat_l in cat.Localizations.Where(x => x.Culture == CultureInfo.CurrentUICulture.Name).DefaultIfEmpty()
                         from cat_g in cat.Localizations.Where(x => x.Culture == null).DefaultIfEmpty()
-                        /* List Prices */
+                            /* List Prices */
                         from cs in i.ListPrices.Where(x => x.CurrencyCode == currentCurrencyCode && x.PriceGroupCode == priceGroup).DefaultIfEmpty()
-                        from ds in i.ListPrices.Where(x => x.CurrencyCode == defaultCurrencyCode && x.PriceGroupCode == priceGroup).DefaultIfEmpty()                        
+                        from ds in i.ListPrices.Where(x => x.CurrencyCode == defaultCurrencyCode && x.PriceGroupCode == priceGroup).DefaultIfEmpty()
                         from c in i.ListPrices.Where(x => x.CurrencyCode == currentCurrencyCode && x.PriceGroupCode == null).DefaultIfEmpty()
-                        from d in i.ListPrices.Where(x => x.CurrencyCode == defaultCurrencyCode && x.PriceGroupCode == null).DefaultIfEmpty()                        
+                        from d in i.ListPrices.Where(x => x.CurrencyCode == defaultCurrencyCode && x.PriceGroupCode == null).DefaultIfEmpty()
                         let listPrice = ds != null ? (cs ?? ds) : (c ?? d)
                         let defaultListPrice = (c ?? d)
-                        /* Map */          
+                        /* Map */
                         select new
                         {
                             ID = i.ID,
@@ -336,10 +381,11 @@ order by
 
             /* Map data to View Model */
             var viewData = new List<ItemListView>(data.Count());
-                       
+
             foreach (var item in data)
             {
-                var itemListView = new ItemListView {
+                var itemListView = new ItemListView
+                {
                     ID = item.ID,
                     ItemNo = item.ItemNo,
                     IsActive = item.IsActive,
@@ -376,13 +422,13 @@ order by
                     /* 2013-08-13: Implementing advanced rounding options. */
                     price = CurrencyController.ApplyRoundingRule(price, CurrencyController.CurrentCurrency);
 
-                    itemListView.ListPrice = new ItemListPriceView() 
+                    itemListView.ListPrice = new ItemListPriceView()
                     {
                         Price = price,
                         CurrencyCode = currentCurrencyCode,
                         MultiplePrices = item.ListPrice.MultiplePrices,
                         PriceGroupCode = item.ListPrice.PriceGroupCode
-                    };               
+                    };
                 }
 
                 if (item.DefaultListPrice != null)
@@ -402,7 +448,7 @@ order by
                         CurrencyCode = currentCurrencyCode,
                         MultiplePrices = item.ListPrice.MultiplePrices,
                         PriceGroupCode = item.ListPrice.PriceGroupCode
-                    };        
+                    };
                 }
 
                 viewData.Add(itemListView);
